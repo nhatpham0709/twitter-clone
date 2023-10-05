@@ -1,8 +1,8 @@
 import { useRef, useEffect } from 'react';
 import cn from 'clsx';
 import { Dialog } from '@headlessui/react';
-import { Button } from '@components/ui/button';
-import { CustomIcon } from '@components/ui/custom-icon';
+import { Button } from '@/components/ui/button';
+import { CustomIcon } from '@/components/ui/custom-icon';
 
 type ActionModalProps = {
   title: string;
@@ -28,12 +28,13 @@ export function ActionModal({
   secondaryBtnClassName,
   action,
   closeModal
-}: ActionModalProps): JSX.Element {
+}: ActionModalProps) {
   const mainBtn = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!focusOnMainBtn) return;
     const timeoutId = setTimeout(() => mainBtn.current?.focus(), 50);
+    
     return () => clearTimeout(timeoutId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

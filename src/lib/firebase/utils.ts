@@ -23,10 +23,10 @@ import {
   userBookmarksCollection
 } from './collections';
 import type { WithFieldValue, Query } from 'firebase/firestore';
-import type { EditableUserData } from '@lib/types/user';
-import type { FilesWithId, ImagesPreview } from '@lib/types/file';
-import type { Bookmark } from '@lib/types/bookmark';
-import type { Theme, Accent } from '@lib/types/theme';
+import type { EditableUserData } from '@/lib/types/user';
+import type { FilesWithId, ImagesPreview } from '@/lib/types/file';
+import type { Bookmark } from '@/lib/types/bookmark';
+import type { Theme, Accent } from '@/lib/types/theme';
 
 export async function checkUsernameAvailability(
   username: string
@@ -34,6 +34,7 @@ export async function checkUsernameAvailability(
   const { empty } = await getDocs(
     query(usersCollection, where('username', '==', username), limit(1))
   );
+  
   return empty;
 }
 
@@ -41,6 +42,7 @@ export async function getCollectionCount<T>(
   collection: Query<T>
 ): Promise<number> {
   const snapshot = await getCountFromServer(collection);
+
   return snapshot.data().count;
 }
 

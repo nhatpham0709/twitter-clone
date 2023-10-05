@@ -6,10 +6,7 @@ type LoadingProps = {
   iconClassName?: string;
 };
 
-export function Loading({
-  className,
-  iconClassName
-}: LoadingProps): JSX.Element {
+export function Loading({ className, iconClassName }: LoadingProps) {
   return (
     <i className={cn('flex justify-center', className ?? 'p-4')}>
       <CustomIcon

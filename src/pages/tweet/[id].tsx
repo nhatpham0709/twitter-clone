@@ -2,23 +2,23 @@ import { useRef } from 'react';
 import { useRouter } from 'next/router';
 import { AnimatePresence } from 'framer-motion';
 import { doc, query, where, orderBy } from 'firebase/firestore';
-import { tweetsCollection } from '@lib/firebase/collections';
-import { useCollection } from '@lib/hooks/useCollection';
-import { useDocument } from '@lib/hooks/useDocument';
-import { isPlural } from '@lib/utils';
-import { HomeLayout, ProtectedLayout } from '@components/layout/common-layout';
-import { MainLayout } from '@components/layout/main-layout';
-import { MainContainer } from '@components/home/main-container';
-import { MainHeader } from '@components/home/main-header';
-import { Tweet } from '@components/tweet/tweet';
-import { ViewTweet } from '@components/view/view-tweet';
-import { SEO } from '@components/common/seo';
-import { Loading } from '@components/ui/loading';
-import { Error } from '@components/ui/error';
-import { ViewParentTweet } from '@components/view/view-parent-tweet';
+import { tweetsCollection } from '@/lib/firebase/collections';
+import { useCollection } from '@/lib/hooks/useCollection';
+import { useDocument } from '@/lib/hooks/useDocument';
+import { isPlural } from '@/lib/utils';
+import { HomeLayout, ProtectedLayout } from '@/components/layout/common-layout';
+import { MainLayout } from '@/components/layout/main-layout';
+import { MainContainer } from '@/components/home/main-container';
+import { MainHeader } from '@/components/home/main-header';
+import { Tweet } from '@/components/tweet/tweet';
+import { ViewTweet } from '@/components/view/view-tweet';
+import { SEO } from '@/components/common/seo';
+import { Loading } from '@/components/ui/loading';
+import { Error } from '@/components/ui/error';
+import { ViewParentTweet } from '@/components/view/view-parent-tweet';
 import type { ReactElement, ReactNode } from 'react';
 
-export default function TweetId(): JSX.Element {
+export default function TweetId() {
   const {
     query: { id },
     back

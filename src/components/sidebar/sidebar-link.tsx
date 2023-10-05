@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import cn from 'clsx';
-import { preventBubbling } from '@lib/utils';
-import { HeroIcon } from '@components/ui/hero-icon';
+import { preventBubbling } from '@/lib/utils';
+import { HeroIcon } from '@/components/ui/hero-icon';
 import type { NavLink } from './sidebar';
 
 type SidebarLinkProps = NavLink & {
@@ -16,7 +16,7 @@ export function SidebarLink({
   linkName,
   disabled,
   canBeHidden
-}: SidebarLinkProps): JSX.Element {
+}: SidebarLinkProps) {
   const { asPath } = useRouter();
   const isActive = username ? asPath.includes(username) : asPath === href;
 

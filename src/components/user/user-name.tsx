@@ -1,6 +1,6 @@
 import cn from 'clsx';
 import Link from 'next/link';
-import { HeroIcon } from '@components/ui/hero-icon';
+import { HeroIcon } from '@/components/ui/hero-icon';
 
 type UserNameProps = {
   tag?: keyof JSX.IntrinsicElements;
@@ -18,7 +18,7 @@ export function UserName({
   username,
   className,
   iconClassName
-}: UserNameProps): JSX.Element {
+}: UserNameProps) {
   const CustomTag = tag ? tag : 'p';
 
   return (

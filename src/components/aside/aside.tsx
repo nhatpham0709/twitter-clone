@@ -1,4 +1,4 @@
-import { useWindow } from '@lib/context/window-context';
+import { useWindow } from '@/lib/context/window-context';
 import { SearchBar } from './search-bar';
 import { AsideFooter } from './aside-footer';
 import type { ReactNode } from 'react';
@@ -7,7 +7,7 @@ type AsideProps = {
   children: ReactNode;
 };
 
-export function Aside({ children }: AsideProps): JSX.Element | null {
+export function Aside({ children }: AsideProps) {
   const { width } = useWindow();
 
   if (width < 1024) return null;

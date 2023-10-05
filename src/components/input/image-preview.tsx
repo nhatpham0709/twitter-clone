@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import cn from 'clsx';
-import { useModal } from '@lib/hooks/useModal';
-import { preventBubbling } from '@lib/utils';
-import { ImageModal } from '@components/modal/image-modal';
-import { Modal } from '@components/modal/modal';
-import { NextImage } from '@components/ui/next-image';
-import { Button } from '@components/ui/button';
-import { HeroIcon } from '@components/ui/hero-icon';
-import { ToolTip } from '@components/ui/tooltip';
+import { useModal } from '@/lib/hooks/useModal';
+import { preventBubbling } from '@/lib/utils';
+import { ImageModal } from '@/components/modal/image-modal';
+import { Modal } from '@/components/modal/modal';
+import { NextImage } from '@/components/ui/next-image';
+import { Button } from '@/components/ui/button';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import { ToolTip } from '@/components/ui/tooltip';
 import type { MotionProps } from 'framer-motion';
-import type { ImagesPreview, ImageData } from '@lib/types/file';
+import type { ImagesPreview, ImageData } from '@/lib/types/file';
 
 type ImagePreviewProps = {
   tweet?: boolean;
@@ -46,7 +46,7 @@ export function ImagePreview({
   previewCount,
   imagesPreview,
   removeImage
-}: ImagePreviewProps): JSX.Element {
+}: ImagePreviewProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedImage, setSelectedImage] = useState<ImageData | null>(null);
 
@@ -141,7 +141,7 @@ export function ImagePreview({
             />
             {removeImage && (
               <Button
-                className='group absolute top-0 left-0 translate-x-1 translate-y-1
+                className='group absolute left-0 top-0 translate-x-1 translate-y-1
                            bg-light-primary/75 p-1 backdrop-blur-sm 
                            hover:bg-image-preview-hover/75'
                 onClick={preventBubbling(removeImage(id))}

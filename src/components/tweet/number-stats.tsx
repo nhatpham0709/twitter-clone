@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { getStatsMove } from '@lib/utils';
-import { formatNumber } from '@lib/date';
+import { getStatsMove } from '@/lib/utils';
+import { formatNumber } from '@/lib/date';
 
 type NumberStatsProps = {
   move: number;
@@ -12,7 +12,7 @@ export function NumberStats({
   move,
   stats,
   alwaysShowStats
-}: NumberStatsProps): JSX.Element {
+}: NumberStatsProps) {
   return (
     <div className='overflow-hidden'>
       <AnimatePresence mode='wait' initial={false}>

@@ -1,12 +1,10 @@
-import { useAuth } from '@lib/context/auth-context';
+import { useAuth } from '@/lib/context/auth-context';
 
 type UserFollowingProps = {
   userTargetId: string;
 };
 
-export function UserFollowing({
-  userTargetId
-}: UserFollowingProps): JSX.Element | null {
+export function UserFollowing({ userTargetId }: UserFollowingProps): null {
   const { user } = useAuth();
 
   const isOwner =

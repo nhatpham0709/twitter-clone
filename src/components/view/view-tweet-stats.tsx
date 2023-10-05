@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import cn from 'clsx';
-import { useArrayDocument } from '@lib/hooks/useArrayDocument';
-import { useModal } from '@lib/hooks/useModal';
-import { usersCollection } from '@lib/firebase/collections';
-import { Modal } from '@components/modal/modal';
-import { TweetStatsModal } from '@components/modal/tweet-stats-modal';
-import { NumberStats } from '@components/tweet/number-stats';
-import { UserCards } from '@components/user/user-cards';
-import type { Tweet } from '@lib/types/tweet';
+import { useArrayDocument } from '@/lib/hooks/useArrayDocument';
+import { useModal } from '@/lib/hooks/useModal';
+import { usersCollection } from '@/lib/firebase/collections';
+import { Modal } from '@/components/modal/modal';
+import { TweetStatsModal } from '@/components/modal/tweet-stats-modal';
+import { NumberStats } from '@/components/tweet/number-stats';
+import { UserCards } from '@/components/user/user-cards';
+import type { Tweet } from '@/lib/types/tweet';
 
 type viewTweetStats = Pick<Tweet, 'userRetweets' | 'userLikes'> & {
   likeMove: number;
@@ -33,7 +33,7 @@ export function ViewTweetStats({
   currentTweets,
   currentReplies,
   isStatsVisible
-}: viewTweetStats): JSX.Element {
+}: viewTweetStats) {
   const [statsType, setStatsType] = useState<StatsType | null>(null);
 
   const { open, openModal, closeModal } = useModal();
@@ -88,7 +88,7 @@ export function ViewTweetStats({
               !!stats && (
                 <button
                   className={cn(
-                    `hover-animation mt-0.5 mb-[3px] flex h-4 items-center gap-1 border-b 
+                    `hover-animation mb-[3px] mt-0.5 flex h-4 items-center gap-1 border-b 
                      border-b-transparent outline-none hover:border-b-light-primary 
                      focus-visible:border-b-light-primary dark:hover:border-b-dark-primary
                      dark:focus-visible:border-b-dark-primary`,

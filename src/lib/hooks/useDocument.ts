@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { getDoc, doc, onSnapshot } from 'firebase/firestore';
-import { usersCollection } from '@lib/firebase/collections';
+import { usersCollection } from '@/lib/firebase/collections';
 import { useCacheRef } from './useCacheRef';
 import type { DocumentReference } from 'firebase/firestore';
-import type { User } from '@lib/types/user';
+import type { User } from '@/lib/types/user';
 
 type UseDocument<T> = {
   data: T | null;
@@ -38,6 +38,7 @@ export function useDocument<T>(
     if (disabled) {
       setData(null);
       setLoading(false);
+
       return;
     }
 
@@ -60,6 +61,7 @@ export function useDocument<T>(
       if (allowNull && !data) {
         setData(null);
         setLoading(false);
+        
         return;
       }
 

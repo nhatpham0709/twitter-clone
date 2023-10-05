@@ -1,19 +1,15 @@
 import Link from 'next/link';
 import cn from 'clsx';
-import { formatDate } from '@lib/date';
-import { ToolTip } from '@components/ui/tooltip';
-import type { Tweet } from '@lib/types/tweet';
+import { formatDate } from '@/lib/date';
+import { ToolTip } from '@/components/ui/tooltip';
+import type { Tweet } from '@/lib/types/tweet';
 
 type TweetDateProps = Pick<Tweet, 'createdAt'> & {
   tweetLink: string;
   viewTweet?: boolean;
 };
 
-export function TweetDate({
-  createdAt,
-  tweetLink,
-  viewTweet
-}: TweetDateProps): JSX.Element {
+export function TweetDate({ createdAt, tweetLink, viewTweet }: TweetDateProps) {
   return (
     <div className={cn('flex gap-1', viewTweet && 'py-4')}>
       {!viewTweet && <i>·</i>}

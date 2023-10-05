@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
-import { usersCollection } from '@lib/firebase/collections';
+import { usersCollection } from '@/lib/firebase/collections';
 import type { CollectionReference } from 'firebase/firestore';
-import type { User } from '@lib/types/user';
+import type { User } from '@/lib/types/user';
 
 type UserArrayDocument<T> = {
   data: T[] | null;
@@ -47,6 +47,7 @@ export function useArrayDocument<T>(
           const user = (
             await getDoc(doc(usersCollection, currentData.createdBy))
           ).data();
+
           return { ...currentData, user };
         })
       );
@@ -67,6 +68,7 @@ export function useArrayDocument<T>(
         if (!docs.length) {
           setData(null);
           setLoading(false);
+          
           return;
         }
 

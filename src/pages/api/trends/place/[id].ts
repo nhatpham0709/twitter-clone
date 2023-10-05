@@ -1,11 +1,11 @@
-import { AUTH } from '@lib/api/auth';
+import { AUTH } from '@/lib/api/auth';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type {
   TrendsData,
   ErrorResponse,
   TrendsResponse,
   FilteredTrends
-} from '@lib/types/place';
+} from '@/lib/types/place';
 
 type PlaceIdEndpointQuery = {
   id: string;

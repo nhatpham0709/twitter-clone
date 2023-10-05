@@ -1,8 +1,8 @@
 import { useMemo, useEffect } from 'react';
 import { doc } from 'firebase/firestore';
-import { useDocument } from '@lib/hooks/useDocument';
-import { tweetsCollection } from '@lib/firebase/collections';
-import { getRandomId } from '@lib/random';
+import { useDocument } from '@/lib/hooks/useDocument';
+import { tweetsCollection } from '@/lib/firebase/collections';
+import { getRandomId } from '@/lib/random';
 import { Tweet } from './tweet';
 import type { LoadedParents } from './tweet-with-parent';
 
@@ -16,7 +16,7 @@ export function TweetParent({
   parentId,
   loadedParents,
   addParentId
-}: TweetParentProps): JSX.Element | null {
+}: TweetParentProps): null {
   const componentId = useMemo(getRandomId, []);
 
   const isParentAlreadyLoaded = loadedParents.some(

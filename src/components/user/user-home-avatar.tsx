@@ -1,17 +1,15 @@
-import { useModal } from '@lib/hooks/useModal';
-import { Button } from '@components/ui/button';
-import { NextImage } from '@components/ui/next-image';
-import { Modal } from '@components/modal/modal';
-import { ImageModal } from '@components/modal/image-modal';
-import type { ImageData } from '@lib/types/file';
+import { useModal } from '@/lib/hooks/useModal';
+import { Button } from '@/components/ui/button';
+import { NextImage } from '@/components/ui/next-image';
+import { Modal } from '@/components/modal/modal';
+import { ImageModal } from '@/components/modal/image-modal';
+import type { ImageData } from '@/lib/types/file';
 
 type UserHomeAvatarProps = {
   profileData?: ImageData | null;
 };
 
-export function UserHomeAvatar({
-  profileData
-}: UserHomeAvatarProps): JSX.Element {
+export function UserHomeAvatar({ profileData }: UserHomeAvatarProps) {
   const { open, openModal, closeModal } = useModal();
 
   return (

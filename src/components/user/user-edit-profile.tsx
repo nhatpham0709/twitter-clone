@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import cn from 'clsx';
-import { useUser } from '@lib/context/user-context';
-import { useModal } from '@lib/hooks/useModal';
-import { updateUserData, uploadImages } from '@lib/firebase/utils';
-import { sleep } from '@lib/utils';
-import { getImagesData } from '@lib/validation';
-import { Modal } from '@components/modal/modal';
-import { EditProfileModal } from '@components/modal/edit-profile-modal';
-import { Button } from '@components/ui/button';
-import { InputField } from '@components/input/input-field';
+import { useUser } from '@/lib/context/user-context';
+import { useModal } from '@/lib/hooks/useModal';
+import { updateUserData, uploadImages } from '@/lib/firebase/utils';
+import { sleep } from '@/lib/utils';
+import { getImagesData } from '@/lib/validation';
+import { Modal } from '@/components/modal/modal';
+import { EditProfileModal } from '@/components/modal/edit-profile-modal';
+import { Button } from '@/components/ui/button';
+import { InputField } from '@/components/input/input-field';
 import type { ChangeEvent, KeyboardEvent } from 'react';
-import type { FilesWithId } from '@lib/types/file';
-import type { User, EditableData, EditableUserData } from '@lib/types/user';
-import type { InputFieldProps } from '@components/input/input-field';
+import type { FilesWithId } from '@/lib/types/file';
+import type { User, EditableData, EditableUserData } from '@/lib/types/user';
+import type { InputFieldProps } from '@/components/input/input-field';
 
 type RequiredInputFieldProps = Omit<InputFieldProps, 'handleChange'> & {
   inputId: EditableData;
@@ -33,7 +33,7 @@ type UserEditProfileProps = {
   hide?: boolean;
 };
 
-export function UserEditProfile({ hide }: UserEditProfileProps): JSX.Element {
+export function UserEditProfile({ hide }: UserEditProfileProps) {
   const { user } = useUser();
   const { open, openModal, closeModal } = useModal();
 
@@ -121,6 +121,7 @@ export function UserEditProfile({ hide }: UserEditProfileProps): JSX.Element {
 
       if (!imagesData) {
         toast.error('Please choose a valid GIF or Photo');
+        
         return;
       }
 

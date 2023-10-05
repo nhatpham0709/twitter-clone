@@ -1,7 +1,7 @@
 import cn from 'clsx';
-import { useTheme } from '@lib/context/theme-context';
-import { HeroIcon } from '@components/ui/hero-icon';
-import type { Accent } from '@lib/types/theme';
+import { useTheme } from '@/lib/context/theme-context';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import type { Accent } from '@/lib/types/theme';
 
 type InputAccentRadioProps = {
   type: Accent;
@@ -22,7 +22,7 @@ const InputColors: Readonly<InputAccentData> = {
     'bg-accent-green hover:ring-accent-green/10 active:ring-accent-green/20'
 };
 
-export function InputAccentRadio({ type }: InputAccentRadioProps): JSX.Element {
+export function InputAccentRadio({ type }: InputAccentRadioProps) {
   const { accent, changeAccent } = useTheme();
 
   const bgColor = InputColors[type];

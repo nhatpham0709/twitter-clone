@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-export function AppHead(): JSX.Element {
+export function AppHead() {
   return (
     <Head>
       <title>Twitter</title>

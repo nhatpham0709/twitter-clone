@@ -1,9 +1,9 @@
-import { UserAvatar } from '@components/user/user-avatar';
-import { UserName } from '@components/user/user-name';
-import { InputThemeRadio } from '@components/input/input-theme-radio';
-import { Button } from '@components/ui/button';
-import { InputAccentRadio } from '@components/input/input-accent-radio';
-import type { Theme, Accent } from '@lib/types/theme';
+import { UserAvatar } from '@/components/user/user-avatar';
+import { UserName } from '@/components/user/user-name';
+import { InputThemeRadio } from '@/components/input/input-theme-radio';
+import { Button } from '@/components/ui/button';
+import { InputAccentRadio } from '@/components/input/input-accent-radio';
+import type { Theme, Accent } from '@/lib/types/theme';
 
 type DisplayModalProps = {
   closeModal: () => void;
@@ -24,7 +24,7 @@ const accentsColor: Readonly<Accent[]> = [
   'green'
 ];
 
-export function DisplayModal({ closeModal }: DisplayModalProps): JSX.Element {
+export function DisplayModal({ closeModal }: DisplayModalProps) {
   return (
     <div className='flex flex-col items-center gap-6'>
       <div className='flex flex-col gap-3 text-center'>

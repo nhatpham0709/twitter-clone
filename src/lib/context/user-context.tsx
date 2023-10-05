@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import type { ReactNode } from 'react';
-import type { User } from '@lib/types/user';
+import type { User } from '@/lib/types/user';
 
 type UserContext = {
   user: User | null;
@@ -17,7 +17,7 @@ type UserContextProviderProps = {
 export function UserContextProvider({
   value,
   children
-}: UserContextProviderProps): JSX.Element {
+}: UserContextProviderProps) {
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 

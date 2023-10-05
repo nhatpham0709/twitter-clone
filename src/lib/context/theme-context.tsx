@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import { useState, useEffect, createContext, useContext } from 'react';
-import { updateUserTheme } from '@lib/firebase/utils';
+import { updateUserTheme } from '@/lib/firebase/utils';
 import { useAuth } from './auth-context';
 import type { ReactNode, ChangeEvent } from 'react';
-import type { Theme, Accent } from '@lib/types/theme';
+import type { Theme, Accent } from '@/lib/types/theme';
 
 type ThemeContext = {
   theme: Theme;
@@ -36,9 +36,7 @@ function setInitialAccent(): Accent {
   return savedAccent ?? 'blue';
 }
 
-export function ThemeContextProvider({
-  children
-}: ThemeContextProviderProps): JSX.Element {
+export function ThemeContextProvider({ children }: ThemeContextProviderProps) {
   const [theme, setTheme] = useState<Theme>(setInitialTheme);
   const [accent, setAccent] = useState<Accent>(setInitialAccent);
 
@@ -75,6 +73,7 @@ export function ThemeContextProvider({
 
       if (user) {
         localStorage.setItem('theme', theme);
+
         return setTimeout(() => void updateUserTheme(user.id, { theme }), 500);
       }
 
@@ -82,6 +81,7 @@ export function ThemeContextProvider({
     };
 
     const timeoutId = flipTheme(theme);
+    
     return () => clearTimeout(timeoutId);
   }, [userId, theme]);
 
@@ -93,6 +93,7 @@ export function ThemeContextProvider({
 
       if (user) {
         localStorage.setItem('accent', accent);
+
         return setTimeout(() => void updateUserTheme(user.id, { accent }), 500);
       }
 
@@ -100,6 +101,7 @@ export function ThemeContextProvider({
     };
 
     const timeoutId = flipAccent(accent);
+    
     return () => clearTimeout(timeoutId);
   }, [userId, accent]);
 

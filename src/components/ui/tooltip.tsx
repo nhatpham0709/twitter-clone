@@ -12,7 +12,7 @@ export function ToolTip({
   modal,
   className,
   groupInner
-}: ToolTipProps): JSX.Element | null {
+}: ToolTipProps): null {
   if (modal) return null;
 
   return (

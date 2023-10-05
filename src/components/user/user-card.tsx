@@ -1,18 +1,18 @@
 import Link from 'next/link';
-import { UserAvatar } from '@components/user/user-avatar';
-import { FollowButton } from '@components/ui/follow-button';
+import { UserAvatar } from '@/components/user/user-avatar';
+import { FollowButton } from '@/components/ui/follow-button';
 import { UserTooltip } from './user-tooltip';
 import { UserName } from './user-name';
 import { UserFollowing } from './user-following';
 import { UserUsername } from './user-username';
-import type { User } from '@lib/types/user';
+import type { User } from '@/lib/types/user';
 
 type UserCardProps = User & {
   modal?: boolean;
   follow?: boolean;
 };
 
-export function UserCard(user: UserCardProps): JSX.Element {
+export function UserCard(user: UserCardProps) {
   const { id, bio, name, modal, follow, username, verified, photoURL } = user;
 
   return (

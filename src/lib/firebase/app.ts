@@ -3,7 +3,7 @@ import { getAuth, connectAuthEmulator } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
 import { getStorage, connectStorageEmulator } from 'firebase/storage';
 import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
-import { isUsingEmulator } from '@lib/env';
+import { isUsingEmulator } from '@/lib/env';
 import { getFirebaseConfig } from './config';
 import type { Auth } from 'firebase/auth';
 import type { Functions } from 'firebase/functions';

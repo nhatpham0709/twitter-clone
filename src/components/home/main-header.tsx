@@ -1,10 +1,10 @@
 import cn from 'clsx';
-import { Button } from '@components/ui/button';
-import { HeroIcon } from '@components/ui/hero-icon';
-import { ToolTip } from '@components/ui/tooltip';
-import { MobileSidebar } from '@components/sidebar/mobile-sidebar';
+import { Button } from '@/components/ui/button';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import { ToolTip } from '@/components/ui/tooltip';
+import { MobileSidebar } from '@/components/sidebar/mobile-sidebar';
 import type { ReactNode } from 'react';
-import type { IconName } from '@components/ui/hero-icon';
+import type { IconName } from '@/components/ui/hero-icon';
 
 type HomeHeaderProps = {
   tip?: string;
@@ -28,7 +28,7 @@ export function MainHeader({
   useActionButton,
   useMobileSidebar,
   action
-}: HomeHeaderProps): JSX.Element {
+}: HomeHeaderProps) {
   return (
     <header
       className={cn(

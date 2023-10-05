@@ -12,19 +12,19 @@ import {
   onSnapshot,
   serverTimestamp
 } from 'firebase/firestore';
-import { auth } from '@lib/firebase/app';
+import { auth } from '@/lib/firebase/app';
 import {
   usersCollection,
   userStatsCollection,
   userBookmarksCollection
-} from '@lib/firebase/collections';
-import { getRandomId, getRandomInt } from '@lib/random';
+} from '@/lib/firebase/collections';
+import { getRandomId, getRandomInt } from '@/lib/random';
 import type { ReactNode } from 'react';
 import type { User as AuthUser } from 'firebase/auth';
 import type { WithFieldValue } from 'firebase/firestore';
-import type { User } from '@lib/types/user';
-import type { Bookmark } from '@lib/types/bookmark';
-import type { Stats } from '@lib/types/stats';
+import type { User } from '@/lib/types/user';
+import type { Bookmark } from '@/lib/types/bookmark';
+import type { Stats } from '@/lib/types/stats';
 
 type AuthContext = {
   user: User | null;
@@ -43,9 +43,7 @@ type AuthContextProviderProps = {
   children: ReactNode;
 };
 
-export function AuthContextProvider({
-  children
-}: AuthContextProviderProps): JSX.Element {
+export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [userBookmarks, setUserBookmarks] = useState<Bookmark[] | null>(null);
   const [error, setError] = useState<Error | null>(null);

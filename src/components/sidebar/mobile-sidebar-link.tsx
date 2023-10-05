@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import cn from 'clsx';
-import { preventBubbling } from '@lib/utils';
-import { HeroIcon } from '@components/ui/hero-icon';
-import type { MobileNavLink } from '@components/modal/mobile-sidebar-modal';
+import { preventBubbling } from '@/lib/utils';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import type { MobileNavLink } from '@/components/modal/mobile-sidebar-modal';
 
 type MobileSidebarLinkProps = MobileNavLink & {
   bottom?: boolean;
@@ -14,7 +14,7 @@ export function MobileSidebarLink({
   linkName,
   iconName,
   disabled
-}: MobileSidebarLinkProps): JSX.Element {
+}: MobileSidebarLinkProps) {
   return (
     <Link href={href} key={href}>
       <a

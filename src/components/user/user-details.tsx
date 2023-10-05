@@ -1,11 +1,11 @@
-import { formatDate } from '@lib/date';
-import { HeroIcon } from '@components/ui/hero-icon';
-import { ToolTip } from '@components/ui/tooltip';
+import { formatDate } from '@/lib/date';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import { ToolTip } from '@/components/ui/tooltip';
 import { UserName } from './user-name';
 import { UserFollowing } from './user-following';
 import { UserFollowStats } from './user-follow-stats';
-import type { IconName } from '@components/ui/hero-icon';
-import type { User } from '@lib/types/user';
+import type { IconName } from '@/components/ui/hero-icon';
+import type { User } from '@/lib/types/user';
 
 type UserDetailsProps = Pick<
   User,
@@ -34,7 +34,7 @@ export function UserDetails({
   createdAt,
   following,
   followers
-}: UserDetailsProps): JSX.Element {
+}: UserDetailsProps) {
   const detailIcons: Readonly<DetailIcon[]> = [
     [location, 'MapPinIcon'],
     [website, 'LinkIcon'],

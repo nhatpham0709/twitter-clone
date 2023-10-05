@@ -1,9 +1,9 @@
 import cn from 'clsx';
-import { preventBubbling } from '@lib/utils';
-import { HeroIcon } from '@components/ui/hero-icon';
-import { ToolTip } from '@components/ui/tooltip';
+import { preventBubbling } from '@/lib/utils';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import { ToolTip } from '@/components/ui/tooltip';
 import { NumberStats } from './number-stats';
-import type { IconName } from '@components/ui/hero-icon';
+import type { IconName } from '@/components/ui/hero-icon';
 
 type TweetOption = {
   tip: string;
@@ -27,7 +27,7 @@ export function TweetOption({
   viewTweet,
   iconClassName,
   onClick
-}: TweetOption): JSX.Element {
+}: TweetOption) {
   return (
     <button
       className={cn(

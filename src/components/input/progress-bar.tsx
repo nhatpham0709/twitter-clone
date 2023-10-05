@@ -1,5 +1,5 @@
 import cn from 'clsx';
-import { ToolTip } from '@components/ui/tooltip';
+import { ToolTip } from '@/components/ui/tooltip';
 
 type ProgressBarProps = {
   modal?: boolean;
@@ -30,7 +30,7 @@ export function ProgressBar({
   inputLimit,
   inputLength,
   isCharLimitExceeded
-}: ProgressBarProps): JSX.Element {
+}: ProgressBarProps) {
   const isCloseToLimit = inputLength >= inputLimit - 20;
   const baseCircle = baseOffset[+isCloseToLimit];
 

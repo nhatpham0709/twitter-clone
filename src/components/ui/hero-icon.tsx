@@ -11,11 +11,7 @@ type HeroIconProps = {
   className?: string;
 };
 
-export function HeroIcon({
-  solid,
-  iconName,
-  className
-}: HeroIconProps): JSX.Element {
+export function HeroIcon({ solid, iconName, className }: HeroIconProps) {
   const Icon = solid ? SolidIcons[iconName] : OutlineIcons[iconName];
 
   return <Icon className={className ?? 'h-6 w-6'} />;

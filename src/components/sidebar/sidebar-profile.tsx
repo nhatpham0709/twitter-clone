@@ -1,20 +1,20 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu } from '@headlessui/react';
 import cn from 'clsx';
-import { useAuth } from '@lib/context/auth-context';
-import { useModal } from '@lib/hooks/useModal';
-import { Modal } from '@components/modal/modal';
-import { ActionModal } from '@components/modal/action-modal';
-import { Button } from '@components/ui/button';
-import { HeroIcon } from '@components/ui/hero-icon';
-import { CustomIcon } from '@components/ui/custom-icon';
-import { UserAvatar } from '@components/user/user-avatar';
-import { UserName } from '@components/user/user-name';
-import { UserUsername } from '@components/user/user-username';
+import { useAuth } from '@/lib/context/auth-context';
+import { useModal } from '@/lib/hooks/useModal';
+import { Modal } from '@/components/modal/modal';
+import { ActionModal } from '@/components/modal/action-modal';
+import { Button } from '@/components/ui/button';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import { CustomIcon } from '@/components/ui/custom-icon';
+import { UserAvatar } from '@/components/user/user-avatar';
+import { UserName } from '@/components/user/user-name';
+import { UserUsername } from '@/components/user/user-username';
 import { variants } from './more-settings';
-import type { User } from '@lib/types/user';
+import type { User } from '@/lib/types/user';
 
-export function SidebarProfile(): JSX.Element {
+export function SidebarProfile() {
   const { user, signOut } = useAuth();
   const { open, openModal, closeModal } = useModal();
 
@@ -38,7 +38,7 @@ export function SidebarProfile(): JSX.Element {
         />
       </Modal>
       <Menu className='relative' as='section'>
-        {({ open }): JSX.Element => (
+        {({ open }) => (
           <>
             <Menu.Button
               className={cn(
@@ -63,7 +63,7 @@ export function SidebarProfile(): JSX.Element {
             <AnimatePresence>
               {open && (
                 <Menu.Items
-                  className='menu-container absolute left-0 right-0 -top-36 w-60 xl:w-full'
+                  className='menu-container absolute -top-36 left-0 right-0 w-60 xl:w-full'
                   as={motion.div}
                   {...variants}
                   static
@@ -89,7 +89,7 @@ export function SidebarProfile(): JSX.Element {
                     </i>
                   </Menu.Item>
                   <Menu.Item>
-                    {({ active }): JSX.Element => (
+                    {({ active }) => (
                       <Button
                         className={cn(
                           'flex w-full gap-3 rounded-md rounded-t-none p-4',

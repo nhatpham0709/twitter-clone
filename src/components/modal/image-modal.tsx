@@ -3,14 +3,14 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import cn from 'clsx';
-import { preventBubbling } from '@lib/utils';
-import { Button } from '@components/ui/button';
-import { HeroIcon } from '@components/ui/hero-icon';
-import { Loading } from '@components/ui/loading';
+import { preventBubbling } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import { Loading } from '@/components/ui/loading';
 import { backdrop, modal } from './modal';
 import type { VariantLabels } from 'framer-motion';
-import type { ImageData } from '@lib/types/file';
-import type { IconName } from '@components/ui/hero-icon';
+import type { ImageData } from '@/lib/types/file';
+import type { IconName } from '@/components/ui/hero-icon';
 
 type ImageModalProps = {
   tweet?: boolean;
@@ -33,7 +33,7 @@ export function ImageModal({
   previewCount,
   selectedIndex,
   handleNextIndex
-}: ImageModalProps): JSX.Element {
+}: ImageModalProps) {
   const [indexes, setIndexes] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -71,6 +71,7 @@ export function ImageModal({
     };
 
     document.addEventListener('keydown', handleKeyDown);
+    
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [handleNextIndex]);
 
@@ -126,7 +127,7 @@ export function ImageModal({
               </a>
             </picture>
             <a
-              className='custom-underline absolute left-0 -bottom-7 font-medium text-light-primary/80
+              className='custom-underline absolute -bottom-7 left-0 font-medium text-light-primary/80
                          decoration-transparent underline-offset-2 transition hover:text-light-primary hover:underline
                          hover:decoration-light-primary focus-visible:text-light-primary dark:text-dark-primary/80 
                          dark:hover:text-dark-primary dark:hover:decoration-dark-primary dark:focus-visible:text-dark-primary'

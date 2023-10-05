@@ -1,21 +1,21 @@
 import { AnimatePresence } from 'framer-motion';
 import { where, orderBy } from 'firebase/firestore';
-import { useWindow } from '@lib/context/window-context';
-import { useInfiniteScroll } from '@lib/hooks/useInfiniteScroll';
-import { tweetsCollection } from '@lib/firebase/collections';
-import { HomeLayout, ProtectedLayout } from '@components/layout/common-layout';
-import { MainLayout } from '@components/layout/main-layout';
-import { SEO } from '@components/common/seo';
-import { MainContainer } from '@components/home/main-container';
-import { Input } from '@components/input/input';
-import { UpdateUsername } from '@components/home/update-username';
-import { MainHeader } from '@components/home/main-header';
-import { Tweet } from '@components/tweet/tweet';
-import { Loading } from '@components/ui/loading';
-import { Error } from '@components/ui/error';
+import { useWindow } from '@/lib/context/window-context';
+import { useInfiniteScroll } from '@/lib/hooks/useInfiniteScroll';
+import { tweetsCollection } from '@/lib/firebase/collections';
+import { HomeLayout, ProtectedLayout } from '@/components/layout/common-layout';
+import { MainLayout } from '@/components/layout/main-layout';
+import { SEO } from '@/components/common/seo';
+import { MainContainer } from '@/components/home/main-container';
+import { Input } from '@/components/input/input';
+import { UpdateUsername } from '@/components/home/update-username';
+import { MainHeader } from '@/components/home/main-header';
+import { Tweet } from '@/components/tweet/tweet';
+import { Loading } from '@/components/ui/loading';
+import { Error } from '@/components/ui/error';
 import type { ReactElement, ReactNode } from 'react';
 
-export default function Home(): JSX.Element {
+export default function Home() {
   const { isMobile } = useWindow();
 
   const { data, loading, LoadMore } = useInfiniteScroll(

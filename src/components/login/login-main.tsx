@@ -1,9 +1,9 @@
-import { useAuth } from '@lib/context/auth-context';
-import { NextImage } from '@components/ui/next-image';
-import { CustomIcon } from '@components/ui/custom-icon';
-import { Button } from '@components/ui/button';
+import { useAuth } from '@/lib/context/auth-context';
+import { NextImage } from '@/components/ui/next-image';
+import { CustomIcon } from '@/components/ui/custom-icon';
+import { Button } from '@/components/ui/button';
 
-export function LoginMain(): JSX.Element {
+export function LoginMain() {
   const { signInWithGoogle } = useAuth();
 
   return (

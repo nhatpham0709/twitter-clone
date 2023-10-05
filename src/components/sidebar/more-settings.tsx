@@ -1,14 +1,14 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu } from '@headlessui/react';
 import cn from 'clsx';
-import { useModal } from '@lib/hooks/useModal';
-import { preventBubbling } from '@lib/utils';
-import { Modal } from '@components/modal/modal';
-import { DisplayModal } from '@components/modal/display-modal';
-import { HeroIcon } from '@components/ui/hero-icon';
-import { Button } from '@components/ui/button';
+import { useModal } from '@/lib/hooks/useModal';
+import { preventBubbling } from '@/lib/utils';
+import { Modal } from '@/components/modal/modal';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import { Button } from '@/components/ui/button';
 import { MenuLink } from './menu-link';
 import type { Variants } from 'framer-motion';
+import { DisplayModal } from '@/components/modal/display-modal';
 
 export const variants: Variants = {
   initial: { opacity: 0, y: 50 },
@@ -20,7 +20,7 @@ export const variants: Variants = {
   exit: { opacity: 0, y: 50, transition: { duration: 0.2 } }
 };
 
-export function MoreSettings(): JSX.Element {
+export function MoreSettings() {
   const { open, openModal, closeModal } = useModal();
 
   return (
@@ -33,7 +33,7 @@ export function MoreSettings(): JSX.Element {
         <DisplayModal closeModal={closeModal} />
       </Modal>
       <Menu className='relative' as='div'>
-        {({ open }): JSX.Element => (
+        {({ open }) => (
           <>
             <Menu.Button className='group relative flex w-full py-1 outline-none'>
               <div
@@ -60,7 +60,7 @@ export function MoreSettings(): JSX.Element {
                   static
                 >
                   <Menu.Item>
-                    {({ active }): JSX.Element => (
+                    {({ active }) => (
                       <MenuLink
                         className={cn(
                           'flex w-full cursor-not-allowed gap-3 rounded-t-md p-4 duration-200',
@@ -75,7 +75,7 @@ export function MoreSettings(): JSX.Element {
                     )}
                   </Menu.Item>
                   <Menu.Item>
-                    {({ active }): JSX.Element => (
+                    {({ active }) => (
                       <MenuLink
                         className={cn(
                           'flex w-full cursor-not-allowed gap-3 rounded-t-md p-4 duration-200',
@@ -90,7 +90,7 @@ export function MoreSettings(): JSX.Element {
                     )}
                   </Menu.Item>
                   <Menu.Item>
-                    {({ active }): JSX.Element => (
+                    {({ active }) => (
                       <Button
                         className={cn(
                           'flex w-full gap-3 rounded-none rounded-b-md p-4 duration-200',

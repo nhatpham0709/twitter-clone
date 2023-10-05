@@ -3,12 +3,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { query, limit } from 'firebase/firestore';
-import { getCollectionCount } from '@lib/firebase/utils';
-import { Loading } from '@components/ui/loading';
+import { getCollectionCount } from '@/lib/firebase/utils';
+import { Loading } from '@/components/ui/loading';
 import { useCollection } from './useCollection';
 import type { UseCollectionOptions } from './useCollection';
 import type { Query, QueryConstraint } from 'firebase/firestore';
-import type { User } from '@lib/types/user';
+import type { User } from '@/lib/types/user';
 
 type InfiniteScroll<T> = {
   data: T[] | null;
@@ -21,20 +21,6 @@ type InfiniteScrollWithUser<T> = {
   loading: boolean;
   LoadMore: () => JSX.Element;
 };
-
-export function useInfiniteScroll<T>(
-  collection: Query<T>,
-  constraints: QueryConstraint[],
-  fetchOptions: UseCollectionOptions & { includeUser: true },
-  options?: { initialSize?: number; stepSize?: number; marginBottom?: number }
-): InfiniteScrollWithUser<T>;
-
-export function useInfiniteScroll<T>(
-  collection: Query<T>,
-  constraints: QueryConstraint[],
-  fetchOptions?: UseCollectionOptions,
-  options?: { initialSize?: number; stepSize?: number; marginBottom?: number }
-): InfiniteScroll<T>;
 
 export function useInfiniteScroll<T>(
   collection: Query<T>,
@@ -90,7 +76,7 @@ export function useInfiniteScroll<T>(
     reachedLimit && (data?.length ?? 0) >= (tweetsSize ?? 0);
 
   const LoadMore = useCallback(
-    (): JSX.Element => (
+    () => (
       <motion.div
         className={isLoadMoreHidden ? 'hidden' : 'block'}
         viewport={{ margin: `0px 0px ${marginBottom ?? 1000}px` }}

@@ -3,13 +3,13 @@ import cn from 'clsx';
 import { Popover } from '@headlessui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
-import { useAuth } from '@lib/context/auth-context';
-import { manageBookmark } from '@lib/firebase/utils';
-import { preventBubbling } from '@lib/utils';
-import { siteURL } from '@lib/env';
-import { Button } from '@components/ui/button';
-import { HeroIcon } from '@components/ui/hero-icon';
-import { ToolTip } from '@components/ui/tooltip';
+import { useAuth } from '@/lib/context/auth-context';
+import { manageBookmark } from '@/lib/firebase/utils';
+import { preventBubbling } from '@/lib/utils';
+import { siteURL } from '@/lib/env';
+import { Button } from '@/components/ui/button';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import { ToolTip } from '@/components/ui/tooltip';
 import { variants } from './tweet-actions';
 
 type TweetShareProps = {
@@ -18,11 +18,7 @@ type TweetShareProps = {
   viewTweet?: boolean;
 };
 
-export function TweetShare({
-  userId,
-  tweetId,
-  viewTweet
-}: TweetShareProps): JSX.Element {
+export function TweetShare({ userId, tweetId, viewTweet }: TweetShareProps) {
   const { userBookmarks } = useAuth();
 
   const handleBookmark =
@@ -35,7 +31,7 @@ export function TweetShare({
 
       toast.success(
         type === 'bookmark'
-          ? (): JSX.Element => (
+          ? () => (
               <span className='flex gap-2'>
                 Tweet added to your Bookmarks
                 <Link href='/bookmarks'>
@@ -57,7 +53,7 @@ export function TweetShare({
 
   return (
     <Popover className='relative'>
-      {({ open, close }): JSX.Element => (
+      {({ open, close }) => (
         <>
           <Popover.Button
             className={cn(

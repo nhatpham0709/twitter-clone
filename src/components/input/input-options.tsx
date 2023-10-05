@@ -1,12 +1,12 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@components/ui/button';
-import { HeroIcon } from '@components/ui/hero-icon';
-import { ToolTip } from '@components/ui/tooltip';
+import { Button } from '@/components/ui/button';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import { ToolTip } from '@/components/ui/tooltip';
 import { variants } from './input';
 import { ProgressBar } from './progress-bar';
 import type { ChangeEvent, ClipboardEvent } from 'react';
-import type { IconName } from '@components/ui/hero-icon';
+import type { IconName } from '@/components/ui/hero-icon';
 
 type Options = {
   name: string;
@@ -68,7 +68,7 @@ export function InputOptions({
   isValidTweet,
   isCharLimitExceeded,
   handleImageUpload
-}: InputOptionsProps): JSX.Element {
+}: InputOptionsProps) {
   const inputFileRef = useRef<HTMLInputElement>(null);
 
   const onClick = (): void => inputFileRef.current?.click();
@@ -83,8 +83,8 @@ export function InputOptions({
   return (
     <motion.div className='flex justify-between' {...variants}>
       <div
-        className='flex text-main-accent xs:[&>button:nth-child(n+6)]:hidden 
-                   md:[&>button]:!block [&>button:nth-child(n+4)]:hidden'
+        className='flex text-main-accent [&>button:nth-child(n+4)]:hidden 
+                   xs:[&>button:nth-child(n+6)]:hidden md:[&>button]:!block'
       >
         <input
           className='hidden'

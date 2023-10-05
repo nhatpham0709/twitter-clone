@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import cn from 'clsx';
-import { manageRetweet, manageLike } from '@lib/firebase/utils';
-import { ViewTweetStats } from '@components/view/view-tweet-stats';
+import { manageRetweet, manageLike } from '@/lib/firebase/utils';
+import { ViewTweetStats } from '@/components/view/view-tweet-stats';
 import { TweetOption } from './tweet-option';
 import { TweetShare } from './tweet-share';
-import type { Tweet } from '@lib/types/tweet';
+import type { Tweet } from '@/lib/types/tweet';
 
 type TweetStatsProps = Pick<
   Tweet,
@@ -30,7 +30,7 @@ export function TweetStats({
   userRetweets,
   userReplies: totalReplies,
   openModal
-}: TweetStatsProps): JSX.Element {
+}: TweetStatsProps) {
   const totalLikes = userLikes.length;
   const totalTweets = userRetweets.length;
 

@@ -1,30 +1,30 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import cn from 'clsx';
-import { useAuth } from '@lib/context/auth-context';
-import { useModal } from '@lib/hooks/useModal';
-import { Modal } from '@components/modal/modal';
-import { TweetReplyModal } from '@components/modal/tweet-reply-modal';
-import { ImagePreview } from '@components/input/image-preview';
-import { UserAvatar } from '@components/user/user-avatar';
-import { UserTooltip } from '@components/user/user-tooltip';
-import { UserName } from '@components/user/user-name';
-import { UserUsername } from '@components/user/user-username';
-import { variants } from '@components/tweet/tweet';
-import { TweetActions } from '@components/tweet/tweet-actions';
-import { TweetStats } from '@components/tweet/tweet-stats';
-import { TweetDate } from '@components/tweet/tweet-date';
-import { Input } from '@components/input/input';
+import { useAuth } from '@/lib/context/auth-context';
+import { useModal } from '@/lib/hooks/useModal';
+import { Modal } from '@/components/modal/modal';
+import { TweetReplyModal } from '@/components/modal/tweet-reply-modal';
+import { ImagePreview } from '@/components/input/image-preview';
+import { UserAvatar } from '@/components/user/user-avatar';
+import { UserTooltip } from '@/components/user/user-tooltip';
+import { UserName } from '@/components/user/user-name';
+import { UserUsername } from '@/components/user/user-username';
+import { variants } from '@/components/tweet/tweet';
+import { TweetActions } from '@/components/tweet/tweet-actions';
+import { TweetStats } from '@/components/tweet/tweet-stats';
+import { TweetDate } from '@/components/tweet/tweet-date';
+import { Input } from '@/components/input/input';
 import type { RefObject } from 'react';
-import type { User } from '@lib/types/user';
-import type { Tweet } from '@lib/types/tweet';
+import type { User } from '@/lib/types/user';
+import type { Tweet } from '@/lib/types/tweet';
 
 type ViewTweetProps = Tweet & {
   user: User;
   viewTweetRef?: RefObject<HTMLElement>;
 };
 
-export function ViewTweet(tweet: ViewTweetProps): JSX.Element {
+export function ViewTweet(tweet: ViewTweetProps) {
   const {
     id: tweetId,
     text,

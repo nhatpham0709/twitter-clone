@@ -1,19 +1,19 @@
 import Link from 'next/link';
-import { useAuth } from '@lib/context/auth-context';
-import { useModal } from '@lib/hooks/useModal';
-import { Button } from '@components/ui/button';
-import { UserAvatar } from '@components/user/user-avatar';
-import { NextImage } from '@components/ui/next-image';
-import { UserName } from '@components/user/user-name';
-import { UserUsername } from '@components/user/user-username';
-import { MainHeader } from '@components/home/main-header';
-import { MobileSidebarLink } from '@components/sidebar/mobile-sidebar-link';
-import { HeroIcon } from '@components/ui/hero-icon';
+import { useAuth } from '@/lib/context/auth-context';
+import { useModal } from '@/lib/hooks/useModal';
+import { Button } from '@/components/ui/button';
+import { UserAvatar } from '@/components/user/user-avatar';
+import { NextImage } from '@/components/ui/next-image';
+import { UserName } from '@/components/user/user-name';
+import { UserUsername } from '@/components/user/user-username';
+import { MainHeader } from '@/components/home/main-header';
+import { MobileSidebarLink } from '@/components/sidebar/mobile-sidebar-link';
+import { HeroIcon } from '@/components/ui/hero-icon';
 import { Modal } from './modal';
 import { ActionModal } from './action-modal';
 import { DisplayModal } from './display-modal';
-import type { NavLink } from '@components/sidebar/sidebar';
-import type { User } from '@lib/types/user';
+import type { NavLink } from '@/components/sidebar/sidebar';
+import type { User } from '@/lib/types/user';
 
 export type MobileNavLink = Omit<NavLink, 'canBeHidden'>;
 
@@ -80,7 +80,7 @@ export function MobileSidebarModal({
   followers,
   coverPhotoURL,
   closeModal
-}: MobileSidebarModalProps): JSX.Element {
+}: MobileSidebarModalProps) {
   const { signOut } = useAuth();
 
   const {
@@ -151,11 +151,11 @@ export function MobileSidebarModal({
             )}
           </a>
         </Link>
-        <div className='mb-8 ml-2 -mt-4'>
+        <div className='-mt-4 mb-8 ml-2'>
           <UserAvatar
             className='absolute -translate-y-1/2 bg-main-background p-1 hover:brightness-100
-                       [&>figure>span]:[transition:200ms]
-                       [&:hover>figure>span]:brightness-75'
+                       [&:hover>figure>span]:brightness-75
+                       [&>figure>span]:[transition:200ms]'
             username={username}
             src={photoURL}
             alt={name}

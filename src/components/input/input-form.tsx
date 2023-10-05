@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import TextArea from 'react-textarea-autosize';
 import { motion } from 'framer-motion';
-import { useModal } from '@lib/hooks/useModal';
-import { Modal } from '@components/modal/modal';
-import { ActionModal } from '@components/modal/action-modal';
-import { HeroIcon } from '@components/ui/hero-icon';
-import { Button } from '@components/ui/button';
+import { useModal } from '@/lib/hooks/useModal';
+import { Modal } from '@/components/modal/modal';
+import { ActionModal } from '@/components/modal/action-modal';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import { Button } from '@/components/ui/button';
 import type {
   ReactNode,
   RefObject,
@@ -68,7 +68,7 @@ export function InputForm({
   discardTweet,
   handleChange,
   handleImageUpload
-}: InputFormProps): JSX.Element {
+}: InputFormProps) {
   const { open, openModal, closeModal } = useModal();
 
   useEffect(() => handleShowHideNav(true), []);
@@ -92,6 +92,7 @@ export function InputForm({
 
     if (blur) {
       setTimeout(() => (sidebar.style.opacity = ''), 200);
+      
       return;
     }
 
@@ -131,7 +132,7 @@ export function InputForm({
           <motion.button
             type='button'
             className='custom-button accent-tab accent-bg-tab flex cursor-not-allowed items-center gap-1
-                       self-start border border-light-line-reply py-0 px-3 text-main-accent
+                       self-start border border-light-line-reply px-3 py-0 text-main-accent
                        hover:bg-main-accent/10 active:bg-main-accent/20 dark:border-light-secondary'
             {...fromTop}
           >
@@ -175,8 +176,8 @@ export function InputForm({
         >
           <button
             type='button'
-            className='custom-button accent-tab accent-bg-tab flex cursor-not-allowed items-center gap-1 py-0
-                       px-3 text-main-accent hover:bg-main-accent/10 active:bg-main-accent/20'
+            className='custom-button accent-tab accent-bg-tab flex cursor-not-allowed items-center gap-1 px-3
+                       py-0 text-main-accent hover:bg-main-accent/10 active:bg-main-accent/20'
           >
             <HeroIcon className='h-4 w-4' iconName='GlobeAmericasIcon' />
             <p className='font-bold'>Everyone can reply</p>

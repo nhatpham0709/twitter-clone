@@ -2,18 +2,18 @@ import cn from 'clsx';
 import { Popover } from '@headlessui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
-import { preventBubbling } from '@lib/utils';
-import { siteURL } from '@lib/env';
-import { Button } from '@components/ui/button';
-import { HeroIcon } from '@components/ui/hero-icon';
-import { ToolTip } from '@components/ui/tooltip';
-import { variants } from '@components/tweet/tweet-actions';
+import { preventBubbling } from '@/lib/utils';
+import { siteURL } from '@/lib/env';
+import { Button } from '@/components/ui/button';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import { ToolTip } from '@/components/ui/tooltip';
+import { variants } from '@/components/tweet/tweet-actions';
 
 type UserShareProps = {
   username: string;
 };
 
-export function UserShare({ username }: UserShareProps): JSX.Element {
+export function UserShare({ username }: UserShareProps) {
   const handleCopy = (closeMenu: () => void) => async (): Promise<void> => {
     closeMenu();
     await navigator.clipboard.writeText(`${siteURL}/user/${username}`);
@@ -22,7 +22,7 @@ export function UserShare({ username }: UserShareProps): JSX.Element {
 
   return (
     <Popover className='relative'>
-      {({ open, close }): JSX.Element => (
+      {({ open, close }) => (
         <>
           <Popover.Button
             as={Button}

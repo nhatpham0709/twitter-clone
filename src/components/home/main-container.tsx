@@ -6,10 +6,7 @@ type MainContainerProps = {
   className?: string;
 };
 
-export function MainContainer({
-  children,
-  className
-}: MainContainerProps): JSX.Element {
+export function MainContainer({ children, className }: MainContainerProps) {
   return (
     <main
       className={cn(

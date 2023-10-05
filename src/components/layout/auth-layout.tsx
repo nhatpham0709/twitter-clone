@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '@lib/context/auth-context';
-import { sleep } from '@lib/utils';
-import { Placeholder } from '@components/common/placeholder';
+import { useAuth } from '@/lib/context/auth-context';
+import { sleep } from '@/lib/utils';
+import { Placeholder } from '@/components/common/placeholder';
 import type { LayoutProps } from './common-layout';
 
-export function AuthLayout({ children }: LayoutProps): JSX.Element {
+export function AuthLayout({ children }: LayoutProps) {
   const [pending, setPending] = useState(true);
 
   const { user, loading } = useAuth();

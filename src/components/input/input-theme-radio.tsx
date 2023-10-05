@@ -1,7 +1,7 @@
 import cn from 'clsx';
-import { useTheme } from '@lib/context/theme-context';
-import { HeroIcon } from '@components/ui/hero-icon';
-import type { Theme } from '@lib/types/theme';
+import { useTheme } from '@/lib/context/theme-context';
+import { HeroIcon } from '@/components/ui/hero-icon';
+import type { Theme } from '@/lib/types/theme';
 
 type InputThemeRadioProps = {
   type: Theme;
@@ -42,10 +42,7 @@ const inputThemeData: Readonly<InputThemeData> = {
   }
 };
 
-export function InputThemeRadio({
-  type,
-  label
-}: InputThemeRadioProps): JSX.Element {
+export function InputThemeRadio({ type, label }: InputThemeRadioProps) {
   const { theme, changeTheme } = useTheme();
 
   const { textColor, backgroundColor, iconBorderColor, hoverBackgroundColor } =

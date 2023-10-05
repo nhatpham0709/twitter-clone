@@ -1,14 +1,14 @@
 import Link from 'next/link';
 import cn from 'clsx';
-import { useWindow } from '@lib/context/window-context';
-import { FollowButton } from '@components/ui/follow-button';
-import { NextImage } from '@components/ui/next-image';
+import { useWindow } from '@/lib/context/window-context';
+import { FollowButton } from '@/components/ui/follow-button';
+import { NextImage } from '@/components/ui/next-image';
 import { UserAvatar } from './user-avatar';
 import { UserName } from './user-name';
 import { UserFollowing } from './user-following';
 import { UserUsername } from './user-username';
 import type { ReactNode } from 'react';
-import type { User } from '@lib/types/user';
+import type { User } from '@/lib/types/user';
 
 type UserTooltipProps = Pick<
   User,
@@ -42,7 +42,7 @@ export function UserTooltip({
   following,
   followers,
   coverPhotoURL
-}: UserTooltipProps): JSX.Element {
+}: UserTooltipProps) {
   const { isMobile } = useWindow();
 
   if (isMobile || modal) return <>{children}</>;
@@ -91,8 +91,8 @@ export function UserTooltip({
               <div className='mb-10'>
                 <UserAvatar
                   className='absolute -translate-y-1/2 bg-main-background p-1 
-                             hover:brightness-100 [&>figure>span]:[transition:200ms]
-                             [&:hover>figure>span]:brightness-75'
+                             hover:brightness-100 [&:hover>figure>span]:brightness-75
+                             [&>figure>span]:[transition:200ms]'
                   src={photoURL}
                   alt={name}
                   size={64}

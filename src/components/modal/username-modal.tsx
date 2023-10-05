@@ -1,6 +1,6 @@
 import { Dialog } from '@headlessui/react';
-import { CustomIcon } from '@components/ui/custom-icon';
-import { Button } from '@components/ui/button';
+import { CustomIcon } from '@/components/ui/custom-icon';
+import { Button } from '@/components/ui/button';
 import type { ReactNode, FormEvent } from 'react';
 
 type UsernameModalProps = {
@@ -33,7 +33,7 @@ export function UsernameModal({
   alreadySet,
   changeUsername,
   cancelUpdateUsername
-}: UsernameModalProps): JSX.Element {
+}: UsernameModalProps) {
   const { title, description, cancelLabel } = usernameModalData[+alreadySet];
 
   return (

@@ -38,3 +38,8 @@ next-env.d.ts
 # python
 /.mypy_cache
 *.py
+
+.env
+firebase-debug.log
+firestore-debug.log
+ui-debug.log

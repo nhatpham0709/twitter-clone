@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import { doc } from 'firebase/firestore';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useDocument } from '@lib/hooks/useDocument';
-import { useUser } from '@lib/context/user-context';
-import { isPlural } from '@lib/utils';
-import { userStatsCollection } from '@lib/firebase/collections';
+import { useDocument } from '@/lib/hooks/useDocument';
+import { useUser } from '@/lib/context/user-context';
+import { isPlural } from '@/lib/utils';
+import { userStatsCollection } from '@/lib/firebase/collections';
 import { UserName } from './user-name';
 import type { Variants } from 'framer-motion';
 
@@ -14,7 +14,7 @@ export const variants: Variants = {
   exit: { opacity: 0, transition: { duration: 0.2 } }
 };
 
-export function UserHeader(): JSX.Element {
+export function UserHeader() {
   const {
     pathname,
     query: { id }
@@ -54,7 +54,7 @@ export function UserHeader(): JSX.Element {
           {...variants}
           key='loading'
         >
-          <div className='mb-1 -mt-1 h-5 w-24' />
+          <div className='-mt-1 mb-1 h-5 w-24' />
           <div className='h-4 w-12' />
         </motion.div>
       ) : !user ? (

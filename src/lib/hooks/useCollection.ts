@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { getDoc, doc, onSnapshot } from 'firebase/firestore';
-import { usersCollection } from '@lib/firebase/collections';
+import { usersCollection } from '@/lib/firebase/collections';
 import { useCacheQuery } from './useCacheQuery';
 import type { Query } from 'firebase/firestore';
-import type { User } from '@lib/types/user';
+import type { User } from '@/lib/types/user';
 
 type UseCollection<T> = {
   data: T[] | null;
@@ -49,6 +49,7 @@ export function useCollection<T>(
   useEffect(() => {
     if (disabled) {
       setLoading(false);
+
       return;
     }
 
@@ -63,6 +64,7 @@ export function useCollection<T>(
           const user = (
             await getDoc(doc(usersCollection, currentData.createdBy))
           ).data();
+          
           return { ...currentData, user };
         })
       );
@@ -78,6 +80,7 @@ export function useCollection<T>(
       if (allowNull && !data.length) {
         setData(null);
         setLoading(false);
+
         return;
       }
 

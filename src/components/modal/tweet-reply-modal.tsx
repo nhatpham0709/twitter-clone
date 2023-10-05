@@ -1,16 +1,13 @@
-import { Input } from '@components/input/input';
-import { Tweet } from '@components/tweet/tweet';
-import type { TweetProps } from '@components/tweet/tweet';
+import { Input } from '@/components/input/input';
+import { Tweet } from '@/components/tweet/tweet';
+import type { TweetProps } from '@/components/tweet/tweet';
 
 type TweetReplyModalProps = {
   tweet: TweetProps;
   closeModal: () => void;
 };
 
-export function TweetReplyModal({
-  tweet,
-  closeModal
-}: TweetReplyModalProps): JSX.Element {
+export function TweetReplyModal({ tweet, closeModal }: TweetReplyModalProps) {
   return (
     <Input
       modal

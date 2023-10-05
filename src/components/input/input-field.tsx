@@ -1,5 +1,5 @@
 import cn from 'clsx';
-import type { User, EditableData } from '@lib/types/user';
+import type { User, EditableData } from '@/lib/types/user';
 import type { KeyboardEvent, ChangeEvent } from 'react';
 
 export type InputFieldProps = {
@@ -27,7 +27,7 @@ export function InputField({
   errorMessage,
   handleChange,
   handleKeyboardShortcut
-}: InputFieldProps): JSX.Element {
+}: InputFieldProps) {
   const slicedInputValue = inputValue?.slice(0, inputLimit) ?? '';
 
   const inputLength = slicedInputValue.length;

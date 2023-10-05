@@ -18,7 +18,7 @@ type WindowContextProviderProps = {
 
 export function WindowContextProvider({
   children
-}: WindowContextProviderProps): JSX.Element {
+}: WindowContextProviderProps) {
   const [windowSize, setWindowSize] = useState<WindowSize>({
     width: window.innerWidth,
     height: window.innerHeight
@@ -32,6 +32,7 @@ export function WindowContextProvider({
       });
 
     window.addEventListener('resize', handleResize);
+    
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 

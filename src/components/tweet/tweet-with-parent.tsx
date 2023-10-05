@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Tweet } from './tweet';
 import { TweetParent } from './tweet-parent';
-import type { TweetWithUser } from '@lib/types/tweet';
+import type { TweetWithUser } from '@/lib/types/tweet';
 
 type TweetWithParentProps = {
   data: TweetWithUser[];
@@ -9,7 +9,7 @@ type TweetWithParentProps = {
 
 export type LoadedParents = Record<'parentId' | 'childId', string>[];
 
-export function TweetWithParent({ data }: TweetWithParentProps): JSX.Element {
+export function TweetWithParent({ data }: TweetWithParentProps) {
   const [loadedParents, setLoadedParents] = useState<LoadedParents>([]);
 
   const addParentId = (parentId: string, targetChildId: string): void =>

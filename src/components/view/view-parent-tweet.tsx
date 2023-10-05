@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { doc } from 'firebase/firestore';
-import { useDocument } from '@lib/hooks/useDocument';
-import { tweetsCollection } from '@lib/firebase/collections';
-import { Tweet } from '@components/tweet/tweet';
+import { useDocument } from '@/lib/hooks/useDocument';
+import { tweetsCollection } from '@/lib/firebase/collections';
+import { Tweet } from '@/components/tweet/tweet';
 import type { RefObject } from 'react';
 
 type ViewParentTweetProps = {
@@ -13,7 +13,7 @@ type ViewParentTweetProps = {
 export function ViewParentTweet({
   parentId,
   viewTweetRef
-}: ViewParentTweetProps): JSX.Element | null {
+}: ViewParentTweetProps) {
   const { data, loading } = useDocument(doc(tweetsCollection, parentId), {
     includeUser: true,
     allowNull: true
@@ -27,9 +27,9 @@ export function ViewParentTweet({
   if (loading) return null;
   if (!data)
     return (
-      <div className='px-4 pt-3 pb-2'>
+      <div className='px-4 pb-2 pt-3'>
         <p
-          className='rounded-2xl bg-main-sidebar-background py-3 px-1 pl-4 
+          className='rounded-2xl bg-main-sidebar-background px-1 py-3 pl-4 
                      text-light-secondary dark:text-dark-secondary'
         >
           This Tweet was deleted by the Tweet author.{' '}

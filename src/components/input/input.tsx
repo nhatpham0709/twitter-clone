@@ -4,26 +4,26 @@ import { AnimatePresence, motion } from 'framer-motion';
 import cn from 'clsx';
 import { toast } from 'react-hot-toast';
 import { addDoc, getDoc, serverTimestamp } from 'firebase/firestore';
-import { tweetsCollection } from '@lib/firebase/collections';
+import { tweetsCollection } from '@/lib/firebase/collections';
 import {
   manageReply,
   uploadImages,
   manageTotalTweets,
   manageTotalPhotos
-} from '@lib/firebase/utils';
-import { useAuth } from '@lib/context/auth-context';
-import { sleep } from '@lib/utils';
-import { getImagesData } from '@lib/validation';
-import { UserAvatar } from '@components/user/user-avatar';
+} from '@/lib/firebase/utils';
+import { useAuth } from '@/lib/context/auth-context';
+import { sleep } from '@/lib/utils';
+import { getImagesData } from '@/lib/validation';
+import { UserAvatar } from '@/components/user/user-avatar';
 import { InputForm, fromTop } from './input-form';
 import { ImagePreview } from './image-preview';
 import { InputOptions } from './input-options';
 import type { ReactNode, FormEvent, ChangeEvent, ClipboardEvent } from 'react';
 import type { WithFieldValue } from 'firebase/firestore';
 import type { Variants } from 'framer-motion';
-import type { User } from '@lib/types/user';
-import type { Tweet } from '@lib/types/tweet';
-import type { FilesWithId, ImagesPreview, ImageData } from '@lib/types/file';
+import type { User } from '@/lib/types/user';
+import type { Tweet } from '@/lib/types/tweet';
+import type { FilesWithId, ImagesPreview, ImageData } from '@/lib/types/file';
 
 type InputProps = {
   modal?: boolean;
@@ -48,7 +48,7 @@ export function Input({
   children,
   replyModal,
   closeModal
-}: InputProps): JSX.Element {
+}: InputProps) {
   const [selectedImages, setSelectedImages] = useState<FilesWithId>([]);
   const [imagesPreview, setImagesPreview] = useState<ImagesPreview>([]);
   const [inputValue, setInputValue] = useState('');
@@ -66,6 +66,7 @@ export function Input({
   useEffect(
     () => {
       if (modal) inputRef.current?.focus();
+
       return cleanImage;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -140,6 +141,7 @@ export function Input({
 
     if (!imagesData) {
       toast.error('Please choose a GIF or photo up to 4');
+      
       return;
     }
 
@@ -214,7 +216,7 @@ export function Input({
       {children}
       {reply && visited && (
         <motion.p
-          className='ml-[75px] -mb-2 mt-2 text-light-secondary dark:text-dark-secondary'
+          className='-mb-2 ml-[75px] mt-2 text-light-secondary dark:text-dark-secondary'
           {...fromTop}
         >
           Replying to{' '}
@@ -229,7 +231,7 @@ export function Input({
         className={cn(
           'hover-animation grid w-full grid-cols-[auto,1fr] gap-3 px-4 py-3',
           reply
-            ? 'pt-3 pb-1'
+            ? 'pb-1 pt-3'
             : replyModal
             ? 'pt-0'
             : 'border-b-2 border-light-border dark:border-dark-border',

@@ -1,20 +1,20 @@
 import { doc, query, where } from 'firebase/firestore';
 import { AnimatePresence } from 'framer-motion';
-import { useUser } from '@lib/context/user-context';
-import { useCollection } from '@lib/hooks/useCollection';
-import { useDocument } from '@lib/hooks/useDocument';
-import { tweetsCollection } from '@lib/firebase/collections';
-import { mergeData } from '@lib/merge';
-import { UserLayout, ProtectedLayout } from '@components/layout/common-layout';
-import { MainLayout } from '@components/layout/main-layout';
-import { UserDataLayout } from '@components/layout/user-data-layout';
-import { UserHomeLayout } from '@components/layout/user-home-layout';
-import { StatsEmpty } from '@components/tweet/stats-empty';
-import { Loading } from '@components/ui/loading';
-import { Tweet } from '@components/tweet/tweet';
+import { useUser } from '@/lib/context/user-context';
+import { useCollection } from '@/lib/hooks/useCollection';
+import { useDocument } from '@/lib/hooks/useDocument';
+import { tweetsCollection } from '@/lib/firebase/collections';
+import { mergeData } from '@/lib/merge';
+import { UserLayout, ProtectedLayout } from '@/components/layout/common-layout';
+import { MainLayout } from '@/components/layout/main-layout';
+import { UserDataLayout } from '@/components/layout/user-data-layout';
+import { UserHomeLayout } from '@/components/layout/user-home-layout';
+import { StatsEmpty } from '@/components/tweet/stats-empty';
+import { Loading } from '@/components/ui/loading';
+import { Tweet } from '@/components/tweet/tweet';
 import type { ReactElement, ReactNode } from 'react';
 
-export default function UserTweets(): JSX.Element {
+export default function UserTweets() {
   const { user } = useUser();
 
   const { id, username, pinnedTweet } = user ?? {};

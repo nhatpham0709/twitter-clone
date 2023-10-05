@@ -1,6 +1,6 @@
 import cn from 'clsx';
-import { NextImage } from '@components/ui/next-image';
-import type { ImageData } from '@lib/types/file';
+import { NextImage } from '@/components/ui/next-image';
+import type { ImageData } from '@/lib/types/file';
 
 export type StatsEmptyProps = {
   title: string;
@@ -14,7 +14,7 @@ export function StatsEmpty({
   modal,
   imageData,
   description
-}: StatsEmptyProps): JSX.Element {
+}: StatsEmptyProps) {
   return (
     <div className={cn('flex justify-center p-8', modal && 'mt-[52px]')}>
       <div className='w-full max-w-sm'>

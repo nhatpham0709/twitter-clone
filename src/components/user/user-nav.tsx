@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import cn from 'clsx';
-import { variants } from '@components/user/user-header';
+import { variants } from '@/components/user/user-header';
 import { UserNavLink } from './user-nav-link';
 
 type UserNavProps = {
@@ -20,7 +20,7 @@ const allNavs = [
   ]
 ] as const;
 
-export function UserNav({ follow }: UserNavProps): JSX.Element {
+export function UserNav({ follow }: UserNavProps) {
   const userNav = allNavs[+!!follow];
 
   return (
@@ -28,7 +28,7 @@ export function UserNav({ follow }: UserNavProps): JSX.Element {
       className={cn(
         `hover-animation flex justify-between overflow-y-auto
          border-b border-light-border dark:border-dark-border`,
-        follow && 'mt-1 mb-0.5'
+        follow && 'mb-0.5 mt-1'
       )}
       {...variants}
       exit={undefined}
