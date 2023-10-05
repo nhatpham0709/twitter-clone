@@ -16,7 +16,7 @@ export function TweetParent({
   parentId,
   loadedParents,
   addParentId
-}: TweetParentProps): null {
+}: TweetParentProps) {
   const componentId = useMemo(getRandomId, []);
 
   const isParentAlreadyLoaded = loadedParents.some(

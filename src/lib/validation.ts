@@ -68,7 +68,7 @@ export function getImagesData(
 
   const imagesId = rawImages.map(({ name }) => {
     const randomId = getRandomId();
-    
+
     return {
       id: randomId,
       name: name === 'image.png' ? `${randomId}.png` : null

@@ -64,7 +64,7 @@ export function useCollection<T>(
           const user = (
             await getDoc(doc(usersCollection, currentData.createdBy))
           ).data();
-          
+
           return { ...currentData, user };
         })
       );

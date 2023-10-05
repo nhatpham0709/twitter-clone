@@ -68,7 +68,7 @@ export function useArrayDocument<T>(
         if (!docs.length) {
           setData(null);
           setLoading(false);
-          
+
           return;
         }
 

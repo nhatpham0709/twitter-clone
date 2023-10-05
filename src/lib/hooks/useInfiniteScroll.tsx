@@ -24,6 +24,20 @@ type InfiniteScrollWithUser<T> = {
 
 export function useInfiniteScroll<T>(
   collection: Query<T>,
+  constraints: QueryConstraint[],
+  fetchOptions: UseCollectionOptions & { includeUser: true },
+  options?: { initialSize?: number; stepSize?: number; marginBottom?: number }
+): InfiniteScrollWithUser<T>;
+
+export function useInfiniteScroll<T>(
+  collection: Query<T>,
+  constraints: QueryConstraint[],
+  fetchOptions?: UseCollectionOptions,
+  options?: { initialSize?: number; stepSize?: number; marginBottom?: number }
+): InfiniteScroll<T>;
+
+export function useInfiniteScroll<T>(
+  collection: Query<T>,
   queryConstraints?: QueryConstraint[],
   fetchOptions?: UseCollectionOptions,
   options?: { initialSize?: number; stepSize?: number; marginBottom?: number }

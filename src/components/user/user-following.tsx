@@ -4,7 +4,7 @@ type UserFollowingProps = {
   userTargetId: string;
 };
 
-export function UserFollowing({ userTargetId }: UserFollowingProps): null {
+export function UserFollowing({ userTargetId }: UserFollowingProps) {
   const { user } = useAuth();
 
   const isOwner =

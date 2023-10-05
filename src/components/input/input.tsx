@@ -141,7 +141,7 @@ export function Input({
 
     if (!imagesData) {
       toast.error('Please choose a GIF or photo up to 4');
-      
+
       return;
     }
 

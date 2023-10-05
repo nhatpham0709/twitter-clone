@@ -6,7 +6,6 @@ import type { ReactNode } from 'react';
 
 // import { AsideTrends } from '@/components/aside/aside-trends';
 
-
 export type LayoutProps = {
   children: ReactNode;
 };
@@ -58,9 +57,7 @@ export function PeopleLayout({ children }: LayoutProps) {
   return (
     <>
       {children}
-      <Aside>
-        {/* <AsideTrends /> */}
-      </Aside>
+      <Aside>{/* <AsideTrends /> */}</Aside>
     </>
   );
 }

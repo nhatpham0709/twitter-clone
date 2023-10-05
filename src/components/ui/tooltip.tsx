@@ -7,12 +7,7 @@ type ToolTipProps = {
   groupInner?: boolean;
 };
 
-export function ToolTip({
-  tip,
-  modal,
-  className,
-  groupInner
-}: ToolTipProps): null {
+export function ToolTip({ tip, modal, className, groupInner }: ToolTipProps) {
   if (modal) return null;
 
   return (

@@ -121,7 +121,7 @@ function isToday(date: Date): boolean {
 function isYesterday(date: Date): boolean {
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  
+
   return yesterday.toDateString() === date.toDateString();
 }
 

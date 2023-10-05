@@ -71,7 +71,7 @@ export function ImageModal({
     };
 
     document.addEventListener('keydown', handleKeyDown);
-    
+
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [handleNextIndex]);
 

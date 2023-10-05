@@ -35,7 +35,7 @@ export const userConverter: FirestoreDataConverter<User> = {
   },
   fromFirestore(snapshot, options) {
     const data = snapshot.data(options);
-    
+
     return { ...data } as User;
   }
 };

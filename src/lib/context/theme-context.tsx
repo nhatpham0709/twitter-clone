@@ -81,7 +81,7 @@ export function ThemeContextProvider({ children }: ThemeContextProviderProps) {
     };
 
     const timeoutId = flipTheme(theme);
-    
+
     return () => clearTimeout(timeoutId);
   }, [userId, theme]);
 
@@ -101,7 +101,7 @@ export function ThemeContextProvider({ children }: ThemeContextProviderProps) {
     };
 
     const timeoutId = flipAccent(accent);
-    
+
     return () => clearTimeout(timeoutId);
   }, [userId, accent]);
 

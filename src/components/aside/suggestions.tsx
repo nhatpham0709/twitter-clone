@@ -1,12 +1,6 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import {
-  doc,
-  limit,
-  query,
-  orderBy,
-  documentId
-} from 'firebase/firestore';
+import { doc, limit, query, orderBy, documentId } from 'firebase/firestore';
 import { useCollection } from '@/lib/hooks/useCollection';
 import { useDocument } from '@/lib/hooks/useDocument';
 import { usersCollection } from '@/lib/firebase/collections';
@@ -16,18 +10,13 @@ import { Error } from '@/components/ui/error';
 import { variants } from './aside-trends';
 
 export function Suggestions() {
-
   const { data: adminData, loading: adminLoading } = useDocument(
     doc(usersCollection, 'Twt0A27bx9YcG4vu3RTsR7ifJzf2'),
     { allowNull: true }
   );
 
   const { data: suggestionsData, loading: suggestionsLoading } = useCollection(
-    query(
-      usersCollection,
-      orderBy(documentId()),
-      limit(2)
-    ),
+    query(usersCollection, orderBy(documentId()), limit(2)),
     { allowNull: true }
   );
 

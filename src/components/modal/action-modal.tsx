@@ -34,7 +34,7 @@ export function ActionModal({
   useEffect(() => {
     if (!focusOnMainBtn) return;
     const timeoutId = setTimeout(() => mainBtn.current?.focus(), 50);
-    
+
     return () => clearTimeout(timeoutId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

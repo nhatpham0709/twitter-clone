@@ -92,7 +92,7 @@ export function InputForm({
 
     if (blur) {
       setTimeout(() => (sidebar.style.opacity = ''), 200);
-      
+
       return;
     }
 

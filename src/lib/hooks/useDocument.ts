@@ -61,7 +61,7 @@ export function useDocument<T>(
       if (allowNull && !data) {
         setData(null);
         setLoading(false);
-        
+
         return;
       }
 

@@ -121,7 +121,7 @@ export function UserEditProfile({ hide }: UserEditProfileProps) {
 
       if (!imagesData) {
         toast.error('Please choose a valid GIF or Photo');
-        
+
         return;
       }
 
@@ -194,7 +194,7 @@ export function UserEditProfile({ hide }: UserEditProfileProps) {
     ctrlKey
   }: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     if (ctrlKey && key === 'Enter' && !inputNameError) {
-      target.blur();
+      (target as any).blur();
       void updateData();
     }
   };

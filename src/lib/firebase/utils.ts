@@ -34,7 +34,7 @@ export async function checkUsernameAvailability(
   const { empty } = await getDocs(
     query(usersCollection, where('username', '==', username), limit(1))
   );
-  
+
   return empty;
 }
 
