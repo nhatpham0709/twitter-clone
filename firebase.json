@@ -10,8 +10,9 @@
       "firebase-debug.log",
       "firebase-debug.*.log"
     ],
-    "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build",
-    "source": "functions"
+    "predeploy": "cd functions && yarn build",
+    "source": "functions",
+    "runtime": "nodejs18"
   },
   "storage": {
     "rules": "storage.rules"

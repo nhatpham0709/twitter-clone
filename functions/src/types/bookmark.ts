@@ -14,6 +14,7 @@ export const bookmarkConverter: FirestoreDataConverter<Bookmark> = {
   },
   fromFirestore(snapshot) {
     const data = snapshot.data();
+    
     return { ...data } as Bookmark;
   }
 };

@@ -24,7 +24,7 @@ export const notifyEmail = regionalFunctions.firestore
       }
     });
 
-    const tweetLink = `https://twitter-clone-ccrsxx.vercel.app/tweet/${snapshot.id}`;
+    const tweetLink = `${process.env.NEXT_PUBLIC_URL}/tweet/${snapshot.id}`;
 
     const emailHeader = `New Tweet${
       parent ? ' reply' : ''
