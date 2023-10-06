@@ -17,6 +17,8 @@ type WindowContextProviderProps = {
 }
 
 export function WindowContextProvider({ children }: WindowContextProviderProps) {
+
+  
   const [windowSize, setWindowSize] = useState<WindowSize>({
     width: window.innerWidth,
     height: window.innerHeight

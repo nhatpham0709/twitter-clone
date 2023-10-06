@@ -24,7 +24,7 @@ export function AuthLayout({ children }: LayoutProps) {
       }
     }
 
-    void checkLogin()
+    checkLogin()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, loading])
 

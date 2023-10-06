@@ -22,7 +22,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout): React
     <>
       <AppHead />
       <AuthContextProvider>
-        <ThemeContextProvider>{getLayout(<Component {...pageProps} />)}</ThemeContextProvider>
+        <ThemeContextProvider>
+          
+          {getLayout(<Component {...pageProps} />)}</ThemeContextProvider>
       </AuthContextProvider>
     </>
   )
