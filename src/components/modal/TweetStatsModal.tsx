@@ -1,18 +1,14 @@
-import { MainHeader } from "@/components/home/MainHeader";
-import type { ReactNode } from 'react';
-import type { StatsType } from "@/components/view/ViewTweetStats";
+import { MainHeader } from '@/components/home/MainHeader'
+import type { ReactNode } from 'react'
+import type { StatsType } from '@/components/view/ViewTweetStats'
 
 type TweetStatsModalProps = {
-  children: ReactNode;
-  statsType: StatsType | null;
-  handleClose: () => void;
-};
+  children: ReactNode
+  statsType: StatsType | null
+  handleClose: () => void
+}
 
-export function TweetStatsModal({
-  children,
-  statsType,
-  handleClose
-}: TweetStatsModalProps) {
+export function TweetStatsModal({ children, statsType, handleClose }: TweetStatsModalProps) {
   return (
     <>
       <MainHeader
@@ -26,5 +22,5 @@ export function TweetStatsModal({
       />
       {children}
     </>
-  );
+  )
 }

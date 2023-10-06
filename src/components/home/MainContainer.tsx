@@ -1,10 +1,10 @@
-import cn from 'clsx';
-import type { ReactNode } from 'react';
+import cn from 'clsx'
+import type { ReactNode } from 'react'
 
 type MainContainerProps = {
-  children: ReactNode;
-  className?: string;
-};
+  children: ReactNode
+  className?: string
+}
 
 export function MainContainer({ children, className }: MainContainerProps) {
   return (
@@ -17,5 +17,5 @@ export function MainContainer({ children, className }: MainContainerProps) {
     >
       {children}
     </main>
-  );
+  )
 }

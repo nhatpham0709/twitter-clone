@@ -1,53 +1,44 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useState, useEffect, useMemo } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { NumberStats } from "@/components/tweet/NumberStats";
-import type { User } from '@/lib/types/user';
+import { useState, useEffect, useMemo } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { NumberStats } from '@/components/tweet/NumberStats'
+import type { User } from '@/lib/types/user'
 
-type UserFollowStatsProps = Pick<User, 'following' | 'followers'>;
-type Stats = [string, string, number, number];
+type UserFollowStatsProps = Pick<User, 'following' | 'followers'>
+type Stats = [string, string, number, number]
 
-export function UserFollowStats({
-  following,
-  followers
-}: UserFollowStatsProps) {
-  const totalFollowing = following.length;
-  const totalFollowers = followers.length;
+export function UserFollowStats({ following, followers }: UserFollowStatsProps) {
+  const totalFollowing = following.length
+  const totalFollowers = followers.length
 
   const [{ currentFollowers, currentFollowing }, setCurrentStats] = useState({
     currentFollowing: totalFollowing,
     currentFollowers: totalFollowers
-  });
+  })
 
   useEffect(() => {
     setCurrentStats({
       currentFollowing: totalFollowing,
       currentFollowers: totalFollowers
-    });
-  }, [totalFollowing, totalFollowers]);
+    })
+  }, [totalFollowing, totalFollowers])
 
-  const followingMove = useMemo(
-    () => (totalFollowing > currentFollowing ? -25 : 25),
-    [totalFollowing]
-  );
+  const followingMove = useMemo(() => (totalFollowing > currentFollowing ? -25 : 25), [totalFollowing])
 
-  const followersMove = useMemo(
-    () => (totalFollowers > currentFollowers ? -25 : 25),
-    [totalFollowers]
-  );
+  const followersMove = useMemo(() => (totalFollowers > currentFollowers ? -25 : 25), [totalFollowers])
 
   const {
     query: { id }
-  } = useRouter();
+  } = useRouter()
 
-  const userPath = `/user/${id as string}`;
+  const userPath = `/user/${id as string}`
 
   const allStats: Readonly<Stats[]> = [
     ['Following', `${userPath}/following`, followingMove, currentFollowing],
     ['Follower', `${userPath}/followers`, followersMove, currentFollowers]
-  ];
+  ]
 
   return (
     <div
@@ -56,19 +47,18 @@ export function UserFollowStats({
                  dark:[&>a>div]:text-dark-primary'
     >
       {allStats.map(([title, link, move, stats], index) => (
-        (<Link
+        <Link
           href={link}
           key={title}
           className='hover-animation mb-[3px] mt-0.5 flex h-4 items-center gap-1 border-b 
                      border-b-transparent outline-none hover:border-b-light-primary 
                      focus-visible:border-b-light-primary dark:hover:border-b-dark-primary
-                     dark:focus-visible:border-b-dark-primary'>
-
+                     dark:focus-visible:border-b-dark-primary'
+        >
           <NumberStats move={move} stats={stats} alwaysShowStats />
           <p>{index === 1 && stats > 1 ? `${title}s` : title}</p>
-
-        </Link>)
+        </Link>
       ))}
     </div>
-  );
+  )
 }

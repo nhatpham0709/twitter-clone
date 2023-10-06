@@ -1,27 +1,18 @@
-import { formatDate } from '@/lib/date';
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { ToolTip } from "@/components/ui/Tooltip";
-import { UserName } from "./Name";
-import { UserFollowing } from "./Following";
-import { UserFollowStats } from "./FollowStats";
-import type { IconName } from '@/components/ui/HeroIcon';
-import type { User } from '@/lib/types/user';
+import { formatDate } from '@/lib/date'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { ToolTip } from '@/components/ui/Tooltip'
+import { UserName } from './Name'
+import { UserFollowing } from './Following'
+import { UserFollowStats } from './FollowStats'
+import type { IconName } from '@/components/ui/HeroIcon'
+import type { User } from '@/lib/types/user'
 
 type UserDetailsProps = Pick<
   User,
-  | 'id'
-  | 'bio'
-  | 'name'
-  | 'website'
-  | 'username'
-  | 'location'
-  | 'verified'
-  | 'createdAt'
-  | 'following'
-  | 'followers'
->;
+  'id' | 'bio' | 'name' | 'website' | 'username' | 'location' | 'verified' | 'createdAt' | 'following' | 'followers'
+>
 
-type DetailIcon = [string | null, IconName];
+type DetailIcon = [string | null, IconName]
 
 export function UserDetails({
   id,
@@ -39,17 +30,12 @@ export function UserDetails({
     [location, 'MapPinIcon'],
     [website, 'LinkIcon'],
     [`Joined ${formatDate(createdAt, 'joined')}`, 'CalendarDaysIcon']
-  ];
+  ]
 
   return (
     <>
       <div>
-        <UserName
-          className='-mb-1 text-xl'
-          name={name}
-          iconClassName='w-6 h-6'
-          verified={verified}
-        />
+        <UserName className='-mb-1 text-xl' name={name} iconClassName='w-6 h-6' verified={verified} />
         <div className='flex items-center gap-1 text-light-secondary dark:text-dark-secondary'>
           <p>@{username}</p>
           <UserFollowing userTargetId={id} />
@@ -77,10 +63,7 @@ export function UserDetails({
                   ) : index === 2 ? (
                     <button className='custom-underline group relative'>
                       {detail}
-                      <ToolTip
-                        className='translate-y-1'
-                        tip={formatDate(createdAt, 'full')}
-                      />
+                      <ToolTip className='translate-y-1' tip={formatDate(createdAt, 'full')} />
                     </button>
                   ) : (
                     <p>{detail}</p>
@@ -92,5 +75,5 @@ export function UserDetails({
       </div>
       <UserFollowStats following={following} followers={followers} />
     </>
-  );
+  )
 }

@@ -1,26 +1,21 @@
-import { useModal } from '@/hooks/useModal';
-import { Button } from "@/components/ui/Button";
-import { NextImage } from "@/components/ui/NextImage";
-import { Modal } from "@/components/modal/Modal";
-import { ImageModal } from "@/components/modal/ImageModal";
-import type { ImageData } from '@/lib/types/file';
+import { useModal } from '@/hooks/useModal'
+import { Button } from '@/components/ui/Button'
+import { NextImage } from '@/components/ui/NextImage'
+import { Modal } from '@/components/modal/Modal'
+import { ImageModal } from '@/components/modal/ImageModal'
+import type { ImageData } from '@/lib/types/file'
 
 type UserHomeAvatarProps = {
-  profileData?: ImageData | null;
-};
+  profileData?: ImageData | null
+}
 
 export function UserHomeAvatar({ profileData }: UserHomeAvatarProps) {
-  const { open, openModal, closeModal } = useModal();
+  const { open, openModal, closeModal } = useModal()
 
   return (
     <div className='mb-8 xs:mb-14 sm:mb-16'>
       <Modal open={open} closeModal={closeModal}>
-        <ImageModal
-          imageData={
-            { src: profileData?.src, alt: profileData?.alt } as ImageData
-          }
-          previewCount={1}
-        />
+        <ImageModal imageData={{ src: profileData?.src, alt: profileData?.alt } as ImageData} previewCount={1} />
       </Modal>
       <Button
         className='accent-tab absolute -mt-3 aspect-square w-24 -translate-y-1/2 overflow-hidden p-0 
@@ -47,5 +42,5 @@ export function UserHomeAvatar({ profileData }: UserHomeAvatarProps) {
         )}
       </Button>
     </div>
-  );
+  )
 }

@@ -1,36 +1,32 @@
-import { useAuth } from '@/context/AuthContext';
-import { useModal } from '@/hooks/useModal';
-import { manageFollow } from '@/lib/firebase/utils';
-import { preventBubbling } from '@/lib/utils';
-import { Modal } from "@/components/modal/Modal";
-import { ActionModal } from "@/components/modal/ActionModal";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from '@/context/AuthContext'
+import { useModal } from '@/hooks/useModal'
+import { manageFollow } from '@/lib/firebase/utils'
+import { preventBubbling } from '@/lib/utils'
+import { Modal } from '@/components/modal/Modal'
+import { ActionModal } from '@/components/modal/ActionModal'
+import { Button } from '@/components/ui/Button'
 
 type FollowButtonProps = {
-  userTargetId: string;
-  userTargetUsername: string;
-};
+  userTargetId: string
+  userTargetUsername: string
+}
 
-export function FollowButton({
-  userTargetId,
-  userTargetUsername
-}: FollowButtonProps) {
-  const { user } = useAuth();
-  const { open, openModal, closeModal } = useModal();
+export function FollowButton({ userTargetId, userTargetUsername }: FollowButtonProps) {
+  const { user } = useAuth()
+  const { open, openModal, closeModal } = useModal()
 
-  if (user?.id === userTargetId) return null;
+  if (user?.id === userTargetId) return null
 
-  const { id: userId, following } = user ?? {};
+  const { id: userId, following } = user ?? {}
 
-  const handleFollow = (): Promise<void> =>
-    manageFollow('follow', userId as string, userTargetId);
+  const handleFollow = (): Promise<void> => manageFollow('follow', userId as string, userTargetId)
 
   const handleUnfollow = async (): Promise<void> => {
-    await manageFollow('unfollow', userId as string, userTargetId);
-    closeModal();
-  };
+    await manageFollow('unfollow', userId as string, userTargetId)
+    closeModal()
+  }
 
-  const userIsFollowed = !!following?.includes(userTargetId ?? '');
+  const userIsFollowed = !!following?.includes(userTargetId ?? '')
 
   return (
     <>
@@ -68,5 +64,5 @@ export function FollowButton({
         </Button>
       )}
     </>
-  );
+  )
 }

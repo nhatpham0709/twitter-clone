@@ -1,27 +1,27 @@
-import { useState } from 'react';
-import cn from 'clsx';
-import { useArrayDocument } from '@/hooks/useArrayDocument';
-import { useModal } from '@/hooks/useModal';
-import { usersCollection } from '@/lib/firebase/collections';
-import { Modal } from "@/components/modal/Modal";
-import { TweetStatsModal } from "@/components/modal/TweetStatsModal";
-import { NumberStats } from "@/components/tweet/NumberStats";
-import { UserCards } from "@/components/user/Cards";
-import type { Tweet } from '@/lib/types/tweet';
+import { useState } from 'react'
+import cn from 'clsx'
+import { useArrayDocument } from '@/hooks/useArrayDocument'
+import { useModal } from '@/hooks/useModal'
+import { usersCollection } from '@/lib/firebase/collections'
+import { Modal } from '@/components/modal/Modal'
+import { TweetStatsModal } from '@/components/modal/TweetStatsModal'
+import { NumberStats } from '@/components/tweet/NumberStats'
+import { UserCards } from '@/components/user/Cards'
+import type { Tweet } from '@/lib/types/tweet'
 
 type viewTweetStats = Pick<Tweet, 'userRetweets' | 'userLikes'> & {
-  likeMove: number;
-  tweetMove: number;
-  replyMove: number;
-  currentLikes: number;
-  currentTweets: number;
-  currentReplies: number;
-  isStatsVisible: boolean;
-};
+  likeMove: number
+  tweetMove: number
+  replyMove: number
+  currentLikes: number
+  currentTweets: number
+  currentReplies: number
+  isStatsVisible: boolean
+}
 
-export type StatsType = 'retweets' | 'likes';
+export type StatsType = 'retweets' | 'likes'
 
-type Stats = [string, StatsType | null, number, number];
+type Stats = [string, StatsType | null, number, number]
 
 export function ViewTweetStats({
   likeMove,
@@ -34,31 +34,31 @@ export function ViewTweetStats({
   currentReplies,
   isStatsVisible
 }: viewTweetStats) {
-  const [statsType, setStatsType] = useState<StatsType | null>(null);
+  const [statsType, setStatsType] = useState<StatsType | null>(null)
 
-  const { open, openModal, closeModal } = useModal();
+  const { open, openModal, closeModal } = useModal()
 
   const { data, loading } = useArrayDocument(
     statsType ? (statsType === 'likes' ? userLikes : userRetweets) : [],
     usersCollection,
     { disabled: !statsType }
-  );
+  )
 
   const handleOpen = (type: StatsType) => (): void => {
-    setStatsType(type);
-    openModal();
-  };
+    setStatsType(type)
+    openModal()
+  }
 
   const handleClose = (): void => {
-    setStatsType(null);
-    closeModal();
-  };
+    setStatsType(null)
+    closeModal()
+  }
 
   const allStats: Readonly<Stats[]> = [
     ['Reply', null, replyMove, currentReplies],
     ['Retweet', 'retweets', tweetMove, currentTweets],
     ['Like', 'likes', likeMove, currentLikes]
-  ];
+  ]
 
   return (
     <>
@@ -69,12 +69,7 @@ export function ViewTweetStats({
         closeModal={handleClose}
       >
         <TweetStatsModal statsType={statsType} handleClose={handleClose}>
-          <UserCards
-            follow
-            type={statsType as StatsType}
-            data={data}
-            loading={loading}
-          />
+          <UserCards follow type={statsType as StatsType} data={data} loading={loading} />
         </TweetStatsModal>
       </Modal>
       {isStatsVisible && (
@@ -99,11 +94,7 @@ export function ViewTweetStats({
                 >
                   <NumberStats move={move} stats={stats} />
                   <p>{`${
-                    stats === 1
-                      ? title
-                      : stats > 1 && index === 0
-                      ? `${title.slice(0, -1)}ies`
-                      : `${title}s`
+                    stats === 1 ? title : stats > 1 && index === 0 ? `${title.slice(0, -1)}ies` : `${title}s`
                   }`}</p>
                 </button>
               )
@@ -111,5 +102,5 @@ export function ViewTweetStats({
         </div>
       )}
     </>
-  );
+  )
 }

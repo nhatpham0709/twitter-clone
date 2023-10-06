@@ -1,27 +1,27 @@
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import cn from 'clsx';
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import cn from 'clsx'
 
 type UserNavLinkProps = {
-  name: string;
-  path: string;
-};
+  name: string
+  path: string
+}
 
 export function UserNavLink({ name, path }: UserNavLinkProps) {
   const {
     asPath,
     query: { id }
-  } = useRouter();
+  } = useRouter()
 
-  const userPath = `/user/${id as string}${path ? `/${path}` : ''}`;
+  const userPath = `/user/${id as string}${path ? `/${path}` : ''}`
 
   return (
-    (<Link
+    <Link
       href={userPath}
       scroll={false}
       className='hover-animation main-tab dark-bg-tab flex flex-1 justify-center
-                 hover:bg-light-primary/10 dark:hover:bg-dark-primary/10'>
-
+                 hover:bg-light-primary/10 dark:hover:bg-dark-primary/10'
+    >
       <div className='px-6 md:px-8'>
         <p
           className={cn(
@@ -35,7 +35,6 @@ export function UserNavLink({ name, path }: UserNavLinkProps) {
           <i className='h-1 scale-50 rounded-full bg-main-accent opacity-0 transition duration-200' />
         </p>
       </div>
-
-    </Link>)
-  );
+    </Link>
+  )
 }

@@ -1,16 +1,16 @@
-import { Dialog } from '@headlessui/react';
-import { CustomIcon } from "@/components/ui/CustomIcon";
-import { Button } from "@/components/ui/Button";
-import type { ReactNode, FormEvent } from 'react';
+import { Dialog } from '@headlessui/react'
+import { CustomIcon } from '@/components/ui/CustomIcon'
+import { Button } from '@/components/ui/Button'
+import type { ReactNode, FormEvent } from 'react'
 
 type UsernameModalProps = {
-  loading: boolean;
-  children: ReactNode;
-  available: boolean;
-  alreadySet: boolean;
-  changeUsername: (e: FormEvent<HTMLFormElement>) => Promise<void>;
-  cancelUpdateUsername: () => void;
-};
+  loading: boolean
+  children: ReactNode
+  available: boolean
+  alreadySet: boolean
+  changeUsername: (e: FormEvent<HTMLFormElement>) => Promise<void>
+  cancelUpdateUsername: () => void
+}
 
 const usernameModalData = [
   {
@@ -20,11 +20,10 @@ const usernameModalData = [
   },
   {
     title: 'Change your username?',
-    description:
-      'Your @username is unique. You can always change it here again.',
+    description: 'Your @username is unique. You can always change it here again.',
     cancelLabel: 'Cancel'
   }
-] as const;
+] as const
 
 export function UsernameModal({
   loading,
@@ -34,22 +33,17 @@ export function UsernameModal({
   changeUsername,
   cancelUpdateUsername
 }: UsernameModalProps) {
-  const { title, description, cancelLabel } = usernameModalData[+alreadySet];
+  const { title, description, cancelLabel } = usernameModalData[+alreadySet]
 
   return (
-    <form
-      className='flex h-full flex-col justify-between'
-      onSubmit={changeUsername}
-    >
+    <form className='flex h-full flex-col justify-between' onSubmit={changeUsername}>
       <div className='flex flex-col gap-6'>
         <div className='flex flex-col gap-4'>
           <i className='mx-auto'>
             <CustomIcon className='h-10 w-10' iconName='TwitterIcon' />
           </i>
           <div className='flex flex-col gap-2'>
-            <Dialog.Title className='text-2xl font-bold xs:text-3xl sm:text-4xl'>
-              {title}
-            </Dialog.Title>
+            <Dialog.Title className='text-2xl font-bold xs:text-3xl sm:text-4xl'>{title}</Dialog.Title>
             <Dialog.Description className='text-light-secondary dark:text-dark-secondary'>
               {description}
             </Dialog.Description>
@@ -80,5 +74,5 @@ export function UsernameModal({
         </Button>
       </div>
     </form>
-  );
+  )
 }

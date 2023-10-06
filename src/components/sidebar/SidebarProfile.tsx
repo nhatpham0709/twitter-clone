@@ -1,32 +1,28 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { Menu } from '@headlessui/react';
-import cn from 'clsx';
-import { useAuth } from '@/context/AuthContext';
-import { useModal } from '@/hooks/useModal';
-import { Modal } from "@/components/modal/Modal";
-import { ActionModal } from "@/components/modal/ActionModal";
-import { Button } from "@/components/ui/Button";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { CustomIcon } from "@/components/ui/CustomIcon";
-import { UserAvatar } from "@/components/user/Avatar";
-import { UserName } from "@/components/user/Name";
-import { UserUsername } from "@/components/user/Username";
-import { variants } from "./MoreSettings";
-import type { User } from '@/lib/types/user';
+import { AnimatePresence, motion } from 'framer-motion'
+import { Menu } from '@headlessui/react'
+import cn from 'clsx'
+import { useAuth } from '@/context/AuthContext'
+import { useModal } from '@/hooks/useModal'
+import { Modal } from '@/components/modal/Modal'
+import { ActionModal } from '@/components/modal/ActionModal'
+import { Button } from '@/components/ui/Button'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { CustomIcon } from '@/components/ui/CustomIcon'
+import { UserAvatar } from '@/components/user/Avatar'
+import { UserName } from '@/components/user/Name'
+import { UserUsername } from '@/components/user/Username'
+import { variants } from './MoreSettings'
+import type { User } from '@/lib/types/user'
 
 export function SidebarProfile() {
-  const { user, signOut } = useAuth();
-  const { open, openModal, closeModal } = useModal();
+  const { user, signOut } = useAuth()
+  const { open, openModal, closeModal } = useModal()
 
-  const { name, username, verified, photoURL } = user as User;
+  const { name, username, verified, photoURL } = user as User
 
   return (
     <>
-      <Modal
-        modalClassName='max-w-xs bg-main-background w-full p-8 rounded-2xl'
-        open={open}
-        closeModal={closeModal}
-      >
+      <Modal modalClassName='max-w-xs bg-main-background w-full p-8 rounded-2xl' open={open} closeModal={closeModal}>
         <ActionModal
           useIcon
           focusOnMainBtn
@@ -55,10 +51,7 @@ export function SidebarProfile() {
                   <UserUsername username={username} disableLink />
                 </div>
               </div>
-              <HeroIcon
-                className='hidden h-6 w-6 xl:block'
-                iconName='EllipsisHorizontalIcon'
-              />
+              <HeroIcon className='hidden h-6 w-6 xl:block' iconName='EllipsisHorizontalIcon' />
             </Menu.Button>
             <AnimatePresence>
               {open && (
@@ -82,10 +75,7 @@ export function SidebarProfile() {
                       </div>
                     </div>
                     <i>
-                      <HeroIcon
-                        className='h-5 w-5 text-main-accent'
-                        iconName='CheckIcon'
-                      />
+                      <HeroIcon className='h-5 w-5 text-main-accent' iconName='CheckIcon' />
                     </i>
                   </Menu.Item>
                   <Menu.Item>
@@ -108,10 +98,7 @@ export function SidebarProfile() {
                                dark:[filter:drop-shadow(#333639_1px_-1px_1px)]
                                xl:left-1/2 xl:-translate-x-1/2'
                   >
-                    <CustomIcon
-                      className='h-4 w-6 fill-main-background'
-                      iconName='TriangleIcon'
-                    />
+                    <CustomIcon className='h-4 w-6 fill-main-background' iconName='TriangleIcon' />
                   </i>
                 </Menu.Items>
               )}
@@ -120,5 +107,5 @@ export function SidebarProfile() {
         )}
       </Menu>
     </>
-  );
+  )
 }

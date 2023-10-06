@@ -1,28 +1,23 @@
-import { useRef } from 'react';
-import cn from 'clsx';
-import { MainHeader } from "@/components/home/MainHeader";
-import { Button } from "@/components/ui/Button";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { NextImage } from "@/components/ui/NextImage";
-import { ToolTip } from "@/components/ui/Tooltip";
-import type { ReactNode, ChangeEvent } from 'react';
-import type { User } from '@/lib/types/user';
+import { useRef } from 'react'
+import cn from 'clsx'
+import { MainHeader } from '@/components/home/MainHeader'
+import { Button } from '@/components/ui/Button'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { NextImage } from '@/components/ui/NextImage'
+import { ToolTip } from '@/components/ui/Tooltip'
+import type { ReactNode, ChangeEvent } from 'react'
+import type { User } from '@/lib/types/user'
 
-type EditProfileModalProps = Pick<
-  User,
-  'name' | 'photoURL' | 'coverPhotoURL'
-> & {
-  loading: boolean;
-  children: ReactNode;
-  inputNameError: string;
-  editImage: (
-    type: 'cover' | 'profile'
-  ) => ({ target: { files } }: ChangeEvent<HTMLInputElement>) => void;
-  closeModal: () => void;
-  updateData: () => Promise<void>;
-  removeCoverImage: () => void;
-  resetUserEditData: () => void;
-};
+type EditProfileModalProps = Pick<User, 'name' | 'photoURL' | 'coverPhotoURL'> & {
+  loading: boolean
+  children: ReactNode
+  inputNameError: string
+  editImage: (type: 'cover' | 'profile') => ({ target: { files } }: ChangeEvent<HTMLInputElement>) => void
+  closeModal: () => void
+  updateData: () => Promise<void>
+  removeCoverImage: () => void
+  resetUserEditData: () => void
+}
 
 export function EditProfileModal({
   name,
@@ -37,13 +32,13 @@ export function EditProfileModal({
   removeCoverImage,
   resetUserEditData
 }: EditProfileModalProps) {
-  const coverInputFileRef = useRef<HTMLInputElement>(null);
-  const profileInputFileRef = useRef<HTMLInputElement>(null);
+  const coverInputFileRef = useRef<HTMLInputElement>(null)
+  const profileInputFileRef = useRef<HTMLInputElement>(null)
 
   const handleClick = (type: 'cover' | 'profile') => (): void => {
-    if (type === 'cover') coverInputFileRef.current?.click();
-    else profileInputFileRef.current?.click();
-  };
+    if (type === 'cover') coverInputFileRef.current?.click()
+    else profileInputFileRef.current?.click()
+  }
 
   return (
     <>
@@ -80,12 +75,7 @@ export function EditProfileModal({
           </Button>
         </div>
       </MainHeader>
-      <section
-        className={cn(
-          'h-full overflow-y-auto transition-opacity',
-          loading && 'pointer-events-none opacity-50'
-        )}
-      >
+      <section className={cn('h-full overflow-y-auto transition-opacity', loading && 'pointer-events-none opacity-50')}>
         <div className='group relative mt-[52px] h-36 xs:h-44 sm:h-48'>
           <input
             className='hidden'
@@ -178,14 +168,11 @@ export function EditProfileModal({
           >
             <span className='mx-2 text-xl'>Switch to professional</span>
             <i>
-              <HeroIcon
-                className='h-6 w-6 text-light-secondary dark:text-dark-secondary'
-                iconName='ChevronRightIcon'
-              />
+              <HeroIcon className='h-6 w-6 text-light-secondary dark:text-dark-secondary' iconName='ChevronRightIcon' />
             </i>
           </Button>
         </div>
       </section>
     </>
-  );
+  )
 }

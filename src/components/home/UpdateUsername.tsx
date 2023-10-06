@@ -1,97 +1,90 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useState, useEffect } from 'react';
-import { toast } from 'react-hot-toast';
-import {
-  checkUsernameAvailability,
-  updateUsername
-} from '@/lib/firebase/utils';
-import { useAuth } from '@/context/AuthContext';
-import { useModal } from '@/hooks/useModal';
-import { isValidUsername } from '@/lib/validation';
-import { sleep } from '@/lib/utils';
-import { Button } from "@/components/ui/Button";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { ToolTip } from "@/components/ui/Tooltip";
-import { Modal } from "@/components/modal/Modal";
-import { UsernameModal } from "@/components/modal/UsernameModal";
-import { InputField } from "@/components/input/InputField";
-import type { FormEvent, ChangeEvent } from 'react';
+import { useState, useEffect } from 'react'
+import { toast } from 'react-hot-toast'
+import { checkUsernameAvailability, updateUsername } from '@/lib/firebase/utils'
+import { useAuth } from '@/context/AuthContext'
+import { useModal } from '@/hooks/useModal'
+import { isValidUsername } from '@/lib/validation'
+import { sleep } from '@/lib/utils'
+import { Button } from '@/components/ui/Button'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { ToolTip } from '@/components/ui/Tooltip'
+import { Modal } from '@/components/modal/Modal'
+import { UsernameModal } from '@/components/modal/UsernameModal'
+import { InputField } from '@/components/input/InputField'
+import type { FormEvent, ChangeEvent } from 'react'
 
 export function UpdateUsername() {
-  const [alreadySet, setAlreadySet] = useState(false);
-  const [available, setAvailable] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [visited, setVisited] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [alreadySet, setAlreadySet] = useState(false)
+  const [available, setAvailable] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [visited, setVisited] = useState(false)
+  const [inputValue, setInputValue] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const { user } = useAuth();
-  const { open, openModal, closeModal } = useModal();
+  const { user } = useAuth()
+  const { open, openModal, closeModal } = useModal()
 
   useEffect(() => {
     const checkAvailability = async (value: string): Promise<void> => {
-      const empty = await checkUsernameAvailability(value);
+      const empty = await checkUsernameAvailability(value)
 
-      if (empty) setAvailable(true);
+      if (empty) setAvailable(true)
       else {
-        setAvailable(false);
-        setErrorMessage('This username has been taken. Please choose another.');
+        setAvailable(false)
+        setErrorMessage('This username has been taken. Please choose another.')
       }
-    };
+    }
 
-    if (!visited && inputValue.length > 0) setVisited(true);
+    if (!visited && inputValue.length > 0) setVisited(true)
 
     if (visited) {
-      if (errorMessage) setErrorMessage('');
+      if (errorMessage) setErrorMessage('')
 
-      const error = isValidUsername(user?.username as string, inputValue);
+      const error = isValidUsername(user?.username as string, inputValue)
 
       if (error) {
-        setAvailable(false);
-        setErrorMessage(error);
-      } else void checkAvailability(inputValue);
+        setAvailable(false)
+        setErrorMessage(error)
+      } else void checkAvailability(inputValue)
     }
-  }, [inputValue]);
+  }, [inputValue])
 
   useEffect(() => {
-    if (!user?.updatedAt) openModal();
-    else setAlreadySet(true);
-  }, []);
+    if (!user?.updatedAt) openModal()
+    else setAlreadySet(true)
+  }, [])
 
-  const changeUsername = async (
-    e: FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault();
+  const changeUsername = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault()
 
-    if (!available) return;
+    if (!available) return
 
-    setLoading(true);
+    setLoading(true)
 
-    await sleep(500);
+    await sleep(500)
 
-    await updateUsername(user?.id as string, inputValue);
+    await updateUsername(user?.id as string, inputValue)
 
-    closeModal();
+    closeModal()
 
-    setLoading(false);
+    setLoading(false)
 
-    setInputValue('');
-    setVisited(false);
-    setAvailable(false);
+    setInputValue('')
+    setVisited(false)
+    setAvailable(false)
 
-    toast.success('Username updated successfully');
-  };
+    toast.success('Username updated successfully')
+  }
 
   const cancelUpdateUsername = (): void => {
-    closeModal();
-    if (!alreadySet) void updateUsername(user?.id as string);
-  };
+    closeModal()
+    if (!alreadySet) void updateUsername(user?.id as string)
+  }
 
-  const handleChange = ({
-    target: { value }
-  }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void =>
-    setInputValue(value);
+  const handleChange = ({ target: { value } }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void =>
+    setInputValue(value)
 
   return (
     <>
@@ -126,5 +119,5 @@ export function UpdateUsername() {
         <ToolTip tip='Top tweets' />
       </Button>
     </>
-  );
+  )
 }

@@ -1,49 +1,46 @@
-import { useRouter } from 'next/router';
-import { doc } from 'firebase/firestore';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useDocument } from '@/hooks/useDocument';
-import { useUser } from '@/context/UserContext';
-import { isPlural } from '@/lib/utils';
-import { userStatsCollection } from '@/lib/firebase/collections';
-import { UserName } from "./Name";
-import type { Variants } from 'framer-motion';
+import { useRouter } from 'next/router'
+import { doc } from 'firebase/firestore'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useDocument } from '@/hooks/useDocument'
+import { useUser } from '@/context/UserContext'
+import { isPlural } from '@/lib/utils'
+import { userStatsCollection } from '@/lib/firebase/collections'
+import { UserName } from './Name'
+import type { Variants } from 'framer-motion'
 
 export const variants: Variants = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { duration: 0.4 } },
   exit: { opacity: 0, transition: { duration: 0.2 } }
-};
+}
 
 export function UserHeader() {
   const {
     pathname,
     query: { id }
-  } = useRouter();
+  } = useRouter()
 
-  const { user, loading } = useUser();
+  const { user, loading } = useUser()
 
-  const userId = user ? user.id : null;
+  const userId = user ? user.id : null
 
-  const { data: statsData, loading: statsLoading } = useDocument(
-    doc(userStatsCollection(userId ?? 'null'), 'stats'),
-    {
-      allowNull: true,
-      disabled: !userId
-    }
-  );
+  const { data: statsData, loading: statsLoading } = useDocument(doc(userStatsCollection(userId ?? 'null'), 'stats'), {
+    allowNull: true,
+    disabled: !userId
+  })
 
-  const { tweets, likes } = statsData ?? {};
+  const { tweets, likes } = statsData ?? {}
 
   const [totalTweets, totalPhotos, totalLikes] = [
     (user?.totalTweets ?? 0) + (tweets?.length ?? 0),
     user?.totalPhotos,
     likes?.length
-  ];
+  ]
 
-  const currentPage = pathname.split('/').pop() ?? '';
+  const currentPage = pathname.split('/').pop() ?? ''
 
-  const isInTweetPage = ['[id]', 'with-replies'].includes(currentPage);
-  const isInFollowPage = ['following', 'followers'].includes(currentPage);
+  const isInTweetPage = ['[id]', 'with-replies'].includes(currentPage)
+  const isInFollowPage = ['following', 'followers'].includes(currentPage)
 
   return (
     <AnimatePresence mode='popLayout'>
@@ -78,9 +75,7 @@ export function UserHeader() {
                 : 'No Tweet'
               : currentPage === 'media'
               ? totalPhotos
-                ? `${totalPhotos} Photo${isPlural(totalPhotos)} & GIF${isPlural(
-                    totalPhotos
-                  )}`
+                ? `${totalPhotos} Photo${isPlural(totalPhotos)} & GIF${isPlural(totalPhotos)}`
                 : 'No Photo & GIF'
               : totalLikes
               ? `${totalLikes} Like${isPlural(totalLikes)}`
@@ -89,5 +84,5 @@ export function UserHeader() {
         </motion.div>
       )}
     </AnimatePresence>
-  );
+  )
 }

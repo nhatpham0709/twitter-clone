@@ -1,79 +1,65 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import cn from 'clsx';
-import { preventBubbling } from '@/lib/utils';
-import { Button } from "@/components/ui/Button";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { Loading } from "@/components/ui/Loading";
-import { backdrop, modal } from "./Modal";
-import type { VariantLabels } from 'framer-motion';
-import type { ImageData } from '@/lib/types/file';
-import type { IconName } from '@/components/ui/HeroIcon';
+import { useState, useEffect } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import cn from 'clsx'
+import { preventBubbling } from '@/lib/utils'
+import { Button } from '@/components/ui/Button'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { Loading } from '@/components/ui/Loading'
+import { backdrop, modal } from './Modal'
+import type { VariantLabels } from 'framer-motion'
+import type { ImageData } from '@/lib/types/file'
+import type { IconName } from '@/components/ui/HeroIcon'
 
 type ImageModalProps = {
-  tweet?: boolean;
-  imageData: ImageData;
-  previewCount: number;
-  selectedIndex?: number;
-  handleNextIndex?: (type: 'prev' | 'next') => () => void;
-};
+  tweet?: boolean
+  imageData: ImageData
+  previewCount: number
+  selectedIndex?: number
+  handleNextIndex?: (type: 'prev' | 'next') => () => void
+}
 
-type ArrowButton = ['prev' | 'next', string | null, IconName];
+type ArrowButton = ['prev' | 'next', string | null, IconName]
 
 const arrowButtons: Readonly<ArrowButton[]> = [
   ['prev', null, 'ArrowLeftIcon'],
   ['next', 'order-1', 'ArrowRightIcon']
-];
+]
 
-export function ImageModal({
-  tweet,
-  imageData,
-  previewCount,
-  selectedIndex,
-  handleNextIndex
-}: ImageModalProps) {
-  const [indexes, setIndexes] = useState<number[]>([]);
-  const [loading, setLoading] = useState(true);
+export function ImageModal({ tweet, imageData, previewCount, selectedIndex, handleNextIndex }: ImageModalProps) {
+  const [indexes, setIndexes] = useState<number[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const { src, alt } = imageData;
+  const { src, alt } = imageData
 
-  const requireArrows = handleNextIndex && previewCount > 1;
+  const requireArrows = handleNextIndex && previewCount > 1
 
   useEffect(() => {
-    if (
-      tweet &&
-      selectedIndex !== undefined &&
-      !indexes.includes(selectedIndex)
-    ) {
-      setLoading(true);
-      setIndexes([...indexes, selectedIndex]);
+    if (tweet && selectedIndex !== undefined && !indexes.includes(selectedIndex)) {
+      setLoading(true)
+      setIndexes([...indexes, selectedIndex])
     }
 
-    const image = new Image();
-    image.src = src;
-    image.onload = (): void => setLoading(false);
-  }, [...(tweet && previewCount > 1 ? [src] : [])]);
+    const image = new Image()
+    image.src = src
+    image.onload = (): void => setLoading(false)
+  }, [...(tweet && previewCount > 1 ? [src] : [])])
 
   useEffect(() => {
-    if (!requireArrows) return;
+    if (!requireArrows) return
 
     const handleKeyDown = ({ key }: KeyboardEvent): void => {
       const callback =
-        key === 'ArrowLeft'
-          ? handleNextIndex('prev')
-          : key === 'ArrowRight'
-          ? handleNextIndex('next')
-          : null;
+        key === 'ArrowLeft' ? handleNextIndex('prev') : key === 'ArrowRight' ? handleNextIndex('next') : null
 
-      if (callback) callback();
-    };
+      if (callback) callback()
+    }
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keydown', handleKeyDown)
 
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [handleNextIndex]);
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [handleNextIndex])
 
   return (
     <>
@@ -142,5 +128,5 @@ export function ImageModal({
         )}
       </AnimatePresence>
     </>
-  );
+  )
 }

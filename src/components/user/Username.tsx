@@ -1,17 +1,13 @@
-import Link from 'next/link';
-import cn from 'clsx';
+import Link from 'next/link'
+import cn from 'clsx'
 
 type UserUsernameProps = {
-  username: string;
-  className?: string;
-  disableLink?: boolean;
-};
+  username: string
+  className?: string
+  disableLink?: boolean
+}
 
-export function UserUsername({
-  username,
-  className,
-  disableLink
-}: UserUsernameProps) {
+export function UserUsername({ username, className, disableLink }: UserUsernameProps) {
   return (
     <Link
       href={`/user/${username}`}
@@ -24,5 +20,5 @@ export function UserUsername({
     >
       @{username}
     </Link>
-  );
+  )
 }

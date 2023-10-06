@@ -1,11 +1,11 @@
-import { useAuth } from '@/context/AuthContext';
-import { useModal } from '@/hooks/useModal';
-import { Button } from "@/components/ui/Button";
-import { Modal } from "@/components/modal/Modal";
-import { MobileSidebarModal } from "@/components/modal/MobileSidebarModal";
-import { UserAvatar } from "@/components/user/Avatar";
-import type { Variants } from 'framer-motion';
-import type { User } from '@/lib/types/user';
+import { useAuth } from '@/context/AuthContext'
+import { useModal } from '@/hooks/useModal'
+import { Button } from '@/components/ui/Button'
+import { Modal } from '@/components/modal/Modal'
+import { MobileSidebarModal } from '@/components/modal/MobileSidebarModal'
+import { UserAvatar } from '@/components/user/Avatar'
+import type { Variants } from 'framer-motion'
+import type { User } from '@/lib/types/user'
 
 const variant: Variants = {
   initial: { x: '-100%', opacity: 0.8 },
@@ -15,14 +15,14 @@ const variant: Variants = {
     transition: { type: 'spring', duration: 0.8 }
   },
   exit: { x: '-100%', opacity: 0.8, transition: { duration: 0.4 } }
-};
+}
 
 export function MobileSidebar() {
-  const { user } = useAuth();
+  const { user } = useAuth()
 
-  const { photoURL, name } = user as User;
+  const { photoURL, name } = user as User
 
-  const { open, openModal, closeModal } = useModal();
+  const { open, openModal, closeModal } = useModal()
 
   return (
     <>
@@ -39,5 +39,5 @@ export function MobileSidebar() {
         <UserAvatar src={photoURL} alt={name} size={30} />
       </Button>
     </>
-  );
+  )
 }

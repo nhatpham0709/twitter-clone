@@ -1,24 +1,24 @@
-import cn from 'clsx';
-import { Popover } from '@headlessui/react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { toast } from 'react-hot-toast';
-import { preventBubbling } from '@/lib/utils';
-import { siteURL } from '@/lib/env';
-import { Button } from "@/components/ui/Button";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { ToolTip } from "@/components/ui/Tooltip";
-import { variants } from "@/components/tweet/TweetActions";
+import cn from 'clsx'
+import { Popover } from '@headlessui/react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { toast } from 'react-hot-toast'
+import { preventBubbling } from '@/lib/utils'
+import { siteURL } from '@/lib/env'
+import { Button } from '@/components/ui/Button'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { ToolTip } from '@/components/ui/Tooltip'
+import { variants } from '@/components/tweet/TweetActions'
 
 type UserShareProps = {
-  username: string;
-};
+  username: string
+}
 
 export function UserShare({ username }: UserShareProps) {
   const handleCopy = (closeMenu: () => void) => async (): Promise<void> => {
-    closeMenu();
-    await navigator.clipboard.writeText(`${siteURL}/user/${username}`);
-    toast.success('Copied to clipboard');
-  };
+    closeMenu()
+    await navigator.clipboard.writeText(`${siteURL}/user/${username}`)
+    toast.success('Copied to clipboard')
+  }
 
   return (
     <Popover className='relative'>
@@ -59,5 +59,5 @@ export function UserShare({ username }: UserShareProps) {
         </>
       )}
     </Popover>
-  );
+  )
 }

@@ -1,23 +1,23 @@
-import Link from 'next/link';
-import { useAuth } from '@/context/AuthContext';
-import { useWindow } from '@/context/WindowContext';
-import { useModal } from '@/hooks/useModal';
-import { Modal } from "@/components/modal/Modal";
-import { Input } from "@/components/input/Input";
-import { CustomIcon } from "@/components/ui/CustomIcon";
-import { Button } from "@/components/ui/Button";
-import { SidebarLink } from "./SidebarLink";
-import { MoreSettings } from "./MoreSettings";
-import { SidebarProfile } from "./SidebarProfile";
-import type { IconName } from '@/components/ui/HeroIcon';
+import Link from 'next/link'
+import { useAuth } from '@/context/AuthContext'
+import { useWindow } from '@/context/WindowContext'
+import { useModal } from '@/hooks/useModal'
+import { Modal } from '@/components/modal/Modal'
+import { Input } from '@/components/input/Input'
+import { CustomIcon } from '@/components/ui/CustomIcon'
+import { Button } from '@/components/ui/Button'
+import { SidebarLink } from './SidebarLink'
+import { MoreSettings } from './MoreSettings'
+import { SidebarProfile } from './SidebarProfile'
+import type { IconName } from '@/components/ui/HeroIcon'
 
 export type NavLink = {
-  href: string;
-  linkName: string;
-  iconName: IconName;
-  disabled?: boolean;
-  canBeHidden?: boolean;
-};
+  href: string
+  linkName: string
+  iconName: IconName
+  disabled?: boolean
+  canBeHidden?: boolean
+}
 
 const navLinks: Readonly<NavLink[]> = [
   {
@@ -57,15 +57,15 @@ const navLinks: Readonly<NavLink[]> = [
     disabled: true,
     canBeHidden: true
   }
-];
+]
 
 export function Sidebar() {
-  const { user } = useAuth();
-  const { isMobile } = useWindow();
+  const { user } = useAuth()
+  const { isMobile } = useWindow()
 
-  const { open, openModal, closeModal } = useModal();
+  const { open, openModal, closeModal } = useModal()
 
-  const username = user?.username as string;
+  const username = user?.username as string
 
   return (
     <header
@@ -92,22 +92,16 @@ export function Sidebar() {
               href='/home'
               className='custom-button main-tab text-accent-blue transition hover:bg-light-primary/10 
                          focus-visible:bg-accent-blue/10 focus-visible:!ring-accent-blue/80
-                         dark:text-twitter-icon dark:hover:bg-dark-primary/10'>
-
+                         dark:text-twitter-icon dark:hover:bg-dark-primary/10'
+            >
               <CustomIcon className='h-7 w-7' iconName='TwitterIcon' />
-
             </Link>
           </h1>
           <nav className='flex items-center justify-around xs:flex-col xs:justify-center xl:block'>
             {navLinks.map(({ ...linkData }) => (
               <SidebarLink {...linkData} key={linkData.href} />
             ))}
-            <SidebarLink
-              href={`/user/${username}`}
-              username={username}
-              linkName='Profile'
-              iconName='UserIcon'
-            />
+            <SidebarLink href={`/user/${username}`} username={username} linkName='Profile' iconName='UserIcon' />
             {!isMobile && <MoreSettings />}
           </nav>
           <Button
@@ -116,15 +110,12 @@ export function Sidebar() {
                        xs:hover:bg-main-accent/90 xs:active:bg-main-accent/75 xl:w-11/12'
             onClick={openModal}
           >
-            <CustomIcon
-              className='block h-6 w-6 xl:hidden'
-              iconName='FeatherIcon'
-            />
+            <CustomIcon className='block h-6 w-6 xl:hidden' iconName='FeatherIcon' />
             <p className='hidden xl:block'>Tweet</p>
           </Button>
         </section>
         {!isMobile && <SidebarProfile />}
       </div>
     </header>
-  );
+  )
 }

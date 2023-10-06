@@ -1,22 +1,17 @@
-import cn from 'clsx';
-import type { User, EditableData } from '@/lib/types/user';
-import type { KeyboardEvent, ChangeEvent } from 'react';
+import cn from 'clsx'
+import type { User, EditableData } from '@/lib/types/user'
+import type { KeyboardEvent, ChangeEvent } from 'react'
 
 export type InputFieldProps = {
-  label: string;
-  inputId: EditableData | Extract<keyof User, 'username'>;
-  inputValue: string | null;
-  inputLimit?: number;
-  useTextArea?: boolean;
-  errorMessage?: string;
-  handleChange: (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
-  handleKeyboardShortcut?: ({
-    key,
-    ctrlKey
-  }: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-};
+  label: string
+  inputId: EditableData | Extract<keyof User, 'username'>
+  inputValue: string | null
+  inputLimit?: number
+  useTextArea?: boolean
+  errorMessage?: string
+  handleChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  handleKeyboardShortcut?: ({ key, ctrlKey }: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+}
 
 export function InputField({
   label,
@@ -28,10 +23,10 @@ export function InputField({
   handleChange,
   handleKeyboardShortcut
 }: InputFieldProps) {
-  const slicedInputValue = inputValue?.slice(0, inputLimit) ?? '';
+  const slicedInputValue = inputValue?.slice(0, inputLimit) ?? ''
 
-  const inputLength = slicedInputValue.length;
-  const isHittingInputLimit = inputLimit && inputLength > inputLimit;
+  const inputLength = slicedInputValue.length
+  const isHittingInputLimit = inputLimit && inputLength > inputLimit
 
   return (
     <div className='flex flex-col gap-1'>
@@ -73,9 +68,7 @@ export function InputField({
              text-light-secondary transition-all peer-placeholder-shown:translate-y-3
              peer-placeholder-shown:text-lg peer-focus:translate-y-1 peer-focus:text-sm
              dark:text-dark-secondary`,
-            errorMessage
-              ? '!text-accent-red peer-focus:text-accent-red'
-              : 'peer-focus:text-main-accent'
+            errorMessage ? '!text-accent-red peer-focus:text-accent-red' : 'peer-focus:text-main-accent'
           )}
           htmlFor={inputId}
         >
@@ -93,9 +86,7 @@ export function InputField({
           </span>
         )}
       </div>
-      {errorMessage && (
-        <p className='text-sm text-accent-red'>{errorMessage}</p>
-      )}
+      {errorMessage && <p className='text-sm text-accent-red'>{errorMessage}</p>}
     </div>
-  );
+  )
 }

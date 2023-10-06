@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import Head from 'next/head'
 
 export function AppHead() {
   return (
@@ -10,5 +10,5 @@ export function AppHead() {
       <meta name='twitter:site' content='@ccrsxx' />
       <meta name='twitter:card' content='summary_large_image' />
     </Head>
-  );
+  )
 }

@@ -1,46 +1,39 @@
-import { useState, useEffect } from 'react';
-import { toast } from 'react-hot-toast';
-import cn from 'clsx';
-import { useUser } from '@/context/UserContext';
-import { useModal } from '@/hooks/useModal';
-import { updateUserData, uploadImages } from '@/lib/firebase/utils';
-import { sleep } from '@/lib/utils';
-import { getImagesData } from '@/lib/validation';
-import { Modal } from "@/components/modal/Modal";
-import { EditProfileModal } from "@/components/modal/EditProfileModal";
-import { Button } from "@/components/ui/Button";
-import { InputField } from "@/components/input/InputField";
-import type { ChangeEvent, KeyboardEvent } from 'react';
-import type { FilesWithId } from '@/lib/types/file';
-import type { User, EditableData, EditableUserData } from '@/lib/types/user';
-import type { InputFieldProps } from "@/components/input/InputField";
+import { useState, useEffect } from 'react'
+import { toast } from 'react-hot-toast'
+import cn from 'clsx'
+import { useUser } from '@/context/UserContext'
+import { useModal } from '@/hooks/useModal'
+import { updateUserData, uploadImages } from '@/lib/firebase/utils'
+import { sleep } from '@/lib/utils'
+import { getImagesData } from '@/lib/validation'
+import { Modal } from '@/components/modal/Modal'
+import { EditProfileModal } from '@/components/modal/EditProfileModal'
+import { Button } from '@/components/ui/Button'
+import { InputField } from '@/components/input/InputField'
+import type { ChangeEvent, KeyboardEvent } from 'react'
+import type { FilesWithId } from '@/lib/types/file'
+import type { User, EditableData, EditableUserData } from '@/lib/types/user'
+import type { InputFieldProps } from '@/components/input/InputField'
 
 type RequiredInputFieldProps = Omit<InputFieldProps, 'handleChange'> & {
-  inputId: EditableData;
-};
+  inputId: EditableData
+}
 
-type UserImages = Record<
-  Extract<EditableData, 'photoURL' | 'coverPhotoURL'>,
-  FilesWithId
->;
+type UserImages = Record<Extract<EditableData, 'photoURL' | 'coverPhotoURL'>, FilesWithId>
 
-type TrimmedTexts = Pick<
-  EditableUserData,
-  Exclude<EditableData, 'photoURL' | 'coverPhotoURL'>
->;
+type TrimmedTexts = Pick<EditableUserData, Exclude<EditableData, 'photoURL' | 'coverPhotoURL'>>
 
 type UserEditProfileProps = {
-  hide?: boolean;
-};
+  hide?: boolean
+}
 
 export function UserEditProfile({ hide }: UserEditProfileProps) {
-  const { user } = useUser();
-  const { open, openModal, closeModal } = useModal();
+  const { user } = useUser()
+  const { open, openModal, closeModal } = useModal()
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
-  const { bio, name, website, location, photoURL, coverPhotoURL } =
-    user as User;
+  const { bio, name, website, location, photoURL, coverPhotoURL } = user as User
 
   const [editUserData, setEditUserData] = useState<EditableUserData>({
     bio,
@@ -49,127 +42,112 @@ export function UserEditProfile({ hide }: UserEditProfileProps) {
     photoURL,
     location,
     coverPhotoURL
-  });
+  })
 
   const [userImages, setUserImages] = useState<UserImages>({
     photoURL: [],
     coverPhotoURL: []
-  });
+  })
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => cleanImage, []);
+  useEffect(() => cleanImage, [])
 
-  const inputNameError = !editUserData.name?.trim()
-    ? "Name can't be blank"
-    : '';
+  const inputNameError = !editUserData.name?.trim() ? "Name can't be blank" : ''
 
   const updateData = async (): Promise<void> => {
-    setLoading(true);
+    setLoading(true)
 
-    const userId = user?.id as string;
+    const userId = user?.id as string
 
-    const { photoURL, coverPhotoURL: coverURL } = userImages;
+    const { photoURL, coverPhotoURL: coverURL } = userImages
 
     const [newPhotoURL, newCoverPhotoURL] = await Promise.all(
-      [photoURL, coverURL].map((image) => uploadImages(userId, image))
-    );
+      [photoURL, coverURL].map(image => uploadImages(userId, image))
+    )
 
     const newImages: Partial<Pick<User, 'photoURL' | 'coverPhotoURL'>> = {
-      coverPhotoURL:
-        coverPhotoURL === editUserData.coverPhotoURL
-          ? coverPhotoURL
-          : newCoverPhotoURL?.[0].src ?? null,
+      coverPhotoURL: coverPhotoURL === editUserData.coverPhotoURL ? coverPhotoURL : newCoverPhotoURL?.[0].src ?? null,
       ...(newPhotoURL && { photoURL: newPhotoURL[0].src })
-    };
+    }
 
-    const trimmedKeys: Readonly<EditableData[]> = [
-      'name',
-      'bio',
-      'location',
-      'website'
-    ];
+    const trimmedKeys: Readonly<EditableData[]> = ['name', 'bio', 'location', 'website']
 
     const trimmedTexts = trimmedKeys.reduce(
       (acc, curr) => ({ ...acc, [curr]: editUserData[curr]?.trim() ?? null }),
       {} as TrimmedTexts
-    );
+    )
 
     const newUserData: Readonly<EditableUserData> = {
       ...editUserData,
       ...trimmedTexts,
       ...newImages
-    };
+    }
 
-    await sleep(500);
+    await sleep(500)
 
-    await updateUserData(userId, newUserData);
+    await updateUserData(userId, newUserData)
 
-    closeModal();
+    closeModal()
 
-    cleanImage();
+    cleanImage()
 
-    setLoading(false);
-    setEditUserData(newUserData);
+    setLoading(false)
+    setEditUserData(newUserData)
 
-    toast.success('Profile updated successfully');
-  };
+    toast.success('Profile updated successfully')
+  }
 
   const editImage =
     (type: 'cover' | 'profile') =>
     ({ target: { files } }: ChangeEvent<HTMLInputElement>): void => {
-      const imagesData = getImagesData(files);
+      const imagesData = getImagesData(files)
 
       if (!imagesData) {
-        toast.error('Please choose a valid GIF or Photo');
+        toast.error('Please choose a valid GIF or Photo')
 
-        return;
+        return
       }
 
-      const { imagesPreviewData, selectedImagesData } = imagesData;
+      const { imagesPreviewData, selectedImagesData } = imagesData
 
-      const targetKey = type === 'cover' ? 'coverPhotoURL' : 'photoURL';
-      const newImage = imagesPreviewData[0].src;
+      const targetKey = type === 'cover' ? 'coverPhotoURL' : 'photoURL'
+      const newImage = imagesPreviewData[0].src
 
       setEditUserData({
         ...editUserData,
         [targetKey]: newImage
-      });
+      })
 
       setUserImages({
         ...userImages,
         [targetKey]: selectedImagesData
-      });
-    };
+      })
+    }
 
   const removeCoverImage = (): void => {
     setEditUserData({
       ...editUserData,
       coverPhotoURL: null
-    });
+    })
 
     setUserImages({
       ...userImages,
       coverPhotoURL: []
-    });
+    })
 
-    URL.revokeObjectURL(editUserData.coverPhotoURL ?? '');
-  };
+    URL.revokeObjectURL(editUserData.coverPhotoURL ?? '')
+  }
 
   const cleanImage = (): void => {
-    const imagesKey: Readonly<Partial<EditableData>[]> = [
-      'photoURL',
-      'coverPhotoURL'
-    ];
+    const imagesKey: Readonly<Partial<EditableData>[]> = ['photoURL', 'coverPhotoURL']
 
-    imagesKey.forEach((image) =>
-      URL.revokeObjectURL(editUserData[image] ?? '')
-    );
+    imagesKey.forEach(image => URL.revokeObjectURL(editUserData[image] ?? ''))
 
     setUserImages({
       photoURL: [],
       coverPhotoURL: []
-    });
-  };
+    })
+  }
 
   const resetUserEditData = (): void =>
     setEditUserData({
@@ -179,14 +157,12 @@ export function UserEditProfile({ hide }: UserEditProfileProps) {
       photoURL,
       location,
       coverPhotoURL
-    });
+    })
 
   const handleChange =
     (key: EditableData) =>
-    ({
-      target: { value }
-    }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-      setEditUserData({ ...editUserData, [key]: value });
+    ({ target: { value } }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setEditUserData({ ...editUserData, [key]: value })
 
   const handleKeyboardShortcut = ({
     key,
@@ -194,10 +170,10 @@ export function UserEditProfile({ hide }: UserEditProfileProps) {
     ctrlKey
   }: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     if (ctrlKey && key === 'Enter' && !inputNameError) {
-      (target as any).blur();
-      void updateData();
+      ;(target as any).blur()
+      void updateData()
     }
-  };
+  }
 
   const inputFields: Readonly<RequiredInputFieldProps[]> = [
     {
@@ -226,7 +202,7 @@ export function UserEditProfile({ hide }: UserEditProfileProps) {
       inputValue: editUserData.website,
       inputLimit: 100
     }
-  ];
+  ]
 
   return (
     <form className={cn(hide && 'hidden md:block')}>
@@ -247,7 +223,7 @@ export function UserEditProfile({ hide }: UserEditProfileProps) {
           removeCoverImage={removeCoverImage}
           resetUserEditData={resetUserEditData}
         >
-          {inputFields.map((inputData) => (
+          {inputFields.map(inputData => (
             <InputField
               {...inputData}
               handleChange={handleChange(inputData.inputId)}
@@ -266,5 +242,5 @@ export function UserEditProfile({ hide }: UserEditProfileProps) {
         Edit profile
       </Button>
     </form>
-  );
+  )
 }

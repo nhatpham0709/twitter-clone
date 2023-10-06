@@ -4,10 +4,7 @@ const footerLinks = [
   ['Privacy Policy', 'https://twitter.com/tos'],
   ['Cookie Policy', 'https://support.twitter.com/articles/20170514'],
   ['Accessibility', 'https://help.twitter.com/resources/accessibility'],
-  [
-    'Ads Info',
-    'https://business.twitter.com/en/help/troubleshooting/how-twitter-ads-work.html'
-  ],
+  ['Ads Info', 'https://business.twitter.com/en/help/troubleshooting/how-twitter-ads-work.html'],
   ['Blog', 'https://blog.twitter.com'],
   ['Status', 'https://status.twitterstat.us'],
   ['Careers', 'https://careers.twitter.com'],
@@ -18,25 +15,19 @@ const footerLinks = [
   ['Developers', 'https://developer.twitter.com'],
   ['Directory', 'https://twitter.com/i/directory/profiles'],
   ['Settings', 'https://twitter.com/settings']
-] as const;
+] as const
 
 export function LoginFooter() {
   return (
     <footer className='hidden justify-center p-4 text-sm text-light-secondary dark:text-dark-secondary lg:flex'>
       <nav className='flex flex-wrap justify-center gap-4 gap-y-2'>
         {footerLinks.map(([linkName, href]) => (
-          <a
-            className='custom-underline'
-            target='_blank'
-            rel='noreferrer'
-            href={href}
-            key={linkName}
-          >
+          <a className='custom-underline' target='_blank' rel='noreferrer' href={href} key={linkName}>
             {linkName}
           </a>
         ))}
         <p>© 2022 Twitter, Inc.</p>
       </nav>
     </footer>
-  );
+  )
 }

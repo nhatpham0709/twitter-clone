@@ -1,14 +1,14 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu } from '@headlessui/react';
-import cn from 'clsx';
-import { useModal } from '@/hooks/useModal';
-import { preventBubbling } from '@/lib/utils';
-import { Modal } from "@/components/modal/Modal";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { Button } from "@/components/ui/Button";
-import { MenuLink } from "./MenuLink";
-import type { Variants } from 'framer-motion';
-import { DisplayModal } from "@/components/modal/DisplayModal";
+import { motion, AnimatePresence } from 'framer-motion'
+import { Menu } from '@headlessui/react'
+import cn from 'clsx'
+import { useModal } from '@/hooks/useModal'
+import { preventBubbling } from '@/lib/utils'
+import { Modal } from '@/components/modal/Modal'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { Button } from '@/components/ui/Button'
+import { MenuLink } from './MenuLink'
+import type { Variants } from 'framer-motion'
+import { DisplayModal } from '@/components/modal/DisplayModal'
 
 export const variants: Variants = {
   initial: { opacity: 0, y: 50 },
@@ -18,10 +18,10 @@ export const variants: Variants = {
     transition: { type: 'spring', duration: 0.4 }
   },
   exit: { opacity: 0, y: 50, transition: { duration: 0.2 } }
-};
+}
 
 export function MoreSettings() {
-  const { open, openModal, closeModal } = useModal();
+  const { open, openModal, closeModal } = useModal()
 
   return (
     <>
@@ -44,10 +44,7 @@ export function MoreSettings() {
                   open && 'bg-light-primary/10 dark:bg-dark-primary/10'
                 )}
               >
-                <HeroIcon
-                  className='h-7 w-7'
-                  iconName='EllipsisHorizontalCircleIcon'
-                />{' '}
+                <HeroIcon className='h-7 w-7' iconName='EllipsisHorizontalCircleIcon' />{' '}
                 <p className='hidden xl:block'>More</p>
               </div>
             </Menu.Button>
@@ -110,5 +107,5 @@ export function MoreSettings() {
         )}
       </Menu>
     </>
-  );
+  )
 }

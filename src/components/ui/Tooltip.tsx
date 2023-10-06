@@ -1,14 +1,14 @@
-import cn from 'clsx';
+import cn from 'clsx'
 
 type ToolTipProps = {
-  tip: string;
-  modal?: boolean;
-  className?: string;
-  groupInner?: boolean;
-};
+  tip: string
+  modal?: boolean
+  className?: string
+  groupInner?: boolean
+}
 
 export function ToolTip({ tip, modal, className, groupInner }: ToolTipProps) {
-  if (modal) return null;
+  if (modal) return null
 
   return (
     <div
@@ -25,5 +25,5 @@ export function ToolTip({ tip, modal, className, groupInner }: ToolTipProps) {
     >
       <span>{tip}</span>
     </div>
-  );
+  )
 }

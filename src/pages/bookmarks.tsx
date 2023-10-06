@@ -1,68 +1,57 @@
-import { useMemo } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import { toast } from 'react-hot-toast';
-import { orderBy, query } from 'firebase/firestore';
-import { useAuth } from '@/context/AuthContext';
-import { useModal } from '@/hooks/useModal';
-import { useCollection } from '@/hooks/useCollection';
-import { useArrayDocument } from '@/hooks/useArrayDocument';
-import { clearAllBookmarks } from '@/lib/firebase/utils';
-import {
-  tweetsCollection,
-  userBookmarksCollection
-} from '@/lib/firebase/collections';
-import { HomeLayout, ProtectedLayout } from '@/components/layout/CommonLayout';
-import { MainLayout } from '@/components/layout/MainLayout';
-import { SEO } from "@/components/common/Seo";
-import { MainHeader } from "@/components/home/MainHeader";
-import { MainContainer } from "@/components/home/MainContainer";
-import { Modal } from "@/components/modal/Modal";
-import { ActionModal } from "@/components/modal/ActionModal";
-import { Tweet } from "@/components/tweet/Tweet";
-import { StatsEmpty } from "@/components/tweet/StatsEmpty";
-import { Button } from "@/components/ui/Button";
-import { ToolTip } from "@/components/ui/Tooltip";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { Loading } from "@/components/ui/Loading";
-import type { ReactElement, ReactNode } from 'react';
+import { useMemo } from 'react'
+import { AnimatePresence } from 'framer-motion'
+import { toast } from 'react-hot-toast'
+import { orderBy, query } from 'firebase/firestore'
+import { useAuth } from '@/context/AuthContext'
+import { useModal } from '@/hooks/useModal'
+import { useCollection } from '@/hooks/useCollection'
+import { useArrayDocument } from '@/hooks/useArrayDocument'
+import { clearAllBookmarks } from '@/lib/firebase/utils'
+import { tweetsCollection, userBookmarksCollection } from '@/lib/firebase/collections'
+import { HomeLayout, ProtectedLayout } from '@/components/layout/CommonLayout'
+import { MainLayout } from '@/components/layout/MainLayout'
+import { SEO } from '@/components/common/Seo'
+import { MainHeader } from '@/components/home/MainHeader'
+import { MainContainer } from '@/components/home/MainContainer'
+import { Modal } from '@/components/modal/Modal'
+import { ActionModal } from '@/components/modal/ActionModal'
+import { Tweet } from '@/components/tweet/Tweet'
+import { StatsEmpty } from '@/components/tweet/StatsEmpty'
+import { Button } from '@/components/ui/Button'
+import { ToolTip } from '@/components/ui/Tooltip'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { Loading } from '@/components/ui/Loading'
+import type { ReactElement, ReactNode } from 'react'
 
 export default function Bookmarks() {
-  const { user } = useAuth();
+  const { user } = useAuth()
 
-  const { open, openModal, closeModal } = useModal();
+  const { open, openModal, closeModal } = useModal()
 
-  const userId = user?.id as string;
+  const userId = user?.id as string
 
   const { data: bookmarksRef, loading: bookmarksRefLoading } = useCollection(
-    query(userBookmarksCollection(userId), orderBy('createdAt', 'desc')),
-    { allowNull: true }
-  );
+    query(userBookmarksCollection(userId), orderBy('createdAt', 'desc'))
+  )
 
-  const tweetIds = useMemo(
-    () => bookmarksRef?.map(({ id }) => id) ?? [],
-    [bookmarksRef]
-  );
+  const tweetIds = useMemo(() => bookmarksRef?.map(({ id }) => id) ?? [], [bookmarksRef])
 
-  const { data: tweetData, loading: tweetLoading } = useArrayDocument(
-    tweetIds,
-    tweetsCollection,
-    { includeUser: true }
-  );
+  const { data: tweetData, loading: tweetLoading } = useArrayDocument(tweetIds, tweetsCollection, { includeUser: true })
 
   const handleClear = async (): Promise<void> => {
-    await clearAllBookmarks(userId);
-    closeModal();
-    toast.success('Successfully cleared all bookmarks');
-  };
+    try {
+      await clearAllBookmarks(userId)
+      closeModal()
+      toast.success('Successfully cleared all bookmarks')
+    } catch (e) {
+      toast.error('Failed to clear bookmarks')
+    }
+  }
 
   return (
     <MainContainer>
       <SEO title='Bookmarks / Twitter' />
-      <Modal
-        modalClassName='max-w-xs bg-main-background w-full p-8 rounded-2xl'
-        open={open}
-        closeModal={closeModal}
-      >
+      <Modal modalClassName='max-w-xs bg-main-background w-full p-8 rounded-2xl' open={open} closeModal={closeModal}>
         <ActionModal
           title='Clear all Bookmarks?'
           description='This can’t be undone and you’ll remove all Tweets you’ve added to your Bookmarks.'
@@ -76,27 +65,23 @@ export default function Bookmarks() {
       <MainHeader className='flex items-center justify-between'>
         <div className='-mb-1 flex flex-col'>
           <h2 className='-mt-1 text-xl font-bold'>Bookmarks</h2>
-          <p className='text-xs text-light-secondary dark:text-dark-secondary'>
-            @{user?.username}
-          </p>
+          <p className='text-xs text-light-secondary dark:text-dark-secondary'>@{user?.username}</p>
         </div>
         <Button
           className='dark-bg-tab group relative p-2 hover:bg-light-primary/10
                      active:bg-light-primary/20 dark:hover:bg-dark-primary/10 
                      dark:active:bg-dark-primary/20'
           onClick={openModal}
+          disabled={!bookmarksRef?.length}
         >
           <HeroIcon className='h-5 w-5' iconName='ArchiveBoxXMarkIcon' />
-          <ToolTip
-            className='!-translate-x-20 translate-y-3 md:-translate-x-1/2'
-            tip='Clear bookmarks'
-          />
+          <ToolTip className='!-translate-x-20 translate-y-3 md:-translate-x-1/2' tip='Clear bookmarks' />
         </Button>
       </MainHeader>
       <section className='mt-0.5'>
         {bookmarksRefLoading || tweetLoading ? (
           <Loading className='mt-5' />
-        ) : !bookmarksRef ? (
+        ) : !bookmarksRef?.length ? (
           <StatsEmpty
             title='Save Tweets for later'
             description='Don’t let the good ones fly away! Bookmark Tweets to easily find them again in the future.'
@@ -104,14 +89,14 @@ export default function Bookmarks() {
           />
         ) : (
           <AnimatePresence mode='popLayout'>
-            {tweetData?.map((tweet) => (
+            {tweetData?.map(tweet => (
               <Tweet {...tweet} key={tweet.id} />
             ))}
           </AnimatePresence>
         )}
       </section>
     </MainContainer>
-  );
+  )
 }
 
 Bookmarks.getLayout = (page: ReactElement): ReactNode => (
@@ -120,4 +105,4 @@ Bookmarks.getLayout = (page: ReactElement): ReactNode => (
       <HomeLayout>{page}</HomeLayout>
     </MainLayout>
   </ProtectedLayout>
-);
+)

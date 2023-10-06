@@ -1,8 +1,8 @@
-import { HeroIcon } from './HeroIcon';
+import { HeroIcon } from './HeroIcon'
 
 type ErrorProps = {
-  message?: string;
-};
+  message?: string
+}
 
 export function Error({ message }: ErrorProps) {
   return (
@@ -15,5 +15,5 @@ export function Error({ message }: ErrorProps) {
       </i>
       <p>{message ?? 'Something went wrong. Try Loading.'}</p>
     </div>
-  );
+  )
 }

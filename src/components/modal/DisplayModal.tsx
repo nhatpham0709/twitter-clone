@@ -1,28 +1,21 @@
-import { UserAvatar } from "@/components/user/Avatar";
-import { UserName } from "@/components/user/Name";
-import { InputThemeRadio } from "@/components/input/InputThemeRadio";
-import { Button } from "@/components/ui/Button";
-import { InputAccentRadio } from "@/components/input/InputAccentRadio";
-import type { Theme, Accent } from '@/lib/types/theme';
+import { UserAvatar } from '@/components/user/Avatar'
+import { UserName } from '@/components/user/Name'
+import { InputThemeRadio } from '@/components/input/InputThemeRadio'
+import { Button } from '@/components/ui/Button'
+import { InputAccentRadio } from '@/components/input/InputAccentRadio'
+import type { Theme, Accent } from '@/lib/types/theme'
 
 type DisplayModalProps = {
-  closeModal: () => void;
-};
+  closeModal: () => void
+}
 
 const themes: Readonly<[Theme, string][]> = [
   ['light', 'Default'],
   ['dim', 'Dim'],
   ['dark', 'Lights out']
-];
+]
 
-const accentsColor: Readonly<Accent[]> = [
-  'blue',
-  'yellow',
-  'pink',
-  'purple',
-  'orange',
-  'green'
-];
+const accentsColor: Readonly<Accent[]> = ['blue', 'yellow', 'pink', 'purple', 'orange', 'green']
 
 export function DisplayModal({ closeModal }: DisplayModalProps) {
   return (
@@ -42,40 +35,32 @@ export function DisplayModal({ closeModal }: DisplayModalProps) {
           <div>
             <div className='flex gap-1'>
               <UserName verified name='Twitter' />
-              <p className='text-light-secondary dark:text-dark-secondary'>
-                @twitter
-              </p>
+              <p className='text-light-secondary dark:text-dark-secondary'>@twitter</p>
               <div className='flex gap-1 text-light-secondary dark:text-dark-secondary'>
                 <i>·</i>
                 <p>26m</p>
               </div>
             </div>
             <p className='whitespace-pre-line break-words'>
-              At the heart of Twitter are short messages called Tweets — just
-              like this one — which can include photos, videos, links, text,
-              hashtags, and mentions like{' '}
-              <span className='text-main-accent'>@twitter</span>.
+              At the heart of Twitter are short messages called Tweets — just like this one — which can include photos,
+              videos, links, text, hashtags, and mentions like <span className='text-main-accent'>@twitter</span>.
             </p>
           </div>
         </div>
       </article>
       <div className='flex w-full flex-col gap-1'>
-        <p className='text-sm font-bold text-light-secondary dark:text-dark-secondary'>
-          Color
-        </p>
+        <p className='text-sm font-bold text-light-secondary dark:text-dark-secondary'>Color</p>
         <div
           className='hover-animation grid grid-cols-3 grid-rows-2 justify-items-center gap-3 
                      rounded-2xl bg-main-sidebar-background py-3 xs:grid-cols-6 xs:grid-rows-none'
         >
-          {accentsColor.map((accentColor) => (
+          {accentsColor.map(accentColor => (
             <InputAccentRadio type={accentColor} key={accentColor} />
           ))}
         </div>
       </div>
       <div className='flex w-full flex-col gap-1'>
-        <p className='text-sm font-bold text-light-secondary dark:text-dark-secondary'>
-          Background
-        </p>
+        <p className='text-sm font-bold text-light-secondary dark:text-dark-secondary'>Background</p>
         <div
           className='hover-animation grid grid-rows-3 gap-3 rounded-2xl bg-main-sidebar-background
                      px-4 py-3 xs:grid-cols-3 xs:grid-rows-none'
@@ -93,5 +78,5 @@ export function DisplayModal({ closeModal }: DisplayModalProps) {
         Done
       </Button>
     </div>
-  );
+  )
 }

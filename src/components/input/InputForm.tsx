@@ -1,42 +1,32 @@
-import { useEffect } from 'react';
-import TextArea from 'react-textarea-autosize';
-import { motion } from 'framer-motion';
-import { useModal } from '@/hooks/useModal';
-import { Modal } from "@/components/modal/Modal";
-import { ActionModal } from "@/components/modal/ActionModal";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { Button } from "@/components/ui/Button";
-import type {
-  ReactNode,
-  RefObject,
-  ChangeEvent,
-  KeyboardEvent,
-  ClipboardEvent
-} from 'react';
-import type { Variants } from 'framer-motion';
+import { useEffect } from 'react'
+import TextArea from 'react-textarea-autosize'
+import { motion } from 'framer-motion'
+import { useModal } from '@/hooks/useModal'
+import { Modal } from '@/components/modal/Modal'
+import { ActionModal } from '@/components/modal/ActionModal'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { Button } from '@/components/ui/Button'
+import type { ReactNode, RefObject, ChangeEvent, KeyboardEvent, ClipboardEvent } from 'react'
+import type { Variants } from 'framer-motion'
 
 type InputFormProps = {
-  modal?: boolean;
-  formId: string;
-  loading: boolean;
-  visited: boolean;
-  reply?: boolean;
-  children: ReactNode;
-  inputRef: RefObject<HTMLTextAreaElement>;
-  inputValue: string;
-  replyModal?: boolean;
-  isValidTweet: boolean;
-  isUploadingImages: boolean;
-  sendTweet: () => Promise<void>;
-  handleFocus: () => void;
-  discardTweet: () => void;
-  handleChange: ({
-    target: { value }
-  }: ChangeEvent<HTMLTextAreaElement>) => void;
-  handleImageUpload: (
-    e: ChangeEvent<HTMLInputElement> | ClipboardEvent<HTMLTextAreaElement>
-  ) => void;
-};
+  modal?: boolean
+  formId: string
+  loading: boolean
+  visited: boolean
+  reply?: boolean
+  children: ReactNode
+  inputRef: RefObject<HTMLTextAreaElement>
+  inputValue: string
+  replyModal?: boolean
+  isValidTweet: boolean
+  isUploadingImages: boolean
+  sendTweet: () => Promise<void>
+  handleFocus: () => void
+  discardTweet: () => void
+  handleChange: ({ target: { value } }: ChangeEvent<HTMLTextAreaElement>) => void
+  handleImageUpload: (e: ChangeEvent<HTMLInputElement> | ClipboardEvent<HTMLTextAreaElement>) => void
+}
 
 const variants: Variants[] = [
   {
@@ -47,9 +37,9 @@ const variants: Variants[] = [
     initial: { x: 25, opacity: 0 },
     animate: { x: 0, opacity: 1, transition: { type: 'spring' } }
   }
-];
+]
 
-export const [fromTop, fromBottom] = variants;
+export const [fromTop, fromBottom] = variants
 
 export function InputForm({
   modal,
@@ -69,55 +59,48 @@ export function InputForm({
   handleChange,
   handleImageUpload
 }: InputFormProps) {
-  const { open, openModal, closeModal } = useModal();
+  const { open, openModal, closeModal } = useModal()
 
-  useEffect(() => handleShowHideNav(true), []);
+  useEffect(() => handleShowHideNav(true), [])
 
-  const handleKeyboardShortcut = ({
-    key,
-    ctrlKey
-  }: KeyboardEvent<HTMLTextAreaElement>): void => {
+  const handleKeyboardShortcut = ({ key, ctrlKey }: KeyboardEvent<HTMLTextAreaElement>): void => {
     if (!modal && key === 'Escape')
       if (isValidTweet) {
-        inputRef.current?.blur();
-        openModal();
-      } else discardTweet();
-    else if (ctrlKey && key === 'Enter' && isValidTweet) void sendTweet();
-  };
+        inputRef.current?.blur()
+        openModal()
+      } else discardTweet()
+    else if (ctrlKey && key === 'Enter' && isValidTweet) void sendTweet()
+  }
 
   const handleShowHideNav = (blur?: boolean) => (): void => {
-    const sidebar = document.getElementById('sidebar') as HTMLElement;
+    const sidebar = document.getElementById('sidebar') as HTMLElement
 
-    if (!sidebar) return;
+    if (!sidebar) return
 
     if (blur) {
-      setTimeout(() => (sidebar.style.opacity = ''), 200);
+      setTimeout(() => (sidebar.style.opacity = ''), 200)
 
-      return;
+      return
     }
 
-    if (window.innerWidth < 500) sidebar.style.opacity = '0';
-  };
+    if (window.innerWidth < 500) sidebar.style.opacity = '0'
+  }
 
   const handleFormFocus = (): void => {
-    handleShowHideNav()();
-    handleFocus();
-  };
+    handleShowHideNav()()
+    handleFocus()
+  }
 
   const handleClose = (): void => {
-    discardTweet();
-    closeModal();
-  };
+    discardTweet()
+    closeModal()
+  }
 
-  const isVisibilityShown = visited && !reply && !replyModal && !loading;
+  const isVisibilityShown = visited && !reply && !replyModal && !loading
 
   return (
     <div className='flex min-h-[48px] w-full flex-col justify-center gap-4'>
-      <Modal
-        modalClassName='max-w-xs bg-main-background w-full p-8 rounded-2xl'
-        open={open}
-        closeModal={closeModal}
-      >
+      <Modal modalClassName='max-w-xs bg-main-background w-full p-8 rounded-2xl' open={open} closeModal={closeModal}>
         <ActionModal
           title='Discard Tweet?'
           description='This can’t be undone and you’ll lose your draft.'
@@ -146,9 +129,7 @@ export function InputForm({
             className='w-full min-w-0 resize-none bg-transparent text-xl outline-none
                        placeholder:text-light-secondary dark:placeholder:text-dark-secondary'
             value={inputValue}
-            placeholder={
-              reply || replyModal ? 'Tweet your reply' : "What's happening?"
-            }
+            placeholder={reply || replyModal ? 'Tweet your reply' : "What's happening?"}
             onBlur={handleShowHideNav(true)}
             minRows={loading ? 1 : modal && !isUploadingImages ? 3 : 1}
             maxRows={isUploadingImages ? 5 : 15}
@@ -170,10 +151,7 @@ export function InputForm({
       </div>
       {children}
       {isVisibilityShown && (
-        <motion.div
-          className='flex border-b border-light-border pb-2 dark:border-dark-border'
-          {...fromBottom}
-        >
+        <motion.div className='flex border-b border-light-border pb-2 dark:border-dark-border' {...fromBottom}>
           <button
             type='button'
             className='custom-button accent-tab accent-bg-tab flex cursor-not-allowed items-center gap-1 px-3
@@ -185,5 +163,5 @@ export function InputForm({
         </motion.div>
       )}
     </div>
-  );
+  )
 }

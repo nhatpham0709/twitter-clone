@@ -1,14 +1,14 @@
-import cn from 'clsx';
-import { ToolTip } from "@/components/ui/Tooltip";
+import cn from 'clsx'
+import { ToolTip } from '@/components/ui/Tooltip'
 
 type ProgressBarProps = {
-  modal?: boolean;
-  inputLimit: number;
-  inputLength: number;
-  isCharLimitExceeded: boolean;
-};
+  modal?: boolean
+  inputLimit: number
+  inputLength: number
+  isCharLimitExceeded: boolean
+}
 
-const baseOffset = [56.5487, 87.9646] as const;
+const baseOffset = [56.5487, 87.9646] as const
 
 const circleStyles = [
   {
@@ -23,30 +23,22 @@ const circleStyles = [
     stroke: 'stroke-accent-yellow',
     r: 14
   }
-] as const;
+] as const
 
-export function ProgressBar({
-  modal,
-  inputLimit,
-  inputLength,
-  isCharLimitExceeded
-}: ProgressBarProps) {
-  const isCloseToLimit = inputLength >= inputLimit - 20;
-  const baseCircle = baseOffset[+isCloseToLimit];
+export function ProgressBar({ modal, inputLimit, inputLength, isCharLimitExceeded }: ProgressBarProps) {
+  const isCloseToLimit = inputLength >= inputLimit - 20
+  const baseCircle = baseOffset[+isCloseToLimit]
 
-  const inputPercentage = (inputLength / inputLimit) * 100;
-  const circleLength = baseCircle - (baseCircle * inputPercentage) / 100;
+  const inputPercentage = (inputLength / inputLimit) * 100
+  const circleLength = baseCircle - (baseCircle * inputPercentage) / 100
 
-  const remainingCharacters = inputLimit - inputLength;
-  const isHittingCharLimit = remainingCharacters <= 0;
+  const remainingCharacters = inputLimit - inputLength
+  const isHittingCharLimit = remainingCharacters <= 0
 
-  const { container, viewBox, stroke, r } = circleStyles[+isCloseToLimit];
+  const { container, viewBox, stroke, r } = circleStyles[+isCloseToLimit]
 
   return (
-    <button
-      className='group relative cursor-pointer outline-none'
-      type='button'
-    >
+    <button className='group relative cursor-pointer outline-none' type='button'>
       <i
         className={cn(
           'flex h-5 w-5 -rotate-90 items-center justify-center transition',
@@ -54,12 +46,7 @@ export function ProgressBar({
           remainingCharacters <= -10 && 'opacity-0'
         )}
       >
-        <svg
-          className='overflow-visible'
-          width='100%'
-          height='100%'
-          viewBox={viewBox}
-        >
+        <svg className='overflow-visible' width='100%' height='100%' viewBox={viewBox}>
           <circle
             className='stroke-light-border dark:stroke-dark-border'
             cx='50%'
@@ -69,10 +56,7 @@ export function ProgressBar({
             r={r}
           />
           <circle
-            className={cn(
-              'transition-colors',
-              isHittingCharLimit ? 'stroke-accent-red' : stroke
-            )}
+            className={cn('transition-colors', isHittingCharLimit ? 'stroke-accent-red' : stroke)}
             cx='50%'
             cy='50%'
             fill='none'
@@ -100,12 +84,10 @@ export function ProgressBar({
       </span>
       <ToolTip
         tip={
-          isCharLimitExceeded
-            ? 'You have exceeded the character limit'
-            : `${remainingCharacters} characters remaining`
+          isCharLimitExceeded ? 'You have exceeded the character limit' : `${remainingCharacters} characters remaining`
         }
         modal={modal}
       />
     </button>
-  );
+  )
 }

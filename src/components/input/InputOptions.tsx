@@ -1,19 +1,19 @@
-import { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Button } from "@/components/ui/Button";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { ToolTip } from "@/components/ui/Tooltip";
-import { variants } from "./Input";
-import { ProgressBar } from "./ProgressBar";
-import type { ChangeEvent, ClipboardEvent } from 'react';
-import type { IconName } from '@/components/ui/HeroIcon';
+import { useRef } from 'react'
+import { motion } from 'framer-motion'
+import { Button } from '@/components/ui/Button'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { ToolTip } from '@/components/ui/Tooltip'
+import { variants } from './Input'
+import { ProgressBar } from './ProgressBar'
+import type { ChangeEvent, ClipboardEvent } from 'react'
+import type { IconName } from '@/components/ui/HeroIcon'
 
 type Options = {
-  name: string;
-  iconName: IconName;
-  disabled: boolean;
-  onClick?: () => void;
-}[];
+  name: string
+  iconName: IconName
+  disabled: boolean
+  onClick?: () => void
+}[]
 
 const options: Readonly<Options> = [
   {
@@ -46,19 +46,17 @@ const options: Readonly<Options> = [
     iconName: 'MapPinIcon',
     disabled: true
   }
-];
+]
 
 type InputOptionsProps = {
-  reply?: boolean;
-  modal?: boolean;
-  inputLimit: number;
-  inputLength: number;
-  isValidTweet: boolean;
-  isCharLimitExceeded: boolean;
-  handleImageUpload: (
-    e: ChangeEvent<HTMLInputElement> | ClipboardEvent<HTMLTextAreaElement>
-  ) => void;
-};
+  reply?: boolean
+  modal?: boolean
+  inputLimit: number
+  inputLength: number
+  isValidTweet: boolean
+  isCharLimitExceeded: boolean
+  handleImageUpload: (e: ChangeEvent<HTMLInputElement> | ClipboardEvent<HTMLTextAreaElement>) => void
+}
 
 export function InputOptions({
   reply,
@@ -69,16 +67,13 @@ export function InputOptions({
   isCharLimitExceeded,
   handleImageUpload
 }: InputOptionsProps) {
-  const inputFileRef = useRef<HTMLInputElement>(null);
+  const inputFileRef = useRef<HTMLInputElement>(null)
 
-  const onClick = (): void => inputFileRef.current?.click();
+  const onClick = (): void => inputFileRef.current?.click()
 
-  let filteredOptions = options;
+  let filteredOptions = options
 
-  if (reply)
-    filteredOptions = filteredOptions.filter(
-      (_, index) => ![2, 4].includes(index)
-    );
+  if (reply) filteredOptions = filteredOptions.filter((_, index) => ![2, 4].includes(index))
 
   return (
     <motion.div className='flex justify-between' {...variants}>
@@ -110,9 +105,7 @@ export function InputOptions({
       <div className='flex items-center gap-4'>
         <motion.div
           className='flex items-center gap-4'
-          animate={
-            inputLength ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }
-          }
+          animate={inputLength ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
         >
           <ProgressBar
             modal={modal}
@@ -145,5 +138,5 @@ export function InputOptions({
         </Button>
       </div>
     </motion.div>
-  );
+  )
 }

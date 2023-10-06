@@ -1,28 +1,28 @@
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import cn from 'clsx';
-import { useAuth } from '@/context/AuthContext';
-import { useModal } from '@/hooks/useModal';
-import { Modal } from "@/components/modal/Modal";
-import { TweetReplyModal } from "@/components/modal/TweetReplyModal";
-import { ImagePreview } from "@/components/input/ImagePreview";
-import { UserAvatar } from "@/components/user/Avatar";
-import { UserTooltip } from "@/components/user/Tooltip";
-import { UserName } from "@/components/user/Name";
-import { UserUsername } from "@/components/user/Username";
-import { variants } from "@/components/tweet/Tweet";
-import { TweetActions } from "@/components/tweet/TweetActions";
-import { TweetStats } from "@/components/tweet/TweetStats";
-import { TweetDate } from "@/components/tweet/TweetDate";
-import { Input } from "@/components/input/Input";
-import type { RefObject } from 'react';
-import type { User } from '@/lib/types/user';
-import type { Tweet } from '@/lib/types/tweet';
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import cn from 'clsx'
+import { useAuth } from '@/context/AuthContext'
+import { useModal } from '@/hooks/useModal'
+import { Modal } from '@/components/modal/Modal'
+import { TweetReplyModal } from '@/components/modal/TweetReplyModal'
+import { ImagePreview } from '@/components/input/ImagePreview'
+import { UserAvatar } from '@/components/user/Avatar'
+import { UserTooltip } from '@/components/user/Tooltip'
+import { UserName } from '@/components/user/Name'
+import { UserUsername } from '@/components/user/Username'
+import { variants } from '@/components/tweet/Tweet'
+import { TweetActions } from '@/components/tweet/TweetActions'
+import { TweetStats } from '@/components/tweet/TweetStats'
+import { TweetDate } from '@/components/tweet/TweetDate'
+import { Input } from '@/components/input/Input'
+import type { RefObject } from 'react'
+import type { User } from '@/lib/types/user'
+import type { Tweet } from '@/lib/types/tweet'
 
 type ViewTweetProps = Tweet & {
-  user: User;
-  viewTweetRef?: RefObject<HTMLElement>;
-};
+  user: User
+  viewTweetRef?: RefObject<HTMLElement>
+}
 
 export function ViewTweet(tweet: ViewTweetProps) {
   const {
@@ -37,23 +37,23 @@ export function ViewTweet(tweet: ViewTweetProps) {
     userReplies,
     viewTweetRef,
     user: tweetUserData
-  } = tweet;
+  } = tweet
 
-  const { id: ownerId, name, username, verified, photoURL } = tweetUserData;
+  const { id: ownerId, name, username, verified, photoURL } = tweetUserData
 
-  const { user } = useAuth();
+  const { user } = useAuth()
 
-  const { open, openModal, closeModal } = useModal();
+  const { open, openModal, closeModal } = useModal()
 
-  const tweetLink = `/tweet/${tweetId}`;
+  const tweetLink = `/tweet/${tweetId}`
 
-  const userId = user?.id as string;
+  const userId = user?.id as string
 
-  const isOwner = userId === createdBy;
+  const isOwner = userId === createdBy
 
-  const reply = !!parent;
+  const reply = !!parent
 
-  const { id: parentId, username: parentUsername = username } = parent ?? {};
+  const { id: parentId, username: parentUsername = username } = parent ?? {}
 
   return (
     <motion.article
@@ -88,12 +88,7 @@ export function ViewTweet(tweet: ViewTweetProps) {
           <div className='flex min-w-0 justify-between'>
             <div className='flex flex-col truncate xs:overflow-visible xs:whitespace-normal'>
               <UserTooltip {...tweetUserData}>
-                <UserName
-                  className='-mb-1'
-                  name={name}
-                  username={username}
-                  verified={verified}
-                />
+                <UserName className='-mb-1' name={name} username={username} verified={verified} />
               </UserTooltip>
               <UserTooltip {...tweetUserData}>
                 <UserUsername username={username} />
@@ -117,25 +112,14 @@ export function ViewTweet(tweet: ViewTweetProps) {
       {reply && (
         <p className='text-light-secondary dark:text-dark-secondary'>
           Replying to{' '}
-          <Link
-            href={`/user/${parentUsername}`}
-            className='custom-underline text-main-accent'>
+          <Link href={`/user/${parentUsername}`} className='custom-underline text-main-accent'>
             @{parentUsername}
-
           </Link>
         </p>
       )}
       <div>
-        {text && (
-          <p className='whitespace-pre-line break-words text-2xl'>{text}</p>
-        )}
-        {images && (
-          <ImagePreview
-            viewTweet
-            imagesPreview={images}
-            previewCount={images.length}
-          />
-        )}
+        {text && <p className='whitespace-pre-line break-words text-2xl'>{text}</p>}
+        {images && <ImagePreview viewTweet imagesPreview={images} previewCount={images.length} />}
         <div
           className='inner:hover-animation inner:border-b inner:border-light-border
                      dark:inner:border-dark-border'
@@ -156,5 +140,5 @@ export function ViewTweet(tweet: ViewTweetProps) {
         <Input reply parent={{ id: tweetId, username: username }} />
       </div>
     </motion.article>
-  );
+  )
 }

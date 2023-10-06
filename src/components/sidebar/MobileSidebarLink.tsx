@@ -1,22 +1,16 @@
-import Link from 'next/link';
-import cn from 'clsx';
-import { preventBubbling } from '@/lib/utils';
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import type { MobileNavLink } from "@/components/modal/MobileSidebarModal";
+import Link from 'next/link'
+import cn from 'clsx'
+import { preventBubbling } from '@/lib/utils'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import type { MobileNavLink } from '@/components/modal/MobileSidebarModal'
 
 type MobileSidebarLinkProps = MobileNavLink & {
-  bottom?: boolean;
-};
+  bottom?: boolean
+}
 
-export function MobileSidebarLink({
-  href,
-  bottom,
-  linkName,
-  iconName,
-  disabled
-}: MobileSidebarLinkProps) {
+export function MobileSidebarLink({ href, bottom, linkName, iconName, disabled }: MobileSidebarLinkProps) {
   return (
-    (<Link
+    <Link
       href={href}
       key={href}
       className={cn(
@@ -26,14 +20,10 @@ export function MobileSidebarLink({
         bottom ? 'gap-2 p-1.5 text-base' : 'gap-4 p-2 text-xl',
         disabled && 'cursor-not-allowed'
       )}
-      onClick={disabled ? preventBubbling() : undefined}>
-
-      <HeroIcon
-        className={bottom ? 'h-5 w-5' : 'h-7 w-7'}
-        iconName={iconName}
-      />
+      onClick={disabled ? preventBubbling() : undefined}
+    >
+      <HeroIcon className={bottom ? 'h-5 w-5' : 'h-7 w-7'} iconName={iconName} />
       {linkName}
-
-    </Link>)
-  );
+    </Link>
+  )
 }

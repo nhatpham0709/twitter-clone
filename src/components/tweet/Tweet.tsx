@@ -1,38 +1,38 @@
-import Link from 'next/link';
-import { AnimatePresence, motion } from 'framer-motion';
-import cn from 'clsx';
-import { useAuth } from '@/context/AuthContext';
-import { useModal } from '@/hooks/useModal';
-import { delayScroll } from '@/lib/utils';
-import { Modal } from "@/components/modal/Modal";
-import { TweetReplyModal } from "@/components/modal/TweetReplyModal";
-import { ImagePreview } from "@/components/input/ImagePreview";
-import { UserAvatar } from "@/components/user/Avatar";
-import { UserTooltip } from "@/components/user/Tooltip";
-import { UserName } from "@/components/user/Name";
-import { UserUsername } from "@/components/user/Username";
-import { TweetActions } from "./TweetActions";
-import { TweetStatus } from "./TweetStatus";
-import { TweetStats } from "./TweetStats";
-import { TweetDate } from "./TweetDate";
-import type { Variants } from 'framer-motion';
-import type { Tweet } from '@/lib/types/tweet';
-import type { User } from '@/lib/types/user';
+import Link from 'next/link'
+import { AnimatePresence, motion } from 'framer-motion'
+import cn from 'clsx'
+import { useAuth } from '@/context/AuthContext'
+import { useModal } from '@/hooks/useModal'
+import { delayScroll } from '@/lib/utils'
+import { Modal } from '@/components/modal/Modal'
+import { TweetReplyModal } from '@/components/modal/TweetReplyModal'
+import { ImagePreview } from '@/components/input/ImagePreview'
+import { UserAvatar } from '@/components/user/Avatar'
+import { UserTooltip } from '@/components/user/Tooltip'
+import { UserName } from '@/components/user/Name'
+import { UserUsername } from '@/components/user/Username'
+import { TweetActions } from './TweetActions'
+import { TweetStatus } from './TweetStatus'
+import { TweetStats } from './TweetStats'
+import { TweetDate } from './TweetDate'
+import type { Variants } from 'framer-motion'
+import type { Tweet } from '@/lib/types/tweet'
+import type { User } from '@/lib/types/user'
 
 export type TweetProps = Tweet & {
-  user: User;
-  modal?: boolean;
-  pinned?: boolean;
-  profile?: User | null;
-  parentTweet?: boolean;
-  ref?: any;
-};
+  user: User
+  modal?: boolean
+  pinned?: boolean
+  profile?: User | null
+  parentTweet?: boolean
+  ref?: any
+}
 
 export const variants: Variants = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { duration: 0.8 } },
   exit: { opacity: 0, transition: { duration: 0.2 } }
-};
+}
 
 export function Tweet(tweet: TweetProps) {
   const {
@@ -50,30 +50,26 @@ export function Tweet(tweet: TweetProps) {
     userReplies,
     userRetweets,
     user: tweetUserData
-  } = tweet;
+  } = tweet
 
-  const { id: ownerId, name, username, verified, photoURL } = tweetUserData;
+  const { id: ownerId, name, username, verified, photoURL } = tweetUserData
 
-  const { user } = useAuth();
+  const { user } = useAuth()
 
-  const { open, openModal, closeModal } = useModal();
+  const { open, openModal, closeModal } = useModal()
 
-  const tweetLink = `/tweet/${tweetId}`;
+  const tweetLink = `/tweet/${tweetId}`
 
-  const userId = user?.id as string;
+  const userId = user?.id as string
 
-  const isOwner = userId === createdBy;
+  const isOwner = userId === createdBy
 
-  const { id: parentId, username: parentUsername = username } = parent ?? {};
+  const { id: parentId, username: parentUsername = username } = parent ?? {}
 
-  const {
-    id: profileId,
-    name: profileName,
-    username: profileUsername
-  } = profile ?? {};
+  const { id: profileId, name: profileName, username: profileUsername } = profile ?? {}
 
-  const reply = !!parent;
-  const tweetIsRetweeted = userRetweets.includes(profileId ?? '');
+  const reply = !!parent
+  const tweetIsRetweeted = userRetweets.includes(profileId ?? '')
 
   return (
     <motion.article
@@ -97,9 +93,7 @@ export function Tweet(tweet: TweetProps) {
         className={cn(
           `accent-tab hover-card relative flex flex-col 
            gap-y-4 px-4 py-3 outline-none duration-200`,
-          parentTweet
-            ? 'mt-0.5 pb-0 pt-2.5'
-            : 'border-b border-light-border dark:border-dark-border'
+          parentTweet ? 'mt-0.5 pb-0 pt-2.5' : 'border-b border-light-border dark:border-dark-border'
         )}
         onClick={delayScroll(200)}
       >
@@ -112,10 +106,7 @@ export function Tweet(tweet: TweetProps) {
             ) : (
               tweetIsRetweeted && (
                 <TweetStatus type='tweet'>
-                  <Link
-                    href={profileUsername as string}
-                    className='custom-underline truncate text-sm font-bold'
-                  >
+                  <Link href={profileUsername as string} className='custom-underline truncate text-sm font-bold'>
                     {userId === profileId ? 'You' : profileName}Retweeted
                   </Link>
                 </TweetStatus>
@@ -126,9 +117,7 @@ export function Tweet(tweet: TweetProps) {
             <UserTooltip avatar modal={modal} {...tweetUserData}>
               <UserAvatar src={photoURL} alt={name} username={username} />
             </UserTooltip>
-            {parentTweet && (
-              <i className='hover-animation h-full w-0.5 bg-light-line-reply dark:bg-dark-line-reply' />
-            )}
+            {parentTweet && <i className='hover-animation h-full w-0.5 bg-light-line-reply dark:bg-dark-line-reply' />}
           </div>
           <div className='flex min-w-0 flex-col'>
             <div className='flex justify-between gap-2 text-light-secondary dark:text-dark-secondary'>
@@ -161,30 +150,16 @@ export function Tweet(tweet: TweetProps) {
               </div>
             </div>
             {(reply || modal) && (
-              <p
-                className={cn(
-                  'text-light-secondary dark:text-dark-secondary',
-                  modal && 'order-1 my-2'
-                )}
-              >
+              <p className={cn('text-light-secondary dark:text-dark-secondary', modal && 'order-1 my-2')}>
                 Replying to{' '}
-                <Link
-                  href={`/user/${parentUsername}`}
-                  className='custom-underline text-main-accent'
-                >
+                <Link href={`/user/${parentUsername}`} className='custom-underline text-main-accent'>
                   @{parentUsername}
                 </Link>
               </p>
             )}
             {text && <p className='whitespace-pre-line break-words'>{text}</p>}
             <div className='mt-1 flex flex-col gap-2'>
-              {images && (
-                <ImagePreview
-                  tweet
-                  imagesPreview={images}
-                  previewCount={images.length}
-                />
-              )}
+              {images && <ImagePreview tweet imagesPreview={images} previewCount={images.length} />}
               {!modal && (
                 <TweetStats
                   reply={reply}
@@ -202,5 +177,5 @@ export function Tweet(tweet: TweetProps) {
         </div>
       </Link>
     </motion.article>
-  );
+  )
 }

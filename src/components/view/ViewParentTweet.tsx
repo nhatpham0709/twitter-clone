@@ -1,30 +1,27 @@
-import { useEffect } from 'react';
-import { doc } from 'firebase/firestore';
-import { useDocument } from '@/hooks/useDocument';
-import { tweetsCollection } from '@/lib/firebase/collections';
-import { Tweet } from "@/components/tweet/Tweet";
-import type { RefObject } from 'react';
+import { useEffect } from 'react'
+import { doc } from 'firebase/firestore'
+import { useDocument } from '@/hooks/useDocument'
+import { tweetsCollection } from '@/lib/firebase/collections'
+import { Tweet } from '@/components/tweet/Tweet'
+import type { RefObject } from 'react'
 
 type ViewParentTweetProps = {
-  parentId: string;
-  viewTweetRef: RefObject<HTMLElement>;
-};
+  parentId: string
+  viewTweetRef: RefObject<HTMLElement>
+}
 
-export function ViewParentTweet({
-  parentId,
-  viewTweetRef
-}: ViewParentTweetProps) {
+export function ViewParentTweet({ parentId, viewTweetRef }: ViewParentTweetProps) {
   const { data, loading } = useDocument(doc(tweetsCollection, parentId), {
     includeUser: true,
     allowNull: true
-  });
+  })
 
   useEffect(() => {
-    if (!loading) viewTweetRef.current?.scrollIntoView();
+    if (!loading) viewTweetRef.current?.scrollIntoView()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.id, loading]);
+  }, [data?.id, loading])
 
-  if (loading) return null;
+  if (loading) return null
   if (!data)
     return (
       <div className='px-4 pb-2 pt-3'>
@@ -43,7 +40,7 @@ export function ViewParentTweet({
           </a>
         </p>
       </div>
-    );
+    )
 
-  return <Tweet parentTweet {...data} />;
+  return <Tweet parentTweet {...data} />
 }

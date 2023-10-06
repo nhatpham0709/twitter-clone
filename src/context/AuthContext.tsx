@@ -1,74 +1,57 @@
-import { useState, useEffect, useContext, createContext } from 'react';
-import {
-  signInWithPopup,
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signOut as signOutFirebase
-} from 'firebase/auth';
-import {
-  doc,
-  getDoc,
-  setDoc,
-  onSnapshot,
-  serverTimestamp
-} from 'firebase/firestore';
-import { auth } from '@/lib/firebase/app';
-import {
-  usersCollection,
-  userStatsCollection,
-  userBookmarksCollection
-} from '@/lib/firebase/collections';
-import { getRandomInt } from '@/lib/random';
-import type { ReactNode } from 'react';
-import type { User as AuthUser } from 'firebase/auth';
-import type { WithFieldValue } from 'firebase/firestore';
-import type { User } from '@/lib/types/user';
-import type { Bookmark } from '@/lib/types/bookmark';
-import type { Stats } from '@/lib/types/stats';
+import { useState, useEffect, useContext, createContext } from 'react'
+import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut as signOutFirebase } from 'firebase/auth'
+import { doc, getDoc, setDoc, onSnapshot, serverTimestamp } from 'firebase/firestore'
+import { auth } from '@/lib/firebase/app'
+import { usersCollection, userStatsCollection, userBookmarksCollection } from '@/lib/firebase/collections'
+import { getRandomInt } from '@/lib/random'
+import type { ReactNode } from 'react'
+import type { User as AuthUser } from 'firebase/auth'
+import type { WithFieldValue } from 'firebase/firestore'
+import type { User } from '@/lib/types/user'
+import type { Bookmark } from '@/lib/types/bookmark'
+import type { Stats } from '@/lib/types/stats'
 
 type AuthContext = {
-  user: User | null;
-  error: Error | null;
-  loading: boolean;
-  isAdmin: boolean;
-  userBookmarks: Bookmark[] | null;
-  signOut: () => Promise<void>;
-  signInWithGoogle: () => Promise<void>;
-};
+  user: User | null
+  error: Error | null
+  loading: boolean
+  isAdmin: boolean
+  userBookmarks: Bookmark[] | null
+  signOut: () => Promise<void>
+  signInWithGoogle: () => Promise<void>
+}
 
-export const AuthContext = createContext<AuthContext | null>(null);
+export const AuthContext = createContext<AuthContext | null>(null)
 
 type AuthContextProviderProps = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [userBookmarks, setUserBookmarks] = useState<Bookmark[] | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null)
+  const [userBookmarks, setUserBookmarks] = useState<Bookmark[] | null>(null)
+  const [error, setError] = useState<Error | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const manageUser = async (authUser: AuthUser): Promise<void> => {
-      const { uid, displayName, photoURL } = authUser;
+      const { uid, displayName, photoURL } = authUser
 
-      const userSnapshot = await getDoc(doc(usersCollection, uid));
+      const userSnapshot = await getDoc(doc(usersCollection, uid))
 
       if (!userSnapshot.exists()) {
-        let available = false;
-        let randomUsername = '';
+        let available = false
+        let randomUsername = ''
 
         while (!available) {
-          const normalizeName = displayName?.replace(/\s/g, '').toLowerCase();
-          const randomInt = getRandomInt(1, 10_000);
+          const normalizeName = displayName?.replace(/\s/g, '').toLowerCase()
+          const randomInt = getRandomInt(1, 10_000)
 
-          randomUsername = `${normalizeName as string}${randomInt}`;
+          randomUsername = `${normalizeName as string}${randomInt}`
 
-          const randomUserSnapshot = await getDoc(
-            doc(usersCollection, randomUsername)
-          );
+          const randomUserSnapshot = await getDoc(doc(usersCollection, randomUsername))
 
-          if (!randomUserSnapshot.exists()) available = true;
+          if (!randomUserSnapshot.exists()) available = true
         }
 
         const userData: WithFieldValue<User> = {
@@ -90,88 +73,85 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           totalPhotos: 0,
           pinnedTweet: null,
           coverPhotoURL: null
-        };
+        }
 
         const userStatsData: WithFieldValue<Stats> = {
           likes: [],
           tweets: [],
           updatedAt: null
-        };
+        }
 
         try {
           await Promise.all([
             setDoc(doc(usersCollection, uid), userData),
             setDoc(doc(userStatsCollection(uid), 'stats'), userStatsData)
-          ]);
+          ])
 
-          const newUser = (await getDoc(doc(usersCollection, uid))).data();
-          setUser(newUser as User);
+          const newUser = (await getDoc(doc(usersCollection, uid))).data()
+          setUser(newUser as User)
         } catch (error) {
-          setError(error as Error);
+          setError(error as Error)
         }
       } else {
-        const userData = userSnapshot.data();
-        setUser(userData);
+        const userData = userSnapshot.data()
+        setUser(userData)
       }
 
-      setLoading(false);
-    };
+      setLoading(false)
+    }
 
     const handleUserAuth = (authUser: AuthUser | null): void => {
-      setLoading(true);
+      setLoading(true)
 
-      if (authUser) manageUser(authUser);
+      if (authUser) manageUser(authUser)
       else {
-        setUser(null);
-        setLoading(false);
+        setUser(null)
+        setLoading(false)
       }
-    };
+    }
 
-    onAuthStateChanged(auth, handleUserAuth);
-  }, []);
+    onAuthStateChanged(auth, handleUserAuth)
+  }, [])
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) return
 
-    const { id } = user;
+    const { id } = user
 
-    const unsubscribeUser = onSnapshot(doc(usersCollection, id), (doc) => {
-      setUser(doc.data() as User);
-    });
+    const unsubscribeUser = onSnapshot(doc(usersCollection, id), doc => {
+      setUser(doc.data() as User)
+    })
 
-    const unsubscribeBookmarks = onSnapshot(
-      userBookmarksCollection(id),
-      (snapshot) => {
-        const bookmarks = snapshot.docs.map((doc) => doc.data());
-        setUserBookmarks(bookmarks);
-      }
-    );
+    const unsubscribeBookmarks = onSnapshot(userBookmarksCollection(id), snapshot => {
+      const bookmarks = snapshot.docs.map(doc => doc.data())
+      setUserBookmarks(bookmarks)
+    })
 
     return () => {
-      unsubscribeUser();
-      unsubscribeBookmarks();
-    };
+      unsubscribeUser()
+      unsubscribeBookmarks()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id]);
+  }, [user?.id])
 
   const signInWithGoogle = async (): Promise<void> => {
     try {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
+      const provider = new GoogleAuthProvider()
+      await signInWithPopup(auth, provider)
     } catch (error) {
-      setError(error as Error);
+      setError(error as Error)
     }
-  };
+  }
 
   const signOut = async (): Promise<void> => {
     try {
-      await signOutFirebase(auth);
+      await signOutFirebase(auth)
     } catch (error) {
-      setError(error as Error);
+      setError(error as Error)
     }
-  };
+  }
 
-  const isAdmin = user ? user.username === 'ccrsxx' : false;
+  const isAdmin = user ? user.username === 'ccrsxx' : false
 
   const value: AuthContext = {
     user,
@@ -181,16 +161,15 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     userBookmarks,
     signOut,
     signInWithGoogle
-  };
+  }
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 export function useAuth(): AuthContext {
-  const context = useContext(AuthContext);
+  const context = useContext(AuthContext)
 
-  if (!context)
-    throw new Error('useAuth must be used within an AuthContextProvider');
+  if (!context) throw new Error('useAuth must be used within an AuthContextProvider')
 
-  return context;
+  return context
 }

@@ -1,16 +1,16 @@
-import { useModal } from '@/hooks/useModal';
-import { Button } from "@/components/ui/Button";
-import { NextImage } from "@/components/ui/NextImage";
-import { Modal } from "@/components/modal/Modal";
-import { ImageModal } from "@/components/modal/ImageModal";
-import type { ImageData } from '@/lib/types/file';
+import { useModal } from '@/hooks/useModal'
+import { Button } from '@/components/ui/Button'
+import { NextImage } from '@/components/ui/NextImage'
+import { Modal } from '@/components/modal/Modal'
+import { ImageModal } from '@/components/modal/ImageModal'
+import type { ImageData } from '@/lib/types/file'
 
 type UserHomeCoverProps = {
-  coverData?: ImageData | null;
-};
+  coverData?: ImageData | null
+}
 
 export function UserHomeCover({ coverData }: UserHomeCoverProps) {
-  const { open, openModal, closeModal } = useModal();
+  const { open, openModal, closeModal } = useModal()
 
   return (
     <div className='mt-0.5 h-36 xs:h-48 sm:h-52'>
@@ -35,5 +35,5 @@ export function UserHomeCover({ coverData }: UserHomeCoverProps) {
         <div className='h-full bg-light-line-reply dark:bg-dark-line-reply' />
       )}
     </div>
-  );
+  )
 }

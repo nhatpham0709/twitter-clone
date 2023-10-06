@@ -1,10 +1,10 @@
-import { useAuth } from '@/context/AuthContext';
-import { NextImage } from "@/components/ui/NextImage";
-import { CustomIcon } from "@/components/ui/CustomIcon";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from '@/context/AuthContext'
+import { NextImage } from '@/components/ui/NextImage'
+import { CustomIcon } from '@/components/ui/CustomIcon'
+import { Button } from '@/components/ui/Button'
 
 export function LoginMain() {
-  const { signInWithGoogle } = useAuth();
+  const { signInWithGoogle } = useAuth()
 
   return (
     <main className='grid lg:grid-cols-[1fr,45vw]'>
@@ -33,9 +33,7 @@ export function LoginMain() {
             className='text-3xl before:content-["See_what’s_happening_in_the_world_right_now."] 
                        lg:text-6xl lg:before:content-["Happening_now"]'
           />
-          <h2 className='hidden text-xl lg:block lg:text-3xl'>
-            Join Twitter today.
-          </h2>
+          <h2 className='hidden text-xl lg:block lg:text-3xl'>Join Twitter today.</h2>
         </div>
         <div className='flex max-w-xs flex-col gap-6 [&_button]:py-2'>
           <div className='grid gap-3 font-bold'>
@@ -70,27 +68,15 @@ export function LoginMain() {
                          text-light-secondary inner:text-accent-blue dark:text-dark-secondary'
             >
               By signing up, you agree to the{' '}
-              <a
-                href='https://twitter.com/tos'
-                target='_blank'
-                rel='noreferrer'
-              >
+              <a href='https://twitter.com/tos' target='_blank' rel='noreferrer'>
                 Terms of Service
               </a>{' '}
               and{' '}
-              <a
-                href='https://twitter.com/privacy'
-                target='_blank'
-                rel='noreferrer'
-              >
+              <a href='https://twitter.com/privacy' target='_blank' rel='noreferrer'>
                 Privacy Policy
               </a>
               , including{' '}
-              <a
-                href='https://help.twitter.com/rules-and-policies/twitter-cookies'
-                target='_blank'
-                rel='noreferrer'
-              >
+              <a href='https://help.twitter.com/rules-and-policies/twitter-cookies' target='_blank' rel='noreferrer'>
                 Cookie Use
               </a>
               .
@@ -110,5 +96,5 @@ export function LoginMain() {
         </div>
       </div>
     </main>
-  );
+  )
 }

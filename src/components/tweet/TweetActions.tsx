@@ -1,13 +1,13 @@
-import { useMemo } from 'react';
-import { useRouter } from 'next/router';
-import { doc, getDoc } from 'firebase/firestore';
-import { Popover } from '@headlessui/react';
-import { AnimatePresence, motion } from 'framer-motion';
-import cn from 'clsx';
-import { toast } from 'react-hot-toast';
-import { useAuth } from '@/context/AuthContext';
-import { useModal } from '@/hooks/useModal';
-import { tweetsCollection } from '@/lib/firebase/collections';
+import { useMemo } from 'react'
+import { useRouter } from 'next/router'
+import { doc, getDoc } from 'firebase/firestore'
+import { Popover } from '@headlessui/react'
+import { AnimatePresence, motion } from 'framer-motion'
+import cn from 'clsx'
+import { toast } from 'react-hot-toast'
+import { useAuth } from '@/context/AuthContext'
+import { useModal } from '@/hooks/useModal'
+import { tweetsCollection } from '@/lib/firebase/collections'
 import {
   removeTweet,
   manageReply,
@@ -15,17 +15,17 @@ import {
   managePinnedTweet,
   manageTotalTweets,
   manageTotalPhotos
-} from '@/lib/firebase/utils';
-import { delayScroll, preventBubbling, sleep } from '@/lib/utils';
-import { Modal } from "@/components/modal/Modal";
-import { ActionModal } from "@/components/modal/ActionModal";
-import { Button } from "@/components/ui/Button";
-import { ToolTip } from "@/components/ui/Tooltip";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { CustomIcon } from "@/components/ui/CustomIcon";
-import type { Variants } from 'framer-motion';
-import type { Tweet } from '@/lib/types/tweet';
-import type { User } from '@/lib/types/user';
+} from '@/lib/firebase/utils'
+import { delayScroll, preventBubbling, sleep } from '@/lib/utils'
+import { Modal } from '@/components/modal/Modal'
+import { ActionModal } from '@/components/modal/ActionModal'
+import { Button } from '@/components/ui/Button'
+import { ToolTip } from '@/components/ui/Tooltip'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { CustomIcon } from '@/components/ui/CustomIcon'
+import type { Variants } from 'framer-motion'
+import type { Tweet } from '@/lib/types/tweet'
+import type { User } from '@/lib/types/user'
 
 export const variants: Variants = {
   initial: { opacity: 0, y: -25 },
@@ -35,34 +35,32 @@ export const variants: Variants = {
     transition: { type: 'spring', duration: 0.4 }
   },
   exit: { opacity: 0, y: -25, transition: { duration: 0.2 } }
-};
+}
 
 type TweetActionsProps = Pick<Tweet, 'createdBy'> & {
-  isOwner: boolean;
-  ownerId: string;
-  tweetId: string;
-  username: string;
-  parentId?: string;
-  hasImages: boolean;
-  viewTweet?: boolean;
-};
+  isOwner: boolean
+  ownerId: string
+  tweetId: string
+  username: string
+  parentId?: string
+  hasImages: boolean
+  viewTweet?: boolean
+}
 
-type PinModalData = Record<'title' | 'description' | 'mainBtnLabel', string>;
+type PinModalData = Record<'title' | 'description' | 'mainBtnLabel', string>
 
 const pinModalData: Readonly<PinModalData[]> = [
   {
     title: 'Pin Tweet to from profile?',
-    description:
-      'This will appear at the top of your profile and replace any previously pinned Tweet.',
+    description: 'This will appear at the top of your profile and replace any previously pinned Tweet.',
     mainBtnLabel: 'Pin'
   },
   {
     title: 'Unpin Tweet from profile?',
-    description:
-      'This will no longer appear automatically at the top of your profile.',
+    description: 'This will no longer appear automatically at the top of your profile.',
     mainBtnLabel: 'Unpin'
   }
-];
+]
 
 export function TweetActions({
   isOwner,
@@ -74,79 +72,65 @@ export function TweetActions({
   viewTweet,
   createdBy
 }: TweetActionsProps) {
-  const { user, isAdmin } = useAuth();
-  const { push } = useRouter();
+  const { user, isAdmin } = useAuth()
+  const { push } = useRouter()
 
-  const {
-    open: removeOpen,
-    openModal: removeOpenModal,
-    closeModal: removeCloseModal
-  } = useModal();
+  const { open: removeOpen, openModal: removeOpenModal, closeModal: removeCloseModal } = useModal()
 
-  const {
-    open: pinOpen,
-    openModal: pinOpenModal,
-    closeModal: pinCloseModal
-  } = useModal();
+  const { open: pinOpen, openModal: pinOpenModal, closeModal: pinCloseModal } = useModal()
 
-  const { id: userId, following, pinnedTweet } = user as User;
+  const { id: userId, following, pinnedTweet } = user as User
 
-  const isInAdminControl = isAdmin && !isOwner;
-  const tweetIsPinned = pinnedTweet === tweetId;
+  const isInAdminControl = isAdmin && !isOwner
+  const tweetIsPinned = pinnedTweet === tweetId
 
   const handleRemove = async (): Promise<void> => {
     if (viewTweet)
       if (parentId) {
-        const parentSnapshot = await getDoc(doc(tweetsCollection, parentId));
+        const parentSnapshot = await getDoc(doc(tweetsCollection, parentId))
         if (parentSnapshot.exists()) {
-          await push(`/tweet/${parentId}`, undefined, { scroll: false });
-          delayScroll(200)();
-          await sleep(50);
-        } else await push('/home');
-      } else await push('/home');
+          await push(`/tweet/${parentId}`, undefined, { scroll: false })
+          delayScroll(200)()
+          await sleep(50)
+        } else await push('/home')
+      } else await push('/home')
 
     await Promise.all([
       removeTweet(tweetId),
       manageTotalTweets('decrement', ownerId),
       hasImages && manageTotalPhotos('decrement', createdBy),
       parentId && manageReply('decrement', parentId)
-    ]);
+    ])
 
-    toast.success(
-      `${isInAdminControl ? `@${username}'s` : 'Your'} Tweet was deleted`
-    );
+    toast.success(`${isInAdminControl ? `@${username}'s` : 'Your'} Tweet was deleted`)
 
-    removeCloseModal();
-  };
+    removeCloseModal()
+  }
 
   const handlePin = async (): Promise<void> => {
-    await managePinnedTweet(tweetIsPinned ? 'unpin' : 'pin', userId, tweetId);
-    toast.success(
-      `Your tweet was ${tweetIsPinned ? 'unpinned' : 'pinned'} to your profile`
-    );
-    pinCloseModal();
-  };
+    await managePinnedTweet(tweetIsPinned ? 'unpin' : 'pin', userId, tweetId)
+    toast.success(`Your tweet was ${tweetIsPinned ? 'unpinned' : 'pinned'} to your profile`)
+    pinCloseModal()
+  }
 
   const handleFollow =
     (closeMenu: () => void, ...args: Parameters<typeof manageFollow>) =>
     async (): Promise<void> => {
-      const [type] = args;
+      const [type] = args
 
-      closeMenu();
-      await manageFollow(...args);
+      closeMenu()
+      await manageFollow(...args)
 
-      toast.success(
-        `You ${type === 'follow' ? 'followed' : 'unfollowed'} @${username}`
-      );
-    };
+      toast.success(`You ${type === 'follow' ? 'followed' : 'unfollowed'} @${username}`)
+    }
 
-  const userIsFollowed = following.includes(createdBy);
+  const userIsFollowed = following.includes(createdBy)
 
   const currentPinModalData = useMemo(
     () => pinModalData[+tweetIsPinned],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [pinOpen]
-  );
+  )
 
   return (
     <>
@@ -247,9 +231,7 @@ export function TweetActions({
                     <Popover.Button
                       className='accent-tab flex w-full gap-3 rounded-md rounded-t-none p-4 hover:bg-main-sidebar-background'
                       as={Button}
-                      onClick={preventBubbling(
-                        handleFollow(close, 'unfollow', userId, createdBy)
-                      )}
+                      onClick={preventBubbling(handleFollow(close, 'unfollow', userId, createdBy))}
                     >
                       <HeroIcon iconName='UserMinusIcon' />
                       Unfollow @{username}
@@ -258,9 +240,7 @@ export function TweetActions({
                     <Popover.Button
                       className='accent-tab flex w-full gap-3 rounded-md rounded-t-none p-4 hover:bg-main-sidebar-background'
                       as={Button}
-                      onClick={preventBubbling(
-                        handleFollow(close, 'follow', userId, createdBy)
-                      )}
+                      onClick={preventBubbling(handleFollow(close, 'follow', userId, createdBy))}
                     >
                       <HeroIcon iconName='UserPlusIcon' />
                       Follow @{username}
@@ -273,5 +253,5 @@ export function TweetActions({
         )}
       </Popover>
     </>
-  );
+  )
 }

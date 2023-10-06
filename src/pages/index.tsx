@@ -1,8 +1,8 @@
-import { AuthLayout } from "@/components/layout/AuthLayout";
-import { SEO } from "@/components/common/Seo";
-import { LoginMain } from "@/components/login/LoginMain";
-import { LoginFooter } from "@/components/login/LoginFooter";
-import type { ReactElement, ReactNode } from 'react';
+import { AuthLayout } from '@/components/layout/AuthLayout'
+import { SEO } from '@/components/common/Seo'
+import { LoginMain } from '@/components/login/LoginMain'
+import { LoginFooter } from '@/components/login/LoginFooter'
+import type { ReactElement, ReactNode } from 'react'
 
 export default function Login() {
   return (
@@ -14,9 +14,7 @@ export default function Login() {
       <LoginMain />
       <LoginFooter />
     </div>
-  );
+  )
 }
 
-Login.getLayout = (page: ReactElement): ReactNode => (
-  <AuthLayout>{page}</AuthLayout>
-);
+Login.getLayout = (page: ReactElement): ReactNode => <AuthLayout>{page}</AuthLayout>

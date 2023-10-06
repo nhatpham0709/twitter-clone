@@ -1,18 +1,18 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { Dialog } from '@headlessui/react';
-import cn from 'clsx';
-import type { ReactNode } from 'react';
-import type { Variants } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion'
+import { Dialog } from '@headlessui/react'
+import cn from 'clsx'
+import type { ReactNode } from 'react'
+import type { Variants } from 'framer-motion'
 
 type ModalProps = {
-  open: boolean;
-  children: ReactNode;
-  className?: string;
-  modalAnimation?: Variants;
-  modalClassName?: string;
-  closePanelOnClick?: boolean;
-  closeModal: () => void;
-};
+  open: boolean
+  children: ReactNode
+  className?: string
+  modalAnimation?: Variants
+  modalClassName?: string
+  closePanelOnClick?: boolean
+  closeModal: () => void
+}
 
 const variants: Variants[] = [
   {
@@ -29,9 +29,9 @@ const variants: Variants[] = [
     },
     exit: { opacity: 0, scale: 0.8, transition: { duration: 0.15 } }
   }
-];
+]
 
-export const [backdrop, modal] = variants;
+export const [backdrop, modal] = variants
 
 export function Modal({
   open,
@@ -45,23 +45,13 @@ export function Modal({
   return (
     <AnimatePresence>
       {open && (
-        <Dialog
-          className='relative z-50'
-          open={open}
-          onClose={closeModal}
-          static
-        >
+        <Dialog className='relative z-50' open={open} onClose={closeModal} static>
           <motion.div
             className='hover-animation fixed inset-0 bg-black/40 dark:bg-[#5B7083]/40'
             aria-hidden='true'
             {...backdrop}
           />
-          <div
-            className={cn(
-              'fixed inset-0 overflow-y-auto p-4',
-              className ?? 'flex items-center justify-center'
-            )}
-          >
+          <div className={cn('fixed inset-0 overflow-y-auto p-4', className ?? 'flex items-center justify-center')}>
             <Dialog.Panel
               className={modalClassName}
               as={motion.div}
@@ -74,5 +64,5 @@ export function Modal({
         </Dialog>
       )}
     </AnimatePresence>
-  );
+  )
 }

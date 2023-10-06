@@ -1,25 +1,18 @@
-import cn from 'clsx';
-import Link from 'next/link';
-import { HeroIcon } from '@/components/ui/HeroIcon';
+import cn from 'clsx'
+import Link from 'next/link'
+import { HeroIcon } from '@/components/ui/HeroIcon'
 
 type UserNameProps = {
-  tag?: keyof JSX.IntrinsicElements;
-  name: string;
-  verified: boolean;
-  username?: string;
-  className?: string;
-  iconClassName?: string;
-};
+  tag?: keyof JSX.IntrinsicElements
+  name: string
+  verified: boolean
+  username?: string
+  className?: string
+  iconClassName?: string
+}
 
-export function UserName({
-  tag,
-  name,
-  verified,
-  username,
-  className,
-  iconClassName
-}: UserNameProps) {
-  const CustomTag = tag ? tag : 'p';
+export function UserName({ tag, name, verified, username, className, iconClassName }: UserNameProps) {
+  const CustomTag = tag ? tag : 'p'
 
   return (
     <Link
@@ -34,13 +27,9 @@ export function UserName({
       <CustomTag className='truncate'>{name}</CustomTag>
       {verified && (
         <i>
-          <HeroIcon
-            className={cn('fill-accent-blue', iconClassName ?? 'h-5 w-5')}
-            iconName='CheckBadgeIcon'
-            solid
-          />
+          <HeroIcon className={cn('fill-accent-blue', iconClassName ?? 'h-5 w-5')} iconName='CheckBadgeIcon' solid />
         </i>
       )}
     </Link>
-  );
+  )
 }

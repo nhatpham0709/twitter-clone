@@ -1,13 +1,13 @@
-import Link from 'next/link';
-import cn from 'clsx';
-import { formatDate } from '@/lib/date';
-import { ToolTip } from "@/components/ui/Tooltip";
-import type { Tweet } from '@/lib/types/tweet';
+import Link from 'next/link'
+import cn from 'clsx'
+import { formatDate } from '@/lib/date'
+import { ToolTip } from '@/components/ui/Tooltip'
+import type { Tweet } from '@/lib/types/tweet'
 
 type TweetDateProps = Pick<Tweet, 'createdAt'> & {
-  tweetLink: string;
-  viewTweet?: boolean;
-};
+  tweetLink: string
+  viewTweet?: boolean
+}
 
 export function TweetDate({ createdAt, tweetLink, viewTweet }: TweetDateProps) {
   return (
@@ -19,10 +19,9 @@ export function TweetDate({ createdAt, tweetLink, viewTweet }: TweetDateProps) {
           className={cn(
             'custom-underline peer whitespace-nowrap',
             viewTweet && 'text-light-secondary dark:text-dark-secondary'
-          )}>
-
+          )}
+        >
           {formatDate(createdAt, viewTweet ? 'full' : 'tweet')}
-
         </Link>
         <ToolTip
           className='translate-y-1 peer-focus:opacity-100 peer-focus-visible:visible
@@ -31,5 +30,5 @@ export function TweetDate({ createdAt, tweetLink, viewTweet }: TweetDateProps) {
         />
       </div>
     </div>
-  );
+  )
 }

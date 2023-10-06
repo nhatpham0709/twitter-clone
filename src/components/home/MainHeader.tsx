@@ -1,22 +1,22 @@
-import cn from 'clsx';
-import { Button } from "@/components/ui/Button";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { ToolTip } from "@/components/ui/Tooltip";
-import { MobileSidebar } from "@/components/sidebar/MobileSidebar";
-import type { ReactNode } from 'react';
-import type { IconName } from '@/components/ui/HeroIcon';
+import cn from 'clsx'
+import { Button } from '@/components/ui/Button'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { ToolTip } from '@/components/ui/Tooltip'
+import { MobileSidebar } from '@/components/sidebar/MobileSidebar'
+import type { ReactNode } from 'react'
+import type { IconName } from '@/components/ui/HeroIcon'
 
 type HomeHeaderProps = {
-  tip?: string;
-  title?: string;
-  children?: ReactNode;
-  iconName?: IconName;
-  className?: string;
-  disableSticky?: boolean;
-  useActionButton?: boolean;
-  useMobileSidebar?: boolean;
-  action?: () => void;
-};
+  tip?: string
+  title?: string
+  children?: ReactNode
+  iconName?: IconName
+  className?: string
+  disableSticky?: boolean
+  useActionButton?: boolean
+  useMobileSidebar?: boolean
+  action?: () => void
+}
 
 export function MainHeader({
   tip,
@@ -43,10 +43,7 @@ export function MainHeader({
                      dark:hover:bg-dark-primary/10 dark:active:bg-dark-primary/20'
           onClick={action}
         >
-          <HeroIcon
-            className='h-5 w-5'
-            iconName={iconName ?? 'ArrowLeftIcon'}
-          />
+          <HeroIcon className='h-5 w-5' iconName={iconName ?? 'ArrowLeftIcon'} />
           <ToolTip tip={tip ?? 'Back'} />
         </Button>
       )}
@@ -60,5 +57,5 @@ export function MainHeader({
       )}
       {children}
     </header>
-  );
+  )
 }

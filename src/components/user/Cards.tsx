@@ -1,32 +1,31 @@
-import cn from 'clsx';
-import { AnimatePresence, motion } from 'framer-motion';
-import { StatsEmpty } from "@/components/tweet/StatsEmpty";
-import { Loading } from "@/components/ui/Loading";
-import { variants } from "@/components/user/Header";
-import { UserCard } from "./Card";
-import type { User } from '@/lib/types/user';
-import type { StatsType } from "@/components/view/ViewTweetStats";
-import type { StatsEmptyProps } from "@/components/tweet/StatsEmpty";
+import cn from 'clsx'
+import { AnimatePresence, motion } from 'framer-motion'
+import { StatsEmpty } from '@/components/tweet/StatsEmpty'
+import { Loading } from '@/components/ui/Loading'
+import { variants } from '@/components/user/Header'
+import { UserCard } from './Card'
+import type { User } from '@/lib/types/user'
+import type { StatsType } from '@/components/view/ViewTweetStats'
+import type { StatsEmptyProps } from '@/components/tweet/StatsEmpty'
 
-type FollowType = 'following' | 'followers';
+type FollowType = 'following' | 'followers'
 
-type CombinedTypes = StatsType | FollowType;
+type CombinedTypes = StatsType | FollowType
 
 type UserCardsProps = {
-  data: User[] | null;
-  type: CombinedTypes;
-  follow?: boolean;
-  loading: boolean;
-};
+  data: User[] | null
+  type: CombinedTypes
+  follow?: boolean
+  loading: boolean
+}
 
-type NoStatsData = Record<CombinedTypes, StatsEmptyProps>;
+type NoStatsData = Record<CombinedTypes, StatsEmptyProps>
 
 const allNoStatsData: Readonly<NoStatsData> = {
   retweets: {
     title: 'Amplify Tweets you like',
     imageData: { src: '/assets/no-retweets.png', alt: 'No retweets' },
-    description:
-      'Share someone else’s Tweet on your timeline by Retweeting it. When you do, it’ll show up here.'
+    description: 'Share someone else’s Tweet on your timeline by Retweeting it. When you do, it’ll show up here.'
   },
   likes: {
     title: 'No Tweet Likes yet',
@@ -44,11 +43,11 @@ const allNoStatsData: Readonly<NoStatsData> = {
     description:
       'When someone follows this account, they’ll show up here. Tweeting and interacting with others helps boost followers.'
   }
-};
+}
 
 export function UserCards({ data, type, follow, loading }: UserCardsProps) {
-  const noStatsData = allNoStatsData[type];
-  const modal = ['retweets', 'likes'].includes(type);
+  const noStatsData = allNoStatsData[type]
+  const modal = ['retweets', 'likes'].includes(type)
 
   return (
     <section
@@ -62,7 +61,7 @@ export function UserCards({ data, type, follow, loading }: UserCardsProps) {
       ) : (
         <AnimatePresence mode='popLayout'>
           {data?.length ? (
-            data.map((userData) => (
+            data.map(userData => (
               <motion.div layout='position' key={userData.id} {...variants}>
                 <UserCard {...userData} follow={follow} modal={modal} />
               </motion.div>
@@ -73,5 +72,5 @@ export function UserCards({ data, type, follow, loading }: UserCardsProps) {
         </AnimatePresence>
       )}
     </section>
-  );
+  )
 }

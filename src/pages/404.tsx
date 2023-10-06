@@ -1,11 +1,11 @@
-import Error from 'next/error';
-import { useTheme } from '@/context/ThemeContext';
-import { SEO } from "@/components/common/Seo";
+import Error from 'next/error'
+import { useTheme } from '@/context/ThemeContext'
+import { SEO } from '@/components/common/Seo'
 
 export default function NotFound() {
-  const { theme } = useTheme();
+  const { theme } = useTheme()
 
-  const isDarkMode = ['dim', 'dark'].includes(theme);
+  const isDarkMode = ['dim', 'dark'].includes(theme)
 
   return (
     <>
@@ -16,5 +16,5 @@ export default function NotFound() {
       />
       <Error statusCode={404} withDarkMode={isDarkMode} />
     </>
-  );
+  )
 }

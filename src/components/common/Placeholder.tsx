@@ -1,5 +1,5 @@
-import { CustomIcon } from "@/components/ui/CustomIcon";
-import { SEO } from "./Seo";
+import { CustomIcon } from '@/components/ui/CustomIcon'
+import { SEO } from './Seo'
 
 export function Placeholder() {
   return (
@@ -10,11 +10,8 @@ export function Placeholder() {
         image='/home.png'
       />
       <i>
-        <CustomIcon
-          className='h-20 w-20 text-[#1DA1F2]'
-          iconName='TwitterIcon'
-        />
+        <CustomIcon className='h-20 w-20 text-[#1DA1F2]' iconName='TwitterIcon' />
       </i>
     </main>
-  );
+  )
 }

@@ -1,33 +1,33 @@
-import Link from 'next/link';
-import cn from 'clsx';
-import { Popover } from '@headlessui/react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { toast } from 'react-hot-toast';
-import { useAuth } from '@/context/AuthContext';
-import { manageBookmark } from '@/lib/firebase/utils';
-import { preventBubbling } from '@/lib/utils';
-import { siteURL } from '@/lib/env';
-import { Button } from "@/components/ui/Button";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import { ToolTip } from "@/components/ui/Tooltip";
-import { variants } from "./TweetActions";
+import Link from 'next/link'
+import cn from 'clsx'
+import { Popover } from '@headlessui/react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { toast } from 'react-hot-toast'
+import { useAuth } from '@/context/AuthContext'
+import { manageBookmark } from '@/lib/firebase/utils'
+import { preventBubbling } from '@/lib/utils'
+import { siteURL } from '@/lib/env'
+import { Button } from '@/components/ui/Button'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import { ToolTip } from '@/components/ui/Tooltip'
+import { variants } from './TweetActions'
 
 type TweetShareProps = {
-  userId: string;
-  tweetId: string;
-  viewTweet?: boolean;
-};
+  userId: string
+  tweetId: string
+  viewTweet?: boolean
+}
 
 export function TweetShare({ userId, tweetId, viewTweet }: TweetShareProps) {
-  const { userBookmarks } = useAuth();
+  const { userBookmarks } = useAuth()
 
   const handleBookmark =
     (closeMenu: () => void, ...args: Parameters<typeof manageBookmark>) =>
     async (): Promise<void> => {
-      const [type] = args;
+      const [type] = args
 
-      closeMenu();
-      await manageBookmark(...args);
+      closeMenu()
+      await manageBookmark(...args)
 
       toast.success(
         type === 'bookmark'
@@ -40,16 +40,16 @@ export function TweetShare({ userId, tweetId, viewTweet }: TweetShareProps) {
               </span>
             )
           : 'Tweet removed from your bookmarks'
-      );
-    };
+      )
+    }
 
   const handleCopy = (closeMenu: () => void) => async (): Promise<void> => {
-    closeMenu();
-    await navigator.clipboard.writeText(`${siteURL}/tweet/${tweetId}`);
-    toast.success('Copied to clipboard');
-  };
+    closeMenu()
+    await navigator.clipboard.writeText(`${siteURL}/tweet/${tweetId}`)
+    toast.success('Copied to clipboard')
+  }
 
-  const tweetIsBookmarked = !!userBookmarks?.some(({ id }) => id === tweetId);
+  const tweetIsBookmarked = !!userBookmarks?.some(({ id }) => id === tweetId)
 
   return (
     <Popover className='relative'>
@@ -67,10 +67,7 @@ export function TweetShare({ userId, tweetId, viewTweet }: TweetShareProps) {
                          group-focus-visible:bg-accent-blue/10 group-focus-visible:ring-2 
                          group-focus-visible:ring-accent-blue/80 group-active:bg-accent-blue/20'
             >
-              <HeroIcon
-                className={viewTweet ? 'h-6 w-6' : 'h-5 w-5'}
-                iconName='ArrowUpTrayIcon'
-              />
+              <HeroIcon className={viewTweet ? 'h-6 w-6' : 'h-5 w-5'} iconName='ArrowUpTrayIcon' />
               {!open && <ToolTip tip='Share' />}
             </i>
           </Popover.Button>
@@ -94,9 +91,7 @@ export function TweetShare({ userId, tweetId, viewTweet }: TweetShareProps) {
                   <Popover.Button
                     className='accent-tab flex w-full gap-3 rounded-md rounded-t-none p-4 hover:bg-main-sidebar-background'
                     as={Button}
-                    onClick={preventBubbling(
-                      handleBookmark(close, 'bookmark', userId, tweetId)
-                    )}
+                    onClick={preventBubbling(handleBookmark(close, 'bookmark', userId, tweetId))}
                   >
                     <HeroIcon iconName='BookmarkIcon' />
                     Bookmark
@@ -105,9 +100,7 @@ export function TweetShare({ userId, tweetId, viewTweet }: TweetShareProps) {
                   <Popover.Button
                     className='accent-tab flex w-full gap-3 rounded-md rounded-t-none p-4 hover:bg-main-sidebar-background'
                     as={Button}
-                    onClick={preventBubbling(
-                      handleBookmark(close, 'unbookmark', userId, tweetId)
-                    )}
+                    onClick={preventBubbling(handleBookmark(close, 'unbookmark', userId, tweetId))}
                   >
                     <HeroIcon iconName='BookmarkSlashIcon' />
                     Remove Tweet from Bookmarks
@@ -119,5 +112,5 @@ export function TweetShare({ userId, tweetId, viewTweet }: TweetShareProps) {
         </>
       )}
     </Popover>
-  );
+  )
 }

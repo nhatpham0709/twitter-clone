@@ -1,24 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useState, useEffect, useMemo } from 'react';
-import cn from 'clsx';
-import { manageRetweet, manageLike } from '@/lib/firebase/utils';
-import { ViewTweetStats } from "@/components/view/ViewTweetStats";
-import { TweetOption } from "./TweetOption";
-import { TweetShare } from "./TweetShare";
-import type { Tweet } from '@/lib/types/tweet';
+import { useState, useEffect, useMemo } from 'react'
+import cn from 'clsx'
+import { manageRetweet, manageLike } from '@/lib/firebase/utils'
+import { ViewTweetStats } from '@/components/view/ViewTweetStats'
+import { TweetOption } from './TweetOption'
+import { TweetShare } from './TweetShare'
+import type { Tweet } from '@/lib/types/tweet'
 
-type TweetStatsProps = Pick<
-  Tweet,
-  'userLikes' | 'userRetweets' | 'userReplies'
-> & {
-  reply?: boolean;
-  userId: string;
-  isOwner: boolean;
-  tweetId: string;
-  viewTweet?: boolean;
-  openModal?: () => void;
-};
+type TweetStatsProps = Pick<Tweet, 'userLikes' | 'userRetweets' | 'userReplies'> & {
+  reply?: boolean
+  userId: string
+  isOwner: boolean
+  tweetId: string
+  viewTweet?: boolean
+  openModal?: () => void
+}
 
 export function TweetStats({
   reply,
@@ -31,43 +28,33 @@ export function TweetStats({
   userReplies: totalReplies,
   openModal
 }: TweetStatsProps) {
-  const totalLikes = userLikes.length;
-  const totalTweets = userRetweets.length;
+  const totalLikes = userLikes.length
+  const totalTweets = userRetweets.length
 
-  const [{ currentReplies, currentTweets, currentLikes }, setCurrentStats] =
-    useState({
-      currentReplies: totalReplies,
-      currentLikes: totalLikes,
-      currentTweets: totalTweets
-    });
+  const [{ currentReplies, currentTweets, currentLikes }, setCurrentStats] = useState({
+    currentReplies: totalReplies,
+    currentLikes: totalLikes,
+    currentTweets: totalTweets
+  })
 
   useEffect(() => {
     setCurrentStats({
       currentReplies: totalReplies,
       currentLikes: totalLikes,
       currentTweets: totalTweets
-    });
-  }, [totalReplies, totalLikes, totalTweets]);
+    })
+  }, [totalReplies, totalLikes, totalTweets])
 
-  const replyMove = useMemo(
-    () => (totalReplies > currentReplies ? -25 : 25),
-    [totalReplies]
-  );
+  const replyMove = useMemo(() => (totalReplies > currentReplies ? -25 : 25), [totalReplies])
 
-  const likeMove = useMemo(
-    () => (totalLikes > currentLikes ? -25 : 25),
-    [totalLikes]
-  );
+  const likeMove = useMemo(() => (totalLikes > currentLikes ? -25 : 25), [totalLikes])
 
-  const tweetMove = useMemo(
-    () => (totalTweets > currentTweets ? -25 : 25),
-    [totalTweets]
-  );
+  const tweetMove = useMemo(() => (totalTweets > currentTweets ? -25 : 25), [totalTweets])
 
-  const tweetIsLiked = userLikes.includes(userId);
-  const tweetIsRetweeted = userRetweets.includes(userId);
+  const tweetIsLiked = userLikes.includes(userId)
+  const tweetIsRetweeted = userRetweets.includes(userId)
 
-  const isStatsVisible = !!(totalReplies || totalTweets || totalLikes);
+  const isStatsVisible = !!(totalReplies || totalTweets || totalLikes)
 
   return (
     <>
@@ -114,11 +101,7 @@ export function TweetStats({
           stats={currentTweets}
           iconName='ArrowPathRoundedSquareIcon'
           viewTweet={viewTweet}
-          onClick={manageRetweet(
-            tweetIsRetweeted ? 'unretweet' : 'retweet',
-            userId,
-            tweetId
-          )}
+          onClick={manageRetweet(tweetIsRetweeted ? 'unretweet' : 'retweet', userId, tweetId)}
         />
         <TweetOption
           className={cn(
@@ -132,11 +115,7 @@ export function TweetStats({
           stats={currentLikes}
           iconName='HeartIcon'
           viewTweet={viewTweet}
-          onClick={manageLike(
-            tweetIsLiked ? 'unlike' : 'like',
-            userId,
-            tweetId
-          )}
+          onClick={manageLike(tweetIsLiked ? 'unlike' : 'like', userId, tweetId)}
         />
         <TweetShare userId={userId} tweetId={tweetId} viewTweet={viewTweet} />
         {isOwner && (
@@ -151,5 +130,5 @@ export function TweetStats({
         )}
       </div>
     </>
-  );
+  )
 }

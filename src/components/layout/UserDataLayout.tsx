@@ -1,26 +1,23 @@
-import { useRouter } from 'next/router';
-import { query, where, limit } from 'firebase/firestore';
-import { UserContextProvider } from '@/context/UserContext';
-import { useCollection } from '@/hooks/useCollection';
-import { usersCollection } from '@/lib/firebase/collections';
-import { SEO } from "@/components/common/Seo";
-import { MainContainer } from "@/components/home/MainContainer";
-import { MainHeader } from "@/components/home/MainHeader";
-import { UserHeader } from "@/components/user/Header";
-import type { LayoutProps } from './CommonLayout';
+import { useRouter } from 'next/router'
+import { query, where, limit } from 'firebase/firestore'
+import { UserContextProvider } from '@/context/UserContext'
+import { useCollection } from '@/hooks/useCollection'
+import { usersCollection } from '@/lib/firebase/collections'
+import { SEO } from '@/components/common/Seo'
+import { MainContainer } from '@/components/home/MainContainer'
+import { MainHeader } from '@/components/home/MainHeader'
+import { UserHeader } from '@/components/user/Header'
+import type { LayoutProps } from './CommonLayout'
 
 export function UserDataLayout({ children }: LayoutProps) {
   const {
     query: { id },
     back
-  } = useRouter();
+  } = useRouter()
 
-  const { data, loading } = useCollection(
-    query(usersCollection, where('username', '==', id), limit(1)),
-    { allowNull: true }
-  );
+  const { data, loading } = useCollection(query(usersCollection, where('username', '==', id), limit(1)))
 
-  const user = data ? data[0] : null;
+  const user = data ? data[0] : null
 
   return (
     <UserContextProvider value={{ user, loading }}>
@@ -32,5 +29,5 @@ export function UserDataLayout({ children }: LayoutProps) {
         {children}
       </MainContainer>
     </UserContextProvider>
-  );
+  )
 }

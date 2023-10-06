@@ -1,21 +1,21 @@
-import { useRef, useEffect } from 'react';
-import cn from 'clsx';
-import { Dialog } from '@headlessui/react';
-import { Button } from "@/components/ui/Button";
-import { CustomIcon } from "@/components/ui/CustomIcon";
+import { useRef, useEffect } from 'react'
+import cn from 'clsx'
+import { Dialog } from '@headlessui/react'
+import { Button } from '@/components/ui/Button'
+import { CustomIcon } from '@/components/ui/CustomIcon'
 
 type ActionModalProps = {
-  title: string;
-  useIcon?: boolean;
-  description: string;
-  mainBtnLabel: string;
-  focusOnMainBtn?: boolean;
-  mainBtnClassName?: string;
-  secondaryBtnLabel?: string;
-  secondaryBtnClassName?: string;
-  action: () => void;
-  closeModal: () => void;
-};
+  title: string
+  useIcon?: boolean
+  description: string
+  mainBtnLabel: string
+  focusOnMainBtn?: boolean
+  mainBtnClassName?: string
+  secondaryBtnLabel?: string
+  secondaryBtnClassName?: string
+  action: () => void
+  closeModal: () => void
+}
 
 export function ActionModal({
   title,
@@ -29,25 +29,22 @@ export function ActionModal({
   action,
   closeModal
 }: ActionModalProps) {
-  const mainBtn = useRef<HTMLButtonElement>(null);
+  const mainBtn = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    if (!focusOnMainBtn) return;
-    const timeoutId = setTimeout(() => mainBtn.current?.focus(), 50);
+    if (!focusOnMainBtn) return
+    const timeoutId = setTimeout(() => mainBtn.current?.focus(), 50)
 
-    return () => clearTimeout(timeoutId);
+    return () => clearTimeout(timeoutId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   return (
     <div className='flex flex-col gap-6'>
       <div className='flex flex-col gap-4'>
         {useIcon && (
           <i className='mx-auto'>
-            <CustomIcon
-              className='h-10 w-10 text-accent-blue dark:text-twitter-icon'
-              iconName='TwitterIcon'
-            />
+            <CustomIcon className='h-10 w-10 text-accent-blue dark:text-twitter-icon' iconName='TwitterIcon' />
           </i>
         )}
         <div className='flex flex-col gap-2'>
@@ -84,5 +81,5 @@ export function ActionModal({
         </Button>
       </div>
     </div>
-  );
+  )
 }

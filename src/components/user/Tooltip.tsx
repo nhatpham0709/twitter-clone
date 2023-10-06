@@ -1,33 +1,25 @@
-import Link from 'next/link';
-import cn from 'clsx';
-import { useWindow } from '@/context/WindowContext';
-import { FollowButton } from "@/components/ui/FollowButton";
-import { NextImage } from "@/components/ui/NextImage";
-import { UserAvatar } from "./Avatar";
-import { UserName } from "./Name";
-import { UserFollowing } from "./Following";
-import { UserUsername } from "./Username";
-import type { ReactNode } from 'react';
-import type { User } from '@/lib/types/user';
+import Link from 'next/link'
+import cn from 'clsx'
+import { useWindow } from '@/context/WindowContext'
+import { FollowButton } from '@/components/ui/FollowButton'
+import { NextImage } from '@/components/ui/NextImage'
+import { UserAvatar } from './Avatar'
+import { UserName } from './Name'
+import { UserFollowing } from './Following'
+import { UserUsername } from './Username'
+import type { ReactNode } from 'react'
+import type { User } from '@/lib/types/user'
 
 type UserTooltipProps = Pick<
   User,
-  | 'id'
-  | 'bio'
-  | 'name'
-  | 'verified'
-  | 'username'
-  | 'photoURL'
-  | 'following'
-  | 'followers'
-  | 'coverPhotoURL'
+  'id' | 'bio' | 'name' | 'verified' | 'username' | 'photoURL' | 'following' | 'followers' | 'coverPhotoURL'
 > & {
-  modal?: boolean;
-  avatar?: boolean;
-  children: ReactNode;
-};
+  modal?: boolean
+  avatar?: boolean
+  children: ReactNode
+}
 
-type Stats = [string, string, number];
+type Stats = [string, string, number]
 
 export function UserTooltip({
   id,
@@ -43,16 +35,16 @@ export function UserTooltip({
   followers,
   coverPhotoURL
 }: UserTooltipProps) {
-  const { isMobile } = useWindow();
+  const { isMobile } = useWindow()
 
-  if (isMobile || modal) return <>{children}</>;
+  if (isMobile || modal) return <>{children}</>
 
-  const userLink = `/user/${username}`;
+  const userLink = `/user/${username}`
 
   const allStats: Readonly<Stats[]> = [
     ['following', 'Following', following.length],
     ['followers', 'Followers', followers.length]
-  ];
+  ]
 
   return (
     <div
@@ -71,8 +63,7 @@ export function UserTooltip({
           <div className='flex flex-col gap-2'>
             <div className='-mx-4 -mt-4'>
               {coverPhotoURL ? (
-                (<Link href={userLink} className='blur-picture'>
-
+                <Link href={userLink} className='blur-picture'>
                   <NextImage
                     useSkeleton
                     className='relative h-24'
@@ -81,8 +72,7 @@ export function UserTooltip({
                     alt={name}
                     layout='fill'
                   />
-
-                </Link>)
+                </Link>
               ) : (
                 <div className='h-16 rounded-t-2xl bg-light-line-reply dark:bg-dark-line-reply' />
               )}
@@ -102,12 +92,7 @@ export function UserTooltip({
               <FollowButton userTargetId={id} userTargetUsername={username} />
             </div>
             <div>
-              <UserName
-                className='-mb-1 text-lg'
-                name={name}
-                username={username}
-                verified={verified}
-              />
+              <UserName className='-mb-1 text-lg' name={name} username={username} verified={verified} />
               <div className='flex items-center gap-1 text-light-secondary dark:text-dark-secondary'>
                 <UserUsername username={username} />
                 <UserFollowing userTargetId={id} />
@@ -117,23 +102,20 @@ export function UserTooltip({
           {bio && <p>{bio}</p>}
           <div className='text-secondary flex gap-4'>
             {allStats.map(([id, label, stat]) => (
-              (<Link
+              <Link
                 href={`${userLink}/${id}`}
                 key={id}
                 className='hover-animation flex h-4 items-center gap-1 border-b border-b-transparent 
                            outline-none hover:border-b-light-primary focus-visible:border-b-light-primary
-                           dark:hover:border-b-dark-primary dark:focus-visible:border-b-dark-primary'>
-
+                           dark:hover:border-b-dark-primary dark:focus-visible:border-b-dark-primary'
+              >
                 <p className='font-bold'>{stat}</p>
-                <p className='text-light-secondary dark:text-dark-secondary'>
-                  {label}
-                </p>
-
-              </Link>)
+                <p className='text-light-secondary dark:text-dark-secondary'>{label}</p>
+              </Link>
             ))}
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

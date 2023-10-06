@@ -1,19 +1,16 @@
-import { useRouter } from 'next/router';
-import {
-  TrendsLayout,
-  ProtectedLayout
-} from '@/components/layout/CommonLayout';
-import { MainLayout } from '@/components/layout/MainLayout';
-import { SEO } from "@/components/common/Seo";
-import { MainHeader } from "@/components/home/MainHeader";
-import { MainContainer } from "@/components/home/MainContainer";
-import { Button } from "@/components/ui/Button";
-import { ToolTip } from "@/components/ui/Tooltip";
-import { HeroIcon } from '@/components/ui/HeroIcon';
-import type { ReactElement, ReactNode } from 'react';
+import { useRouter } from 'next/router'
+import { TrendsLayout, ProtectedLayout } from '@/components/layout/CommonLayout'
+import { MainLayout } from '@/components/layout/MainLayout'
+import { SEO } from '@/components/common/Seo'
+import { MainHeader } from '@/components/home/MainHeader'
+import { MainContainer } from '@/components/home/MainContainer'
+import { Button } from '@/components/ui/Button'
+import { ToolTip } from '@/components/ui/Tooltip'
+import { HeroIcon } from '@/components/ui/HeroIcon'
+import type { ReactElement, ReactNode } from 'react'
 
 export default function Bookmarks() {
-  const { back } = useRouter();
+  const { back } = useRouter()
 
   return (
     <MainContainer>
@@ -29,7 +26,7 @@ export default function Bookmarks() {
       </MainHeader>
       {/* <AsideTrends inTrendsPage /> */}
     </MainContainer>
-  );
+  )
 }
 
 Bookmarks.getLayout = (page: ReactElement): ReactNode => (
@@ -38,4 +35,4 @@ Bookmarks.getLayout = (page: ReactElement): ReactNode => (
       <TrendsLayout>{page}</TrendsLayout>
     </MainLayout>
   </ProtectedLayout>
-);
+)

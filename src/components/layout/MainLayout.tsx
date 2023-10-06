@@ -1,10 +1,10 @@
-import { SWRConfig } from 'swr';
-import { Toaster } from 'react-hot-toast';
-import { fetchJSON } from '@/lib/fetch';
-import { WindowContextProvider } from '@/context/WindowContext';
-import { Sidebar } from "@/components/sidebar/Sidebar";
-import type { DefaultToastOptions } from 'react-hot-toast';
-import type { LayoutProps } from './CommonLayout';
+import { SWRConfig } from 'swr'
+import { Toaster } from 'react-hot-toast'
+import { fetchJSON } from '@/lib/fetch'
+import { WindowContextProvider } from '@/context/WindowContext'
+import { Sidebar } from '@/components/sidebar/Sidebar'
+import type { DefaultToastOptions } from 'react-hot-toast'
+import type { LayoutProps } from './CommonLayout'
 
 const toastOptions: DefaultToastOptions = {
   style: {
@@ -13,7 +13,7 @@ const toastOptions: DefaultToastOptions = {
     backgroundColor: 'rgb(var(--main-accent))'
   },
   success: { duration: 4000 }
-};
+}
 
 export function MainLayout({ children }: LayoutProps) {
   return (
@@ -22,11 +22,7 @@ export function MainLayout({ children }: LayoutProps) {
         <Sidebar />
         <SWRConfig value={{ fetcher: fetchJSON }}>{children}</SWRConfig>
       </WindowContextProvider>
-      <Toaster
-        position='bottom-center'
-        toastOptions={toastOptions}
-        containerClassName='mb-12 xs:mb-0'
-      />
+      <Toaster position='bottom-center' toastOptions={toastOptions} containerClassName='mb-12 xs:mb-0' />
     </div>
-  );
+  )
 }

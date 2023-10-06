@@ -1,21 +1,21 @@
-import { useRequireAuth } from '@/hooks/useRequireAuth';
-import { Aside } from "@/components/aside/Aside";
-import { Suggestions } from "@/components/aside/Suggestions";
-import { Placeholder } from "@/components/common/Placeholder";
-import type { ReactNode } from 'react';
+import { useRequireAuth } from '@/hooks/useRequireAuth'
+import { Aside } from '@/components/aside/Aside'
+import { Suggestions } from '@/components/aside/Suggestions'
+import { Placeholder } from '@/components/common/Placeholder'
+import type { ReactNode } from 'react'
 
 // import { AsideTrends } from '@/components/aside/aside-trends';
 
 export type LayoutProps = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 export function ProtectedLayout({ children }: LayoutProps) {
-  const user = useRequireAuth();
+  const user = useRequireAuth()
 
-  if (!user) return <Placeholder />;
+  if (!user) return <Placeholder />
 
-  return <>{children}</>;
+  return <>{children}</>
 }
 
 export function HomeLayout({ children }: LayoutProps) {
@@ -27,7 +27,7 @@ export function HomeLayout({ children }: LayoutProps) {
         <Suggestions />
       </Aside>
     </>
-  );
+  )
 }
 
 export function UserLayout({ children }: LayoutProps) {
@@ -39,7 +39,7 @@ export function UserLayout({ children }: LayoutProps) {
         {/* <AsideTrends /> */}
       </Aside>
     </>
-  );
+  )
 }
 
 export function TrendsLayout({ children }: LayoutProps) {
@@ -50,7 +50,7 @@ export function TrendsLayout({ children }: LayoutProps) {
         <Suggestions />
       </Aside>
     </>
-  );
+  )
 }
 
 export function PeopleLayout({ children }: LayoutProps) {
@@ -59,5 +59,5 @@ export function PeopleLayout({ children }: LayoutProps) {
       {children}
       <Aside>{/* <AsideTrends /> */}</Aside>
     </>
-  );
+  )
 }

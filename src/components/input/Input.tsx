@@ -1,86 +1,73 @@
-import Link from 'next/link';
-import { useState, useEffect, useRef, useId } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import cn from 'clsx';
-import { toast } from 'react-hot-toast';
-import { addDoc, getDoc, serverTimestamp } from 'firebase/firestore';
-import { tweetsCollection } from '@/lib/firebase/collections';
-import {
-  manageReply,
-  uploadImages,
-  manageTotalTweets,
-  manageTotalPhotos
-} from '@/lib/firebase/utils';
-import { useAuth } from '@/context/AuthContext';
-import { sleep } from '@/lib/utils';
-import { getImagesData } from '@/lib/validation';
-import { UserAvatar } from "@/components/user/Avatar";
-import { InputForm, fromTop } from "./InputForm";
-import { ImagePreview } from "./ImagePreview";
-import { InputOptions } from "./InputOptions";
-import type { ReactNode, FormEvent, ChangeEvent, ClipboardEvent } from 'react';
-import type { WithFieldValue } from 'firebase/firestore';
-import type { Variants } from 'framer-motion';
-import type { User } from '@/lib/types/user';
-import type { Tweet } from '@/lib/types/tweet';
-import type { FilesWithId, ImagesPreview, ImageData } from '@/lib/types/file';
+import Link from 'next/link'
+import { useState, useEffect, useRef, useId } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import cn from 'clsx'
+import { toast } from 'react-hot-toast'
+import { addDoc, getDoc, serverTimestamp } from 'firebase/firestore'
+import { tweetsCollection } from '@/lib/firebase/collections'
+import { manageReply, uploadImages, manageTotalTweets, manageTotalPhotos } from '@/lib/firebase/utils'
+import { useAuth } from '@/context/AuthContext'
+import { sleep } from '@/lib/utils'
+import { getImagesData } from '@/lib/validation'
+import { UserAvatar } from '@/components/user/Avatar'
+import { InputForm, fromTop } from './InputForm'
+import { ImagePreview } from './ImagePreview'
+import { InputOptions } from './InputOptions'
+import type { ReactNode, FormEvent, ChangeEvent, ClipboardEvent } from 'react'
+import type { WithFieldValue } from 'firebase/firestore'
+import type { Variants } from 'framer-motion'
+import type { User } from '@/lib/types/user'
+import type { Tweet } from '@/lib/types/tweet'
+import type { FilesWithId, ImagesPreview, ImageData } from '@/lib/types/file'
 
 type InputProps = {
-  modal?: boolean;
-  reply?: boolean;
-  parent?: { id: string; username: string };
-  disabled?: boolean;
-  children?: ReactNode;
-  replyModal?: boolean;
-  closeModal?: () => void;
-};
+  modal?: boolean
+  reply?: boolean
+  parent?: { id: string; username: string }
+  disabled?: boolean
+  children?: ReactNode
+  replyModal?: boolean
+  closeModal?: () => void
+}
 
 export const variants: Variants = {
   initial: { opacity: 0 },
   animate: { opacity: 1 }
-};
+}
 
-export function Input({
-  modal,
-  reply,
-  parent,
-  disabled,
-  children,
-  replyModal,
-  closeModal
-}: InputProps) {
-  const [selectedImages, setSelectedImages] = useState<FilesWithId>([]);
-  const [imagesPreview, setImagesPreview] = useState<ImagesPreview>([]);
-  const [inputValue, setInputValue] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [visited, setVisited] = useState(false);
+export function Input({ modal, reply, parent, disabled, children, replyModal, closeModal }: InputProps) {
+  const [selectedImages, setSelectedImages] = useState<FilesWithId>([])
+  const [imagesPreview, setImagesPreview] = useState<ImagesPreview>([])
+  const [inputValue, setInputValue] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [visited, setVisited] = useState(false)
 
-  const { user, isAdmin } = useAuth();
-  const { name, username, photoURL } = user as User;
+  const { user, isAdmin } = useAuth()
+  const { name, username, photoURL } = user as User
 
-  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null)
 
-  const previewCount = imagesPreview.length;
-  const isUploadingImages = !!previewCount;
+  const previewCount = imagesPreview.length
+  const isUploadingImages = !!previewCount
 
   useEffect(
     () => {
-      if (modal) inputRef.current?.focus();
+      if (modal) inputRef.current?.focus()
 
-      return cleanImage;
+      return cleanImage
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
-  );
+  )
 
   const sendTweet = async (): Promise<void> => {
-    inputRef.current?.blur();
+    inputRef.current?.blur()
 
-    setLoading(true);
+    setLoading(true)
 
-    const isReplying = reply ?? replyModal;
+    const isReplying = reply ?? replyModal
 
-    const userId = user?.id as string;
+    const userId = user?.id as string
 
     const tweetData: WithFieldValue<Omit<Tweet, 'id'>> = {
       text: inputValue.trim() || null,
@@ -92,25 +79,25 @@ export function Input({
       updatedAt: null,
       userReplies: 0,
       userRetweets: []
-    };
+    }
 
-    await sleep(500);
+    await sleep(500)
 
     const [tweetRef] = await Promise.all([
       addDoc(tweetsCollection, tweetData),
       manageTotalTweets('increment', userId),
       tweetData.images && manageTotalPhotos('increment', userId),
       isReplying && manageReply('increment', parent?.id as string)
-    ]);
+    ])
 
-    const { id: tweetId } = await getDoc(tweetRef);
+    const { id: tweetId } = await getDoc(tweetRef)
 
     if (!modal && !replyModal) {
-      discardTweet();
-      setLoading(false);
+      discardTweet()
+      setLoading(false)
     }
 
-    if (closeModal) closeModal();
+    if (closeModal) closeModal()
 
     toast.success(
       () => (
@@ -122,84 +109,77 @@ export function Input({
         </span>
       ),
       { duration: 6000 }
-    );
-  };
+    )
+  }
 
-  const handleImageUpload = (
-    e: ChangeEvent<HTMLInputElement> | ClipboardEvent<HTMLTextAreaElement>
-  ): void => {
-    const isClipboardEvent = 'clipboardData' in e;
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement> | ClipboardEvent<HTMLTextAreaElement>): void => {
+    const isClipboardEvent = 'clipboardData' in e
 
     if (isClipboardEvent) {
-      const isPastingText = e.clipboardData.getData('text');
-      if (isPastingText) return;
+      const isPastingText = e.clipboardData.getData('text')
+      if (isPastingText) return
     }
 
-    const files = isClipboardEvent ? e.clipboardData.files : e.target.files;
+    const files = isClipboardEvent ? e.clipboardData.files : e.target.files
 
-    const imagesData = getImagesData(files, previewCount);
+    const imagesData = getImagesData(files, previewCount)
 
     if (!imagesData) {
-      toast.error('Please choose a GIF or photo up to 4');
+      toast.error('Please choose a GIF or photo up to 4')
 
-      return;
+      return
     }
 
-    const { imagesPreviewData, selectedImagesData } = imagesData;
+    const { imagesPreviewData, selectedImagesData } = imagesData
 
-    setImagesPreview([...imagesPreview, ...imagesPreviewData]);
-    setSelectedImages([...selectedImages, ...selectedImagesData]);
+    setImagesPreview([...imagesPreview, ...imagesPreviewData])
+    setSelectedImages([...selectedImages, ...selectedImagesData])
 
-    inputRef.current?.focus();
-  };
+    inputRef.current?.focus()
+  }
 
   const removeImage = (targetId: string) => (): void => {
-    setSelectedImages(selectedImages.filter(({ id }) => id !== targetId));
-    setImagesPreview(imagesPreview.filter(({ id }) => id !== targetId));
+    setSelectedImages(selectedImages.filter(({ id }) => id !== targetId))
+    setImagesPreview(imagesPreview.filter(({ id }) => id !== targetId))
 
-    const { src } = imagesPreview.find(
-      ({ id }) => id === targetId
-    ) as ImageData;
+    const { src } = imagesPreview.find(({ id }) => id === targetId) as ImageData
 
-    URL.revokeObjectURL(src);
-  };
+    URL.revokeObjectURL(src)
+  }
 
   const cleanImage = (): void => {
-    imagesPreview.forEach(({ src }) => URL.revokeObjectURL(src));
+    imagesPreview.forEach(({ src }) => URL.revokeObjectURL(src))
 
-    setSelectedImages([]);
-    setImagesPreview([]);
-  };
+    setSelectedImages([])
+    setImagesPreview([])
+  }
 
   const discardTweet = (): void => {
-    setInputValue('');
-    setVisited(false);
-    cleanImage();
+    setInputValue('')
+    setVisited(false)
+    cleanImage()
 
-    inputRef.current?.blur();
-  };
+    inputRef.current?.blur()
+  }
 
-  const handleChange = ({
-    target: { value }
-  }: ChangeEvent<HTMLTextAreaElement>): void => setInputValue(value);
+  const handleChange = ({ target: { value } }: ChangeEvent<HTMLTextAreaElement>): void => setInputValue(value)
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    void sendTweet();
-  };
+    e.preventDefault()
+    void sendTweet()
+  }
 
-  const handleFocus = (): void => setVisited(!loading);
+  const handleFocus = (): void => setVisited(!loading)
 
-  const formId = useId();
+  const formId = useId()
 
-  const inputLimit = isAdmin ? 560 : 280;
+  const inputLimit = isAdmin ? 560 : 280
 
-  const inputLength = inputValue.length;
-  const isValidInput = !!inputValue.trim().length;
-  const isCharLimitExceeded = inputLength > inputLimit;
+  const inputLength = inputValue.length
+  const isValidInput = !!inputValue.trim().length
+  const isCharLimitExceeded = inputLength > inputLimit
 
-  const isValidTweet =
-    !isCharLimitExceeded && (isValidInput || isUploadingImages);
+  const isValidTweet = !isCharLimitExceeded && (isValidInput || isUploadingImages)
 
   return (
     <form
@@ -210,33 +190,20 @@ export function Input({
       })}
       onSubmit={handleSubmit}
     >
-      {loading && (
-        <motion.i className='h-1 animate-pulse bg-main-accent' {...variants} />
-      )}
+      {loading && <motion.i className='h-1 animate-pulse bg-main-accent' {...variants} />}
       {children}
       {reply && visited && (
-        <motion.p
-          className='-mb-2 ml-[75px] mt-2 text-light-secondary dark:text-dark-secondary'
-          {...fromTop}
-        >
+        <motion.p className='-mb-2 ml-[75px] mt-2 text-light-secondary dark:text-dark-secondary' {...fromTop}>
           Replying to{' '}
-          <Link
-            href={`/user/${parent?.username as string}`}
-            className='custom-underline text-main-accent'>
-
+          <Link href={`/user/${parent?.username as string}`} className='custom-underline text-main-accent'>
             {parent?.username as string}
-
           </Link>
         </motion.p>
       )}
       <label
         className={cn(
           'hover-animation grid w-full grid-cols-[auto,1fr] gap-3 px-4 py-3',
-          reply
-            ? 'pb-1 pt-3'
-            : replyModal
-            ? 'pt-0'
-            : 'border-b-2 border-light-border dark:border-dark-border',
+          reply ? 'pb-1 pt-3' : replyModal ? 'pt-0' : 'border-b-2 border-light-border dark:border-dark-border',
           (disabled || loading) && 'pointer-events-none opacity-50'
         )}
         htmlFor={formId}
@@ -284,5 +251,5 @@ export function Input({
         </div>
       </label>
     </form>
-  );
+  )
 }

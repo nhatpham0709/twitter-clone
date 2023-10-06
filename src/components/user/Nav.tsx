@@ -1,11 +1,11 @@
-import { motion } from 'framer-motion';
-import cn from 'clsx';
-import { variants } from "@/components/user/Header";
-import { UserNavLink } from "./NavLink";
+import { motion } from 'framer-motion'
+import cn from 'clsx'
+import { variants } from '@/components/user/Header'
+import { UserNavLink } from './NavLink'
 
 type UserNavProps = {
-  follow?: boolean;
-};
+  follow?: boolean
+}
 
 const allNavs = [
   [
@@ -18,10 +18,10 @@ const allNavs = [
     { name: 'Following', path: 'following' },
     { name: 'Followers', path: 'followers' }
   ]
-] as const;
+] as const
 
 export function UserNav({ follow }: UserNavProps) {
-  const userNav = allNavs[+!!follow];
+  const userNav = allNavs[+!!follow]
 
   return (
     <motion.nav
@@ -37,5 +37,5 @@ export function UserNav({ follow }: UserNavProps) {
         <UserNavLink name={name} path={path} key={name} />
       ))}
     </motion.nav>
-  );
+  )
 }

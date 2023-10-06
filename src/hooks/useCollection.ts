@@ -1,99 +1,85 @@
-import { useState, useEffect } from 'react';
-import { getDoc, doc, onSnapshot } from 'firebase/firestore';
-import { usersCollection } from '@/lib/firebase/collections';
-import { useCacheQuery } from './useCacheQuery';
-import type { Query } from 'firebase/firestore';
-import type { User } from '@/lib/types/user';
+import { useState, useEffect } from 'react'
+import { getDoc, doc, onSnapshot } from 'firebase/firestore'
+import { usersCollection } from '@/lib/firebase/collections'
+import { useCacheQuery } from './useCacheQuery'
+import type { Query } from 'firebase/firestore'
+import type { User } from '@/lib/types/user'
 
 type UseCollection<T> = {
-  data: T[] | null;
-  loading: boolean;
-};
+  data: T[] | null
+  loading: boolean
+}
 
-type DataWithRef<T> = (T & { createdBy: string })[];
-type DataWithUser<T> = UseCollection<T & { user: User }>;
+type DataWithRef<T> = (T & { createdBy: string })[]
+type DataWithUser<T> = UseCollection<T & { user: User }>
 
 export type UseCollectionOptions = {
-  includeUser?: boolean;
-  allowNull?: boolean;
-  disabled?: boolean;
-  preserve?: boolean;
-};
+  includeUser?: boolean
+  allowNull?: boolean
+  disabled?: boolean
+  preserve?: boolean
+}
 
 export function useCollection<T>(
   query: Query<T>,
   options: {
-    includeUser: true;
-    allowNull?: boolean;
-    disabled?: boolean;
-    preserve?: boolean;
+    includeUser: true
+    allowNull?: boolean
+    disabled?: boolean
+    preserve?: boolean
   }
-): DataWithUser<T>;
+): DataWithUser<T>
 
-export function useCollection<T>(
-  query: Query<T>,
-  options?: UseCollectionOptions
-): UseCollection<T>;
+export function useCollection<T>(query: Query<T>, options?: UseCollectionOptions): UseCollection<T>
 
-export function useCollection<T>(
-  query: Query<T>,
-  options?: UseCollectionOptions
-): UseCollection<T> | DataWithUser<T> {
-  const [data, setData] = useState<T[] | null>(null);
-  const [loading, setLoading] = useState(true);
+export function useCollection<T>(query: Query<T>, options?: UseCollectionOptions): UseCollection<T> | DataWithUser<T> {
+  const [data, setData] = useState<T[] | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  const cachedQuery = useCacheQuery(query);
+  const cachedQuery = useCacheQuery(query)
 
-  const { includeUser, allowNull, disabled, preserve } = options ?? {};
+  const { includeUser, disabled, preserve } = options ?? {}
 
   useEffect(() => {
     if (disabled) {
-      setLoading(false);
+      setLoading(false)
 
-      return;
+      return
     }
 
     if (!preserve && data) {
-      setData(null);
-      setLoading(true);
+      setData(null)
+      setLoading(true)
     }
 
     const populateUser = async (currentData: DataWithRef<T>): Promise<void> => {
       const dataWithUser = await Promise.all(
-        currentData.map(async (currentData) => {
-          const user = (
-            await getDoc(doc(usersCollection, currentData.createdBy))
-          ).data();
+        currentData.map(async currentData => {
+          const user = (await getDoc(doc(usersCollection, currentData.createdBy))).data()
 
-          return { ...currentData, user };
+          return { ...currentData, user }
         })
-      );
-      setData(dataWithUser);
-      setLoading(false);
-    };
+      )
+      setData(dataWithUser)
+      setLoading(false)
+    }
 
-    const unsubscribe = onSnapshot(cachedQuery, (snapshot) => {
-      const data = snapshot.docs.map((doc) =>
-        doc.data({ serverTimestamps: 'estimate' })
-      );
+    const unsubscribe = onSnapshot(cachedQuery, snapshot => {
+      const data = snapshot.docs.map(doc => doc.data({ serverTimestamps: 'estimate' }))
 
-      if (allowNull && !data.length) {
-        setData(null);
-        setLoading(false);
+      if (includeUser) {
+        populateUser(data as DataWithRef<T>)
 
-        return;
+        return
       }
 
-      if (includeUser) void populateUser(data as DataWithRef<T>);
-      else {
-        setData(data);
-        setLoading(false);
-      }
-    });
+      setData(data)
+      setLoading(false)
+    })
 
-    return unsubscribe;
+    return unsubscribe
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cachedQuery, disabled]);
+  }, [cachedQuery, disabled])
 
-  return { data, loading };
+  return { data, loading }
 }
