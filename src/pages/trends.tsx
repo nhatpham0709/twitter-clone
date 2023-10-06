@@ -2,14 +2,14 @@ import { useRouter } from 'next/router';
 import {
   TrendsLayout,
   ProtectedLayout
-} from '@/components/layout/common-layout';
-import { MainLayout } from '@/components/layout/main-layout';
-import { SEO } from '@/components/common/seo';
-import { MainHeader } from '@/components/home/main-header';
-import { MainContainer } from '@/components/home/main-container';
-import { Button } from '@/components/ui/button';
-import { ToolTip } from '@/components/ui/tooltip';
-import { HeroIcon } from '@/components/ui/hero-icon';
+} from '@/components/layout/CommonLayout';
+import { MainLayout } from '@/components/layout/MainLayout';
+import { SEO } from "@/components/common/Seo";
+import { MainHeader } from "@/components/home/MainHeader";
+import { MainContainer } from "@/components/home/MainContainer";
+import { Button } from "@/components/ui/Button";
+import { ToolTip } from "@/components/ui/Tooltip";
+import { HeroIcon } from '@/components/ui/HeroIcon';
 import type { ReactElement, ReactNode } from 'react';
 
 export default function Bookmarks() {

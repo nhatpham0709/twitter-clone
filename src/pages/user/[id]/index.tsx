@@ -1,17 +1,17 @@
 import { doc, query, where } from 'firebase/firestore';
 import { AnimatePresence } from 'framer-motion';
-import { useUser } from '@/lib/context/user-context';
-import { useCollection } from '@/lib/hooks/useCollection';
-import { useDocument } from '@/lib/hooks/useDocument';
+import { useUser } from '@/context/UserContext';
+import { useCollection } from '@/hooks/useCollection';
+import { useDocument } from '@/hooks/useDocument';
 import { tweetsCollection } from '@/lib/firebase/collections';
 import { mergeData } from '@/lib/merge';
-import { UserLayout, ProtectedLayout } from '@/components/layout/common-layout';
-import { MainLayout } from '@/components/layout/main-layout';
-import { UserDataLayout } from '@/components/layout/user-data-layout';
-import { UserHomeLayout } from '@/components/layout/user-home-layout';
-import { StatsEmpty } from '@/components/tweet/stats-empty';
-import { Loading } from '@/components/ui/loading';
-import { Tweet } from '@/components/tweet/tweet';
+import { UserLayout, ProtectedLayout } from '@/components/layout/CommonLayout';
+import { MainLayout } from '@/components/layout/MainLayout';
+import { UserDataLayout } from '@/components/layout/UserDataLayout';
+import { UserHomeLayout } from '@/components/layout/UserHomeLayout';
+import { StatsEmpty } from "@/components/tweet/StatsEmpty";
+import { Loading } from "@/components/ui/Loading";
+import { Tweet } from "@/components/tweet/Tweet";
 import type { ReactElement, ReactNode } from 'react';
 
 export default function UserTweets() {
@@ -58,7 +58,7 @@ export default function UserTweets() {
           description='When they do, their Tweets will show up here.'
         />
       ) : (
-        <AnimatePresence mode='popLayout'>
+        <AnimatePresence>
           {pinnedData && (
             <Tweet pinned {...pinnedData} key={`pinned-${pinnedData.id}`} />
           )}

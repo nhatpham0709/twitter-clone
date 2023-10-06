@@ -1,24 +1,28 @@
 import { AnimatePresence } from 'framer-motion';
 import { where, orderBy } from 'firebase/firestore';
-import { useWindow } from '@/lib/context/window-context';
-import { useInfiniteScroll } from '@/lib/hooks/useInfiniteScroll';
+import { useWindow } from '@/context/WindowContext';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 import { tweetsCollection } from '@/lib/firebase/collections';
-import { HomeLayout, ProtectedLayout } from '@/components/layout/common-layout';
-import { MainLayout } from '@/components/layout/main-layout';
-import { SEO } from '@/components/common/seo';
-import { MainContainer } from '@/components/home/main-container';
-import { Input } from '@/components/input/input';
-import { UpdateUsername } from '@/components/home/update-username';
-import { MainHeader } from '@/components/home/main-header';
-import { Tweet } from '@/components/tweet/tweet';
-import { Loading } from '@/components/ui/loading';
-import { Error } from '@/components/ui/error';
-import type { ReactElement, ReactNode } from 'react';
+import { HomeLayout, ProtectedLayout } from '@/components/layout/CommonLayout';
+import { MainLayout } from '@/components/layout/MainLayout';
+import { SEO } from "@/components/common/Seo";
+import { MainContainer } from "@/components/home/MainContainer";
+import { Input } from "@/components/input/Input";
+import { UpdateUsername } from "@/components/home/UpdateUsername";
+import { MainHeader } from "@/components/home/MainHeader";
+import { Tweet } from "@/components/tweet/Tweet";
+import { Loading } from "@/components/ui/Loading";
+import { Error } from "@/components/ui/Error";
+import { type ReactElement } from 'react';
 
 export default function Home() {
   const { isMobile } = useWindow();
 
-  const { data, loading, LoadMore } = useInfiniteScroll(
+  const {
+    data: tweets,
+    loading,
+    LoadMore
+  } = useInfiniteScroll(
     tweetsCollection,
     [where('parent', '==', null), orderBy('createdAt', 'desc')],
     { includeUser: true, allowNull: true, preserve: true }
@@ -38,15 +42,16 @@ export default function Home() {
       <section className='mt-0.5 xs:mt-0'>
         {loading ? (
           <Loading className='mt-5' />
-        ) : !data ? (
-          <Error message='Something went wrong' />
+        ) : !tweets ? (
+          <Error message='No Tweets' />
         ) : (
           <>
-            <AnimatePresence mode='popLayout'>
-              {data.map((tweet) => (
-                <Tweet {...tweet} key={tweet.id} />
+            <AnimatePresence>
+              {tweets.map((tweet) => (
+                <Tweet key={tweet.id} {...tweet} />
               ))}
             </AnimatePresence>
+
             <LoadMore />
           </>
         )}
@@ -55,7 +60,7 @@ export default function Home() {
   );
 }
 
-Home.getLayout = (page: ReactElement): ReactNode => (
+Home.getLayout = (page: ReactElement) => (
   <ProtectedLayout>
     <MainLayout>
       <HomeLayout>{page}</HomeLayout>

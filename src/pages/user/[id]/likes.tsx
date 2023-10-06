@@ -1,16 +1,16 @@
 import { AnimatePresence } from 'framer-motion';
 import { query, where, orderBy } from 'firebase/firestore';
-import { useCollection } from '@/lib/hooks/useCollection';
+import { useCollection } from '@/hooks/useCollection';
 import { tweetsCollection } from '@/lib/firebase/collections';
-import { useUser } from '@/lib/context/user-context';
-import { UserLayout, ProtectedLayout } from '@/components/layout/common-layout';
-import { MainLayout } from '@/components/layout/main-layout';
-import { SEO } from '@/components/common/seo';
-import { UserDataLayout } from '@/components/layout/user-data-layout';
-import { UserHomeLayout } from '@/components/layout/user-home-layout';
-import { Tweet } from '@/components/tweet/tweet';
-import { Loading } from '@/components/ui/loading';
-import { StatsEmpty } from '@/components/tweet/stats-empty';
+import { useUser } from '@/context/UserContext';
+import { UserLayout, ProtectedLayout } from '@/components/layout/CommonLayout';
+import { MainLayout } from '@/components/layout/MainLayout';
+import { SEO } from "@/components/common/Seo";
+import { UserDataLayout } from '@/components/layout/UserDataLayout';
+import { UserHomeLayout } from '@/components/layout/UserHomeLayout';
+import { Tweet } from "@/components/tweet/Tweet";
+import { Loading } from "@/components/ui/Loading";
+import { StatsEmpty } from "@/components/tweet/StatsEmpty";
 import type { ReactElement, ReactNode } from 'react';
 
 export default function UserLikes() {

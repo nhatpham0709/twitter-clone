@@ -1,6 +1,6 @@
 import Error from 'next/error';
-import { useTheme } from '@/lib/context/theme-context';
-import { SEO } from '@/components/common/seo';
+import { useTheme } from '@/context/ThemeContext';
+import { SEO } from "@/components/common/Seo";
 
 export default function NotFound() {
   const { theme } = useTheme();

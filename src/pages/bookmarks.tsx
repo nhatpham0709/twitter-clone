@@ -2,28 +2,28 @@ import { useMemo } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { orderBy, query } from 'firebase/firestore';
-import { useAuth } from '@/lib/context/auth-context';
-import { useModal } from '@/lib/hooks/useModal';
-import { useCollection } from '@/lib/hooks/useCollection';
-import { useArrayDocument } from '@/lib/hooks/useArrayDocument';
+import { useAuth } from '@/context/AuthContext';
+import { useModal } from '@/hooks/useModal';
+import { useCollection } from '@/hooks/useCollection';
+import { useArrayDocument } from '@/hooks/useArrayDocument';
 import { clearAllBookmarks } from '@/lib/firebase/utils';
 import {
   tweetsCollection,
   userBookmarksCollection
 } from '@/lib/firebase/collections';
-import { HomeLayout, ProtectedLayout } from '@/components/layout/common-layout';
-import { MainLayout } from '@/components/layout/main-layout';
-import { SEO } from '@/components/common/seo';
-import { MainHeader } from '@/components/home/main-header';
-import { MainContainer } from '@/components/home/main-container';
-import { Modal } from '@/components/modal/modal';
-import { ActionModal } from '@/components/modal/action-modal';
-import { Tweet } from '@/components/tweet/tweet';
-import { StatsEmpty } from '@/components/tweet/stats-empty';
-import { Button } from '@/components/ui/button';
-import { ToolTip } from '@/components/ui/tooltip';
-import { HeroIcon } from '@/components/ui/hero-icon';
-import { Loading } from '@/components/ui/loading';
+import { HomeLayout, ProtectedLayout } from '@/components/layout/CommonLayout';
+import { MainLayout } from '@/components/layout/MainLayout';
+import { SEO } from "@/components/common/Seo";
+import { MainHeader } from "@/components/home/MainHeader";
+import { MainContainer } from "@/components/home/MainContainer";
+import { Modal } from "@/components/modal/Modal";
+import { ActionModal } from "@/components/modal/ActionModal";
+import { Tweet } from "@/components/tweet/Tweet";
+import { StatsEmpty } from "@/components/tweet/StatsEmpty";
+import { Button } from "@/components/ui/Button";
+import { ToolTip } from "@/components/ui/Tooltip";
+import { HeroIcon } from '@/components/ui/HeroIcon';
+import { Loading } from "@/components/ui/Loading";
 import type { ReactElement, ReactNode } from 'react';
 
 export default function Bookmarks() {

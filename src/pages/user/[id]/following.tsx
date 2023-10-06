@@ -1,8 +1,8 @@
-import { UserLayout, ProtectedLayout } from '@/components/layout/common-layout';
-import { MainLayout } from '@/components/layout/main-layout';
-import { UserDataLayout } from '@/components/layout/user-data-layout';
-import { UserFollowLayout } from '@/components/layout/user-follow-layout';
-import { UserFollow } from '@/components/user/user-follow';
+import { UserLayout, ProtectedLayout } from '@/components/layout/CommonLayout';
+import { MainLayout } from '@/components/layout/MainLayout';
+import { UserDataLayout } from '@/components/layout/UserDataLayout';
+import { UserFollowLayout } from '@/components/layout/UserFollowLayout';
+import { UserFollow } from "@/components/user/Follow";
 import type { ReactElement, ReactNode } from 'react';
 
 export default function UserFollowing() {

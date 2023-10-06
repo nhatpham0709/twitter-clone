@@ -1,8 +1,8 @@
-import '../styles/globals.scss';
+import "../styles/globals.scss";
 
-import { AuthContextProvider } from '@/lib/context/auth-context';
-import { ThemeContextProvider } from '@/lib/context/theme-context';
-import { AppHead } from '@/components/common/app-head';
+import { AuthContextProvider } from '@/context/AuthContext';
+import { ThemeContextProvider } from '@/context/ThemeContext';
+import { AppHead } from "@/components/common/AppHead";
 import type { ReactElement, ReactNode } from 'react';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';

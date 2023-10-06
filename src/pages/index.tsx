@@ -1,7 +1,7 @@
-import { AuthLayout } from '@/components/layout/auth-layout';
-import { SEO } from '@/components/common/seo';
-import { LoginMain } from '@/components/login/login-main';
-import { LoginFooter } from '@/components/login/login-footer';
+import { AuthLayout } from "@/components/layout/AuthLayout";
+import { SEO } from "@/components/common/Seo";
+import { LoginMain } from "@/components/login/LoginMain";
+import { LoginFooter } from "@/components/login/LoginFooter";
 import type { ReactElement, ReactNode } from 'react';
 
 export default function Login() {
